@@ -266,6 +266,15 @@
             <input type="number" id="f-tiempo" placeholder="3" min="1" max="30">
           </div>
         </div>
+        <div class="f-g" style="grid-column:1/-1">
+          <label>Imagen del artículo</label>
+          <input type="file" id="f-imagen-file" accept="image/*" onchange="previsualizarImagen(this)">
+          <div id="f-imagen-preview" style="margin-top:.8rem;display:none">
+            <img id="preview-img" style="max-height:200px;max-width:100%;object-fit:cover;">
+            <p style="font-size:.75rem;color:var(--gris-texto);margin-top:.4rem">✅ Imagen seleccionada</p>
+          </div>
+          <input type="hidden" id="f-imagen-url">
+        </div>
         <div class="f-g">
           <label>Resumen / Introducción *</label>
           <textarea id="f-resumen" style="min-height:100px" placeholder="Escribe un resumen corto del artículo (2-3 oraciones)..."></textarea>
@@ -502,6 +511,31 @@
     document.getElementById('stat-cats').textContent = cats;
   }
 
+window.previsualizarImagen = function(input) {
+  if(input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('preview-img').src = e.target.result;
+      document.getElementById('f-imagen-preview').style.display = 'block';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+};
+
+async function subirImagenCloudinary() {
+  const file = document.getElementById('f-imagen-file').files[0];
+  const urlExistente = document.getElementById('f-imagen-url').value;
+  if(!file) return urlExistente || '';
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', 'martha-blog');
+  const res = await fetch('https://api.cloudinary.com/v1_1/dav4yhq85/image/upload', {
+    method: 'POST', body: formData
+  });
+  const data = await res.json();
+  return data.secure_url || '';
+}
+
   window.guardarArticulo = async function() {
     const titulo = document.getElementById('f-titulo').value.trim();
     const cat = document.getElementById('f-cat').value;
@@ -512,7 +546,8 @@
     const tiempo = document.getElementById('f-tiempo').value || '3';
     const editId = document.getElementById('edit-id').value;
     if (!titulo || !cat || !resumen || !contenido) { toast('Completa todos los campos obligatorios (*)', 'error'); return; }
-    const data = { titulo, categoria: cat, resumen, contenido, estado, emoji, tiempoLectura: tiempo, fecha: Timestamp.now() };
+    const imagenUrl = await subirImagenCloudinary();
+    const data = { titulo, categoria: cat, resumen, contenido, estado, emoji, tiempoLectura: tiempo, imagen: imagenUrl, fecha: Timestamp.now() };
     try {
       if (editId) { await updateDoc(doc(db, "articulos", editId), data); toast('✅ Artículo actualizado', 'success'); }
       else { await addDoc(collection(db, "articulos"), data); toast('✅ Artículo publicado', 'success'); }
@@ -565,6 +600,9 @@
     document.getElementById('f-estado').value = 'publicado';
     document.getElementById('f-emoji').value = '';
     document.getElementById('f-tiempo').value = '';
+    document.getElementById('f-imagen-file').value = '';
+    document.getElementById('f-imagen-url').value = '';
+    document.getElementById('f-imagen-preview').style.display = 'none';
     document.getElementById('form-page-title').textContent = 'Nuevo Artículo';
   };
 
