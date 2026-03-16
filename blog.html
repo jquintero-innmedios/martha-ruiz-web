@@ -101,13 +101,16 @@
   .pag-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:2px solid var(--gris-claro);background:#fff;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;color:var(--negro)}
   .pag-btn:hover,.pag-btn.active{background:var(--rojo);border-color:var(--rojo);color:#fff}
 
-  footer{background:#0e0e0e;color:rgba(255,255,255,.5);padding:3rem 0 1.5rem;text-align:center}
-  .f-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:.5rem}
-  .f-logo span{color:var(--rojo)}
-  .f-links-ft{display:flex;justify-content:center;gap:2rem;margin:1rem 0;flex-wrap:wrap}
-  .f-links-ft a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.82rem;transition:color .2s}
-  .f-links-ft a:hover{color:var(--rojo)}
-  .f-copy{font-size:.75rem;opacity:.3;margin-top:.5rem}
+footer{background:#ffffff;color:#555;padding:4rem 0 2rem;border-top:4px solid var(--rojo)}
+.f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:4rem;margin-bottom:3rem}
+.f-rainbow-ft{height:3px;background:var(--grad);width:80px;margin:1rem 0}
+.f-tag{font-size:.83rem;line-height:1.65;color:#555}
+.f-col-h{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);margin-bottom:1.2rem}
+.f-lks{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.f-lks a{color:#777;text-decoration:none;font-size:.86rem;transition:color .2s}
+.f-lks a:hover{color:var(--rojo)}
+.f-bottom{border-top:1px solid #e8e8e8;padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.76rem;color:#999}
+@media(max-width:900px){.f-grid{grid-template-columns:1fr;gap:2rem}.container{padding:0 1.5rem}}
 
   @media(max-width:900px){
     nav{padding:0 1.5rem}.nav-links{display:none}
@@ -192,15 +195,38 @@
 </div>
 
 <footer>
-  <div class="f-logo">Martha <span>Ruiz</span> Solera</div>
-  <div class="f-links-ft">
-    <a href="index.html">Inicio</a>
-    <a href="index.html#agenda">Agenda</a>
-    <a href="index.html#contacto">Contacto</a>
-    <a href="admin.html">Admin</a>
+  <div class="container">
+    <div class="f-grid">
+      <div>
+        <img src="fotos/logo.png" alt="Martha Ruiz" style="height:50px;width:auto;margin-bottom:1rem;display:block;">
+        <div class="f-rainbow-ft"></div>
+        <p class="f-tag">Representante a la Cámara por Córdoba · Período 2026–2030<br>Coalición Pr1mero Córdoba · Colombia Renaciente · #105</p>
+        <p style="font-size:.78rem;margin-top:1.2rem;opacity:.5;font-style:italic;color:#555">"Cuando el corazón de Córdoba late con dignidad, coraje y propósito, somos un corazón fuerte."</p>
+      </div>
+      <div>
+        <div class="f-col-h">Navegación</div>
+        <ul class="f-lks">
+          <li><a href="index.html#agenda">Agenda Legislativa</a></li>
+          <li><a href="index.html#sos">S.O.S. Familias</a></li>
+          <li><a href="index.html#perfil">Perfil y Trayectoria</a></li>
+          <li><a href="blog.html">Blog y Columnas</a></li>
+          <li><a href="index.html#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="f-col-h">Recursos</div>
+        <ul class="f-lks">
+          <li><a href="libro.html">Libro: Un Viaje al Fondo de mi Vida</a></li>
+          <li><a href="prensa.html">Sala de Prensa</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 Martha Isabel Ruiz Solera · Representante a la Cámara por Córdoba</span>
+      <span>Hecho con 🤍 desde Montería, Córdoba</span>
+    </div>
   </div>
-  <div class="f-copy">© 2026 Martha Isabel Ruiz Solera · Representante a la Cámara por Córdoba</div>
-  <div class="rainbow-bar" style="margin-top:1.5rem"></div>
+  <div class="rainbow-bar" style="margin-top:2rem"></div>
 </footer>
 
 <script type="module">
