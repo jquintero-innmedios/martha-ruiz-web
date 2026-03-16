@@ -367,20 +367,12 @@
       <div><div class="sec-label">Columnas & Reflexiones</div><h2 class="sec-title">Martha <em>escribe</em></h2></div>
       <a href="#" class="btn-out">Ver todos los artículos</a>
     </div>
-    <div class="blog-grid">
-      <div class="blog-card reveal">
-        <div class="blog-img" style="background:linear-gradient(135deg,#a01520,#cc1e2b)"><div class="blog-img-ic">🏛️</div><span class="blog-cat" style="background:var(--rojo)">Columna Legislativa</span></div>
-        <div class="blog-body"><div class="blog-date">Marzo 2026</div><h3 class="blog-title">Lo que Córdoba le pide al Congreso: una carta desde el territorio</h3><p class="blog-exc">Después de años recorriendo barrios, veredas y municipios, llegué a la Cámara con una maleta llena de historias, no de promesas. Este es mi compromiso con los cordobeses que creyeron en mí…</p><a href="#" class="blog-link">Leer columna →</a></div>
-      </div>
-      <div class="blog-card reveal">
-        <div class="blog-img" style="background:linear-gradient(135deg,#b54d0a,#e8631a)"><div class="blog-img-ic">👩</div><span class="blog-cat" style="background:var(--naranja)">Mujer & Política</span></div>
-        <div class="blog-body"><div class="blog-date">Febrero 2026</div><h3 class="blog-title">Ser mujer en la política cordobesa. Lo hago desde el corazón</h3><p class="blog-exc">La política en el Caribe colombiano ha sido históricamente un espacio de hombres. Decidí entrar no para imitar ese modelo, sino para transformarlo…</p><a href="#" class="blog-link">Leer columna →</a></div>
-      </div>
-      <div class="blog-card reveal">
-        <div class="blog-img" style="background:linear-gradient(135deg,#1040a0,#1a5fb4)"><div class="blog-img-ic">📖</div><span class="blog-cat" style="background:var(--azul)">Reflexión Personal</span></div>
-        <div class="blog-body"><div class="blog-date">Enero 2026</div><h3 class="blog-title">Mi padre, la violencia y por qué hago política desde el amor</h3><p class="blog-exc">A los 8 años la vida me quitó a mi padre. Ese dolor pudo haberme roto. En cambio, se convirtió en el motor que me trajo hasta aquí…</p><a href="#" class="blog-link">Leer columna →</a></div>
-      </div>
-    </div>
+   <div class="blog-grid" id="home-blog-grid">
+  <div style="text-align:center;padding:3rem;color:var(--gris-texto);grid-column:1/-1">
+    <div style="width:30px;height:30px;border:3px solid #f4f4f4;border-top-color:var(--rojo);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem"></div>
+    Cargando artículos...
+  </div>
+</div>
     <div class="libro-ban reveal">
   <div class="libro-izq">
     <img src="fotos/portada.png" alt="Un Viaje al Fondo de mi Vida" style="width:150px;transform:rotate(-4deg);box-shadow:-12px 12px 35px rgba(0,0,0,.6);">
@@ -498,6 +490,46 @@
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}});
   });
+
+  // Cargar artículos en home
+  (async () => {
+    try {
+      const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+      const { getFirestore, collection, getDocs, query, orderBy, limit } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+      const app = initializeApp({
+        apiKey:"AIzaSyC-FZcABicW9VkgCcJtIlMaOX1KdDHWO-k",
+        authDomain:"martha-ruiz-blog.firebaseapp.com",
+        projectId:"martha-ruiz-blog",
+        storageBucket:"martha-ruiz-blog.firebasestorage.app",
+        messagingSenderId:"572271986147",
+        appId:"1:572271986147:web:e4e958abd9c8aefd678cd6"
+      }, 'home');
+      const db = getFirestore(app);
+      const q = query(collection(db,"articulos"), orderBy("fecha","desc"), limit(3));
+      const snap = await getDocs(q);
+      const arts = snap.docs.map(d=>({id:d.id,...d.data()}));
+      const COLS = {'Columna Legislativa':'#cc1e2b','Mujer & Política':'#e8631a','Reflexión Personal':'#1a5fb4','Salud':'#2eaa4a','Familia':'#a01520','Córdoba':'#f5c518'};
+      if(arts.length === 0) {
+        document.getElementById('home-blog-grid').innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#999;padding:2rem">Próximamente nuevos artículos.</p>';
+        return;
+      }
+      document.getElementById('home-blog-grid').innerHTML = arts.map((a,i) => {
+        const c = COLS[a.categoria]||'#cc1e2b';
+        return `<div class="blog-card" onclick="window.location='blog.html?id=${a.id}'" style="cursor:pointer">
+          <div class="blog-img" style="background:linear-gradient(135deg,${c}dd,${c}88)">
+            ${a.imagen ? `<img src="${a.imagen}" style="width:100%;height:100%;object-fit:cover">` : `<div class="blog-img-ic">${a.emoji||'✍️'}</div>`}
+            <span class="blog-cat" style="background:${c}">${a.categoria}</span>
+          </div>
+          <div class="blog-body">
+            <div class="blog-date">${a.fecha?.toDate ? a.fecha.toDate().toLocaleDateString('es-CO',{month:'long',year:'numeric'}) : ''}</div>
+            <h3 class="blog-title">${a.titulo}</h3>
+            <p class="blog-exc">${a.resumen}</p>
+            <a class="blog-link" href="blog.html?id=${a.id}">Leer columna →</a>
+          </div>
+        </div>`;
+      }).join('');
+    } catch(e){ console.error(e); }
+  })();
 </script>
 </body>
 </html>
