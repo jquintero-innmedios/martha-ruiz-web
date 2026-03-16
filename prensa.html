@@ -189,7 +189,7 @@
   <div class="container">
     <div class="f-grid">
       <div>
-        <img src="logo.png" alt="Martha Ruiz" style="height:50px;width:auto;margin-bottom:1rem;display:block;">
+        <img src="fotos/logo.png" alt="Martha Ruiz" style="height:50px;width:auto;margin-bottom:1rem;display:block;">
         <div class="f-rainbow-ft"></div>
         <p class="f-tag">Representante a la Cámara por Córdoba · Período 2026–2030<br>Coalición Pr1mero Córdoba · Colombia Renaciente · #105</p>
         <p style="font-size:.78rem;margin-top:1.2rem;opacity:.5;font-style:italic;color:#555">"Cuando el corazón de Córdoba late con dignidad, coraje y propósito, somos un corazón fuerte."</p>
@@ -292,7 +292,7 @@
     document.getElementById('medios-list').innerHTML = medios.map(m=>{
       const fecha = m.fecha?.toDate ? m.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'}) : '';
       return `<a class="medio-card" href="${m.link}" target="_blank">
-        <div class="medio-logo">${m.medio}</div>
+        <div class="medio-logo" style="overflow:hidden;padding:0">>${m.imagen ? `<img src="${m.imagen}" style="width:100%;height:100%;object-fit:cover;display:block;">` : m.medio}</div>
         <div class="medio-info">
           <div class="medio-nombre">${m.medio}</div>
           <div class="medio-titular">${m.titular}</div>
