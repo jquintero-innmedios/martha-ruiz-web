@@ -299,9 +299,9 @@ footer{background:#ffffff;color:#555;padding:4rem 0 2rem;border-top:4px solid va
       const fecha = a.fecha?.toDate ? a.fecha.toDate().toLocaleDateString('es-CO', {year:'numeric',month:'long',day:'numeric'}) : a.fecha || '';
       return `
         <div class="articulo-card ${featured ? 'featured' : ''}" onclick="window.location='articulo.html?id=${a.id}'">
-          <div class="articulo-img" style="background:linear-gradient(135deg,${color}dd,${color}88)">
-            <div class="articulo-img-icon">${a.emoji || '✍️'}</div>
-            <span class="articulo-cat" style="background:${color}">${a.categoria}</span>
+          <div class="articulo-img" style="background:linear-gradient(135deg,${color}dd,${color}88);position:relative;overflow:hidden">
+            ${a.imagen ? `<img src="${a.imagen}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">` : `<div class="articulo-img-icon">${a.emoji || '✍️'}</div>`}
+            <span class="articulo-cat" style="background:${color};position:relative;z-index:1">${a.categoria}</span>
           </div>
           <div class="articulo-body">
             <div class="articulo-meta">
@@ -317,6 +317,16 @@ footer{background:#ffffff;color:#555;padding:4rem 0 2rem;border-top:4px solid va
 
     document.getElementById('articulos-container').innerHTML = html;
     renderPaginacion(total);
+  }
+
+  function renderPaginacion(total) {
+    const paginas = Math.ceil(total / POR_PAGINA);
+    if (paginas <= 1) { document.getElementById('paginacion').innerHTML = ''; return; }
+    let html = '';
+    for (let i = 1; i <= paginas; i++) {
+      html += `<button class="pag-btn ${i === paginaActual ? 'active' : ''}" onclick="irPagina(${i})">${i}</button>`;
+    }
+    document.getElementById('paginacion').innerHTML = html;
   }
 
   function renderPaginacion(total) {
