@@ -363,7 +363,7 @@
   <div class="container">
     <div class="blog-head reveal">
       <div><div class="sec-label">Columnas & Reflexiones</div><h2 class="sec-title">Martha <em>escribe</em></h2></div>
-      <a href="#" class="btn-out">Ver todos los artículos</a>
+      <a href="blog.html" class="btn-out">Ver todos los artículos</a>
     </div>
    <div class="blog-grid" id="home-blog-grid">
   <div style="text-align:center;padding:3rem;color:var(--gris-texto);grid-column:1/-1">
@@ -513,7 +513,7 @@
       }
       document.getElementById('home-blog-grid').innerHTML = arts.map((a,i) => {
         const c = COLS[a.categoria]||'#cc1e2b';
-        return `<div class="blog-card" onclick="window.location='blog.html?id=${a.id}'" style="cursor:pointer">
+        return `<div class="blog-card" onclick="window.location='articulo.html?id=${a.id}'" style="cursor:pointer">
           <div class="blog-img" style="background:linear-gradient(135deg,${c}dd,${c}88)">
             ${a.imagen ? `<img src="${a.imagen}" style="width:100%;height:100%;object-fit:cover">` : `<div class="blog-img-ic">${a.emoji||'✍️'}</div>`}
             <span class="blog-cat" style="background:${c}">${a.categoria}</span>
@@ -522,7 +522,7 @@
             <div class="blog-date">${a.fecha?.toDate ? a.fecha.toDate().toLocaleDateString('es-CO',{month:'long',year:'numeric'}) : ''}</div>
             <h3 class="blog-title">${a.titulo}</h3>
             <p class="blog-exc">${a.resumen}</p>
-            <a class="blog-link" href="blog.html?id=${a.id}">Leer columna →</a>
+            <a class="blog-link" href="articulo.html?id=${a.id}">Leer columna →</a>
           </div>
         </div>`;
       }).join('');
