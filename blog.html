@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Martha Ruiz · Representante por Córdoba</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rojo:#cc1e2b;--rojo-oscuro:#a01520;--naranja:#e8631a;--amarillo:#f5c518;
+    --verde-c:#2eaa4a;--azul:#1a5fb4;--blanco:#ffffff;--gris-claro:#f4f4f4;
+    --gris-texto:#555555;--negro:#111111;
+    --grad:linear-gradient(90deg,#cc1e2b 0%,#e8631a 28%,#f5c518 52%,#2eaa4a 74%,#1a5fb4 100%);
+    --grad-rojo:linear-gradient(135deg,#cc1e2b 0%,#8b1018 100%);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;background:var(--blanco);color:var(--negro);overflow-x:hidden}
+  .rainbow-bar{height:5px;background:var(--grad);width:100%}
+  .top-banner{background:var(--rojo);color:#fff;text-align:center;padding:.55rem 2rem;font-size:.78rem;letter-spacing:.05em;font-weight:500}
+
+  nav{background:#fff;border-bottom:1px solid #e8e8e8;display:flex;align-items:center;justify-content:space-between;padding:0 5rem;height:64px;box-shadow:0 2px 20px rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+  .nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:.04em;color:var(--negro);text-decoration:none;display:flex;align-items:center;gap:.6rem}
+  .nav-logo-acc{background:var(--grad-rojo);color:#fff;padding:.15rem .7rem;font-size:1rem}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--gris-texto);text-decoration:none;padding:.3rem 0;border-bottom:2px solid transparent;transition:all .2s}
+  .nav-links a:hover,.nav-links a.active{color:var(--rojo);border-color:var(--rojo)}
+  .nav-cta{background:var(--rojo)!important;color:#fff!important;padding:.55rem 1.5rem!important;border:none!important;border-bottom:none!important}
+  .nav-cta:hover{background:var(--rojo-oscuro)!important}
+
+  /* HERO BLOG */
+  .blog-hero{background:var(--negro);padding:5rem 0 4rem;position:relative;overflow:hidden}
+  .blog-hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at 20% 50%,rgba(204,30,43,.15) 0%,transparent 60%)}
+  .blog-hero-inner{max-width:1200px;margin:0 auto;padding:0 5rem;position:relative;z-index:1}
+  .blog-hero-tag{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--rojo);margin-bottom:1rem;display:flex;align-items:center;gap:.8rem}
+  .blog-hero-tag::before{content:'';width:28px;height:3px;background:var(--rojo)}
+  .blog-hero-title{font-family:'Barlow Condensed',sans-serif;font-size:4rem;font-weight:900;text-transform:uppercase;color:#fff;line-height:.95;margin-bottom:1rem}
+  .blog-hero-title span{color:var(--rojo)}
+  .blog-hero-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:rgba(255,255,255,.55);max-width:500px}
+  .blog-hero-rainbow{height:3px;background:var(--grad);width:80px;margin-top:2rem}
+
+  /* FILTROS */
+  .filtros{background:var(--gris-claro);border-bottom:1px solid #e0e0e0;padding:0}
+  .filtros-inner{max-width:1200px;margin:0 auto;padding:0 5rem;display:flex;gap:0;overflow-x:auto}
+  .filtro-btn{padding:1rem 1.5rem;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-texto);background:transparent;border:none;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s}
+  .filtro-btn:hover,.filtro-btn.active{color:var(--rojo);border-color:var(--rojo)}
+
+  /* GRID */
+  .blog-content{max-width:1200px;margin:0 auto;padding:4rem 5rem;display:grid;grid-template-columns:1fr 320px;gap:4rem;align-items:start}
+
+  /* ARTÍCULOS */
+  .articulos-grid{display:flex;flex-direction:column;gap:3px}
+  .articulo-card{background:#fff;display:grid;grid-template-columns:280px 1fr;overflow:hidden;cursor:pointer;transition:box-shadow .3s,transform .3s;border:1px solid #f0f0f0}
+  .articulo-card:hover{box-shadow:0 20px 50px rgba(0,0,0,.1);transform:translateY(-3px)}
+  .articulo-card.featured{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .articulo-img{height:100%;min-height:200px;background:var(--rojo);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .articulo-card.featured .articulo-img{height:300px}
+  .articulo-img-icon{font-size:3rem;opacity:.12}
+  .articulo-cat{position:absolute;top:1rem;left:1rem;color:#fff;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .8rem}
+  .articulo-body{padding:2rem}
+  .articulo-meta{display:flex;align-items:center;gap:1rem;margin-bottom:.8rem}
+  .articulo-fecha{font-size:.72rem;color:var(--rojo);font-weight:700;letter-spacing:.05em}
+  .articulo-tiempo{font-size:.72rem;color:var(--gris-texto)}
+  .articulo-title{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;text-transform:uppercase;color:var(--negro);line-height:1.15;margin-bottom:.8rem;letter-spacing:.01em}
+  .articulo-card.featured .articulo-title{font-size:1.8rem}
+  .articulo-excerpt{font-size:.88rem;color:var(--gris-texto);line-height:1.7}
+  .articulo-link{display:inline-flex;align-items:center;gap:.4rem;margin-top:1.2rem;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--rojo);text-decoration:none;border-bottom:2px solid var(--rojo);padding-bottom:.1rem;transition:color .2s}
+  .articulo-link:hover{color:var(--rojo-oscuro)}
+
+  /* LOADING */
+  .loading{text-align:center;padding:4rem;color:var(--gris-texto);font-size:.9rem}
+  .spinner{width:40px;height:40px;border:3px solid var(--gris-claro);border-top-color:var(--rojo);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .empty{text-align:center;padding:4rem;color:var(--gris-texto)}
+  .empty-icon{font-size:3rem;margin-bottom:1rem}
+
+  /* SIDEBAR */
+  .sidebar{display:flex;flex-direction:column;gap:2rem}
+  .sidebar-block{background:var(--gris-claro);padding:2rem}
+  .sidebar-title{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;text-transform:uppercase;color:var(--negro);letter-spacing:.05em;margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:2px solid var(--rojo)}
+  .sidebar-cats{display:flex;flex-direction:column;gap:.5rem}
+  .sidebar-cat{display:flex;justify-content:space-between;align-items:center;padding:.6rem .8rem;background:#fff;cursor:pointer;font-size:.85rem;font-weight:600;color:var(--negro);transition:all .2s;text-decoration:none}
+  .sidebar-cat:hover{background:var(--rojo);color:#fff}
+  .sidebar-cat span{background:var(--gris-claro);color:var(--gris-texto);padding:.1rem .5rem;font-size:.72rem;border-radius:10px}
+  .sidebar-cat:hover span{background:rgba(255,255,255,.2);color:#fff}
+  .sidebar-martha{background:var(--negro);padding:2rem;text-align:center;color:#fff}
+  .sidebar-martha-foto{width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:top;border:3px solid var(--rojo);margin:0 auto 1rem;display:block}
+  .sidebar-martha-foto-placeholder{width:80px;height:80px;border-radius:50%;background:var(--rojo);margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:2rem}
+  .sidebar-martha-name{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;text-transform:uppercase;margin-bottom:.3rem}
+  .sidebar-martha-desc{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.5;margin-bottom:1rem}
+  .sidebar-rainbow{height:3px;background:var(--grad);margin-top:1rem}
+  .recientes{display:flex;flex-direction:column;gap:.8rem}
+  .reciente-item{display:flex;gap:.8rem;align-items:start;cursor:pointer;padding:.5rem;transition:background .2s;text-decoration:none}
+  .reciente-item:hover{background:#fff}
+  .reciente-num{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;color:var(--gris-claro);line-height:1;flex-shrink:0}
+  .reciente-title{font-size:.82rem;font-weight:600;color:var(--negro);line-height:1.4}
+  .reciente-fecha{font-size:.72rem;color:var(--gris-texto);margin-top:.2rem}
+
+  /* PAGINACIÓN */
+  .paginacion{display:flex;justify-content:center;gap:.5rem;padding:2rem 0 4rem}
+  .pag-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border:2px solid var(--gris-claro);background:#fff;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;color:var(--negro)}
+  .pag-btn:hover,.pag-btn.active{background:var(--rojo);border-color:var(--rojo);color:#fff}
+
+  footer{background:#0e0e0e;color:rgba(255,255,255,.5);padding:3rem 0 1.5rem;text-align:center}
+  .f-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;color:#fff;margin-bottom:.5rem}
+  .f-logo span{color:var(--rojo)}
+  .f-links-ft{display:flex;justify-content:center;gap:2rem;margin:1rem 0;flex-wrap:wrap}
+  .f-links-ft a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.82rem;transition:color .2s}
+  .f-links-ft a:hover{color:var(--rojo)}
+  .f-copy{font-size:.75rem;opacity:.3;margin-top:.5rem}
+
+  @media(max-width:900px){
+    nav{padding:0 1.5rem}.nav-links{display:none}
+    .blog-hero-inner,.filtros-inner,.blog-content{padding:2rem 1.5rem}
+    .blog-content{grid-template-columns:1fr}
+    .sidebar{display:none}
+    .articulo-card{grid-template-columns:1fr}
+    .articulo-img{height:200px}
+  }
+</style>
+</head>
+<body>
+
+<div class="rainbow-bar"></div>
+<div class="top-banner">✍️ <strong>Blog de Martha Ruiz</strong> — Columnas, reflexiones y agenda legislativa</div>
+
+<nav>
+  <a class="nav-logo" href="martha-ruiz-solera.html"><img src="fotos/logo.png" alt="Martha Ruiz" style="height:40px;width:auto;"></a>
+  <ul class="nav-links">
+    <li><a href="martha-ruiz-solera.html#agenda">Agenda</a></li>
+    <li><a href="martha-ruiz-solera.html#sos">S.O.S. Familias</a></li>
+    <li><a href="martha-ruiz-solera.html#perfil">Perfil</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="martha-ruiz-solera.html#contacto" class="nav-cta">Contáctame</a></li>
+  </ul>
+</nav>
+
+<div class="blog-hero">
+  <div class="blog-hero-inner">
+    <div class="blog-hero-tag">Columnas & Reflexiones</div>
+    <h1 class="blog-hero-title">Martha <span>escribe</span></h1>
+    <p class="blog-hero-sub">Pensamientos sobre política, servicio público y las realidades que viven las familias cordobesas.</p>
+    <div class="blog-hero-rainbow"></div>
+  </div>
+</div>
+
+<div class="filtros">
+  <div class="filtros-inner">
+    <button class="filtro-btn active" onclick="filtrar('todos',this)">Todos</button>
+    <button class="filtro-btn" onclick="filtrar('Columna Legislativa',this)">Columna Legislativa</button>
+    <button class="filtro-btn" onclick="filtrar('Mujer & Política',this)">Mujer & Política</button>
+    <button class="filtro-btn" onclick="filtrar('Reflexión Personal',this)">Reflexión Personal</button>
+    <button class="filtro-btn" onclick="filtrar('Salud',this)">Salud</button>
+    <button class="filtro-btn" onclick="filtrar('Familia',this)">Familia</button>
+    <button class="filtro-btn" onclick="filtrar('Córdoba',this)">Córdoba</button>
+  </div>
+</div>
+
+<div class="blog-content">
+  <div>
+    <div id="articulos-container">
+      <div class="loading"><div class="spinner"></div>Cargando artículos...</div>
+    </div>
+    <div class="paginacion" id="paginacion"></div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-martha">
+      <div class="sidebar-martha-foto-placeholder">✍️</div>
+      <div class="sidebar-martha-name">Martha Ruiz</div>
+      <p class="sidebar-martha-desc">Representante a la Cámara por Córdoba · Psicóloga · Escritora · Servidora pública por vocación</p>
+      <div class="sidebar-rainbow"></div>
+    </div>
+
+    <div class="sidebar-block">
+      <div class="sidebar-title">Categorías</div>
+      <div class="sidebar-cats">
+        <a class="sidebar-cat" onclick="filtrar('Columna Legislativa',null)">Columna Legislativa <span id="cnt-leg">0</span></a>
+        <a class="sidebar-cat" onclick="filtrar('Mujer & Política',null)">Mujer & Política <span id="cnt-muj">0</span></a>
+        <a class="sidebar-cat" onclick="filtrar('Reflexión Personal',null)">Reflexión Personal <span id="cnt-ref">0</span></a>
+        <a class="sidebar-cat" onclick="filtrar('Salud',null)">Salud <span id="cnt-sal">0</span></a>
+        <a class="sidebar-cat" onclick="filtrar('Familia',null)">Familia <span id="cnt-fam">0</span></a>
+        <a class="sidebar-cat" onclick="filtrar('Córdoba',null)">Córdoba <span id="cnt-cor">0</span></a>
+      </div>
+    </div>
+
+    <div class="sidebar-block">
+      <div class="sidebar-title">Recientes</div>
+      <div class="recientes" id="recientes-list"></div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="f-logo">Martha <span>Ruiz</span> Solera</div>
+  <div class="f-links-ft">
+    <a href="martha-ruiz-solera.html">Inicio</a>
+    <a href="martha-ruiz-solera.html#agenda">Agenda</a>
+    <a href="martha-ruiz-solera.html#contacto">Contacto</a>
+    <a href="admin.html">Admin</a>
+  </div>
+  <div class="f-copy">© 2026 Martha Isabel Ruiz Solera · Representante a la Cámara por Córdoba</div>
+  <div class="rainbow-bar" style="margin-top:1.5rem"></div>
+</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC-FZcABicW9VkgCcJtIlMaOX1KdDHWO-k",
+    authDomain: "martha-ruiz-blog.firebaseapp.com",
+    projectId: "martha-ruiz-blog",
+    storageBucket: "martha-ruiz-blog.firebasestorage.app",
+    messagingSenderId: "572271986147",
+    appId: "1:572271986147:web:e4e958abd9c8aefd678cd6"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  let todosLosArticulos = [];
+  let filtroActual = 'todos';
+  const POR_PAGINA = 6;
+  let paginaActual = 1;
+
+  const COLORES_CAT = {
+    'Columna Legislativa': '#cc1e2b',
+    'Mujer & Política': '#e8631a',
+    'Reflexión Personal': '#1a5fb4',
+    'Salud': '#2eaa4a',
+    'Familia': '#a01520',
+    'Córdoba': '#f5c518'
+  };
+
+  async function cargarArticulos() {
+    try {
+      const q = query(collection(db, "articulos"), orderBy("fecha", "desc"));
+      const snap = await getDocs(q);
+      todosLosArticulos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderArticulos();
+      renderRecientes();
+      actualizarContadores();
+    } catch(e) {
+      document.getElementById('articulos-container').innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">📝</div>
+          <p>Aún no hay artículos publicados.</p>
+        </div>`;
+    }
+  }
+
+  function renderArticulos() {
+    const filtrados = filtroActual === 'todos'
+      ? todosLosArticulos
+      : todosLosArticulos.filter(a => a.categoria === filtroActual);
+
+    const total = filtrados.length;
+    const inicio = (paginaActual - 1) * POR_PAGINA;
+    const pagina = filtrados.slice(inicio, inicio + POR_PAGINA);
+
+    if (pagina.length === 0) {
+      document.getElementById('articulos-container').innerHTML = `
+        <div class="empty"><div class="empty-icon">📝</div><p>No hay artículos en esta categoría aún.</p></div>`;
+      document.getElementById('paginacion').innerHTML = '';
+      return;
+    }
+
+    const html = pagina.map((a, i) => {
+      const featured = i === 0 && paginaActual === 1 && filtroActual === 'todos';
+      const color = COLORES_CAT[a.categoria] || '#cc1e2b';
+      const fecha = a.fecha?.toDate ? a.fecha.toDate().toLocaleDateString('es-CO', {year:'numeric',month:'long',day:'numeric'}) : a.fecha || '';
+      return `
+        <div class="articulo-card ${featured ? 'featured' : ''}" onclick="window.location='articulo.html?id=${a.id}'">
+          <div class="articulo-img" style="background:linear-gradient(135deg,${color}dd,${color}88)">
+            <div class="articulo-img-icon">${a.emoji || '✍️'}</div>
+            <span class="articulo-cat" style="background:${color}">${a.categoria}</span>
+          </div>
+          <div class="articulo-body">
+            <div class="articulo-meta">
+              <span class="articulo-fecha">${fecha}</span>
+              <span class="articulo-tiempo">· ${a.tiempoLectura || '3'} min de lectura</span>
+            </div>
+            <h2 class="articulo-title">${a.titulo}</h2>
+            <p class="articulo-excerpt">${a.resumen}</p>
+            <a class="articulo-link">Leer artículo →</a>
+          </div>
+        </div>`;
+    }).join('');
+
+    document.getElementById('articulos-container').innerHTML = html;
+    renderPaginacion(total);
+  }
+
+  function renderPaginacion(total) {
+    const paginas = Math.ceil(total / POR_PAGINA);
+    if (paginas <= 1) { document.getElementById('paginacion').innerHTML = ''; return; }
+    let html = '';
+    for (let i = 1; i <= paginas; i++) {
+      html += `<button class="pag-btn ${i === paginaActual ? 'active' : ''}" onclick="irPagina(${i})">${i}</button>`;
+    }
+    document.getElementById('paginacion').innerHTML = html;
+  }
+
+  function renderRecientes() {
+    const recientes = todosLosArticulos.slice(0, 5);
+    document.getElementById('recientes-list').innerHTML = recientes.map((a, i) => {
+      const fecha = a.fecha?.toDate ? a.fecha.toDate().toLocaleDateString('es-CO', {month:'short', day:'numeric'}) : '';
+      return `<a class="reciente-item" href="articulo.html?id=${a.id}">
+        <div class="reciente-num">0${i+1}</div>
+        <div><div class="reciente-title">${a.titulo}</div><div class="reciente-fecha">${fecha}</div></div>
+      </a>`;
+    }).join('');
+  }
+
+  function actualizarContadores() {
+    const cats = {'leg':'Columna Legislativa','muj':'Mujer & Política','ref':'Reflexión Personal','sal':'Salud','fam':'Familia','cor':'Córdoba'};
+    Object.entries(cats).forEach(([key, cat]) => {
+      const el = document.getElementById(`cnt-${key}`);
+      if (el) el.textContent = todosLosArticulos.filter(a => a.categoria === cat).length;
+    });
+  }
+
+  window.filtrar = function(cat, btn) {
+    filtroActual = cat;
+    paginaActual = 1;
+    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    renderArticulos();
+  };
+
+  window.irPagina = function(n) {
+    paginaActual = n;
+    renderArticulos();
+    window.scrollTo({top: 300, behavior: 'smooth'});
+  };
+
+  cargarArticulos();
+</script>
+</body>
+</html>

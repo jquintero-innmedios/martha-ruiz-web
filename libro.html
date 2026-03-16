@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Un Viaje al Fondo de mi Vida — Martha Ruiz Solera</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rojo:#cc1e2b;--rojo-oscuro:#a01520;--naranja:#e8631a;--amarillo:#f5c518;
+    --verde-c:#2eaa4a;--azul:#1a5fb4;--blanco:#fff;--gris-claro:#f4f4f4;
+    --gris-texto:#555;--negro:#111;
+    --grad:linear-gradient(90deg,#cc1e2b 0%,#e8631a 28%,#f5c518 52%,#2eaa4a 74%,#1a5fb4 100%);
+    --grad-rojo:linear-gradient(135deg,#cc1e2b 0%,#8b1018 100%);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;background:var(--blanco);color:var(--negro);overflow-x:hidden}
+  .rainbow-bar{height:5px;background:var(--grad);width:100%}
+
+  /* NAV */
+  nav{background:#fff;border-bottom:1px solid #e8e8e8;display:flex;align-items:center;justify-content:space-between;padding:0 5rem;height:64px;box-shadow:0 2px 20px rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+  .nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:.04em;color:var(--negro);text-decoration:none;display:flex;align-items:center;gap:.6rem}
+  .nav-logo-acc{background:var(--grad-rojo);color:#fff;padding:.15rem .7rem;font-size:1rem}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--gris-texto);text-decoration:none;padding:.3rem 0;border-bottom:2px solid transparent;transition:all .2s}
+  .nav-links a:hover{color:var(--rojo);border-color:var(--rojo)}
+  .nav-cta{background:var(--rojo)!important;color:#fff!important;padding:.55rem 1.5rem!important;border:none!important;border-bottom:none!important}
+  .nav-cta:hover{background:var(--rojo-oscuro)!important}
+
+  /* HERO */
+  .hero{background:#3d2314;min-height:90vh;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;position:relative}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(204,30,43,.12) 0%,transparent 60%)}
+  .hero-left{display:flex;align-items:center;justify-content:center;padding:5rem;position:relative;z-index:1}
+  .libro-portada-wrap{position:relative;display:flex;align-items:center;justify-content:center}
+  .libro-portada{width:280px;transform:rotate(-4deg);box-shadow:-20px 20px 60px rgba(0,0,0,.7);position:relative;z-index:1;transition:transform .4s}
+  .libro-portada:hover{transform:rotate(0deg) scale(1.03)}
+  .libro-portada-glow{position:absolute;width:300px;height:400px;background:radial-gradient(ellipse,rgba(204,30,43,.3) 0%,transparent 70%);filter:blur(30px);z-index:0}
+  .hero-right{display:flex;flex-direction:column;justify-content:center;padding:5rem 5rem 5rem 3rem;position:relative;z-index:1}
+  .hero-tag{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--amarillo);display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem}
+  .hero-tag::before{content:'';width:28px;height:3px;background:var(--amarillo)}
+  .hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(3rem,5vw,5rem);font-weight:900;text-transform:uppercase;color:#fff;line-height:.95;margin-bottom:.5rem}
+  .hero-title span{color:var(--rojo)}
+  .hero-autor{font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:rgba(255,255,255,.5);margin-bottom:2rem}
+  .hero-rainbow{height:3px;background:var(--grad);width:80px;margin-bottom:2rem}
+  .hero-desc{font-size:1rem;line-height:1.85;color:rgba(255,255,255,.7);margin-bottom:2.5rem;max-width:480px}
+  .hero-badges{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+  .badge{display:flex;align-items:center;gap:.5rem;padding:.5rem 1rem;border:1px solid rgba(255,255,255,.15);font-size:.75rem;font-weight:600;letter-spacing:.05em;color:rgba(255,255,255,.7)}
+  .badge-icon{font-size:1rem}
+  .hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+  .btn-amarillo{background:var(--amarillo);color:var(--negro);padding:1rem 2.5rem;font-size:.85rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .25s;display:inline-block}
+  .btn-amarillo:hover{background:#e0b010;transform:translateY(-2px)}
+  .btn-outline-w{background:transparent;color:#fff;padding:1rem 2.5rem;font-size:.85rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;border:2px solid rgba(255,255,255,.3);cursor:pointer;transition:all .25s;display:inline-block}
+  .btn-outline-w:hover{border-color:#fff;background:rgba(255,255,255,.05)}
+
+  /* SINOPSIS */
+  .sinopsis{padding:7rem 0;background:var(--blanco)}
+  .sinopsis-inner{max-width:1100px;margin:0 auto;padding:0 5rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+  .sec-label{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--rojo);display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+  .sec-label::before{content:'';width:28px;height:3px;background:var(--rojo)}
+  .sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;text-transform:uppercase;color:var(--negro);line-height:1.05;margin-bottom:1.5rem}
+  .sec-title em{font-style:italic;color:var(--rojo);font-family:'Playfair Display',serif;text-transform:none;font-size:.95em}
+  .sin-p{font-size:.97rem;line-height:1.85;color:var(--gris-texto);margin-bottom:1.2rem}
+  .sin-quote{border-left:4px solid var(--rojo);padding:1.2rem 1.8rem;background:var(--gris-claro);margin:1.5rem 0}
+  .sin-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:var(--rojo-oscuro);line-height:1.6}
+  .sin-temas{display:flex;flex-direction:column;gap:.8rem;margin-top:2rem}
+  .sin-tema{display:flex;align-items:start;gap:1rem;padding:1rem;background:var(--gris-claro)}
+  .sin-tema-ico{font-size:1.2rem;flex-shrink:0}
+  .sin-tema strong{display:block;font-size:.9rem;color:var(--negro);margin-bottom:.2rem}
+  .sin-tema span{font-size:.82rem;color:var(--gris-texto);line-height:1.5}
+
+  /* SOBRE LA AUTORA */
+  .autora{background:var(--gris-claro);padding:6rem 0}
+  .autora-inner{max-width:1100px;margin:0 auto;padding:0 5rem;display:grid;grid-template-columns:300px 1fr;gap:5rem;align-items:center}
+  .autora-foto-wrap{position:relative}
+  .autora-foto{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top;display:block}
+  .autora-foto-placeholder{width:100%;aspect-ratio:3/4;background:var(--rojo);display:flex;align-items:center;justify-content:center;font-size:5rem;opacity:.3}
+  .autora-foto-badge{position:absolute;bottom:-1rem;right:-1rem;background:var(--rojo);color:#fff;padding:1rem;text-align:center;min-width:120px}
+  .autora-foto-badge strong{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:900;text-transform:uppercase;display:block}
+  .autora-foto-badge span{font-size:.7rem;opacity:.8}
+  .autora-content{}
+  .autora-nombre{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;text-transform:uppercase;color:var(--negro);margin-bottom:.3rem}
+  .autora-rol{font-size:.85rem;color:var(--rojo);font-weight:700;letter-spacing:.05em;margin-bottom:1.5rem}
+  .autora-rainbow{height:3px;background:var(--grad);width:60px;margin-bottom:1.5rem}
+  .autora-p{font-size:.97rem;line-height:1.85;color:var(--gris-texto);margin-bottom:1rem}
+
+  /* RECONOCIMIENTOS */
+  .reconocimientos{background:#3d2314;padding:5rem 0}
+  .rec-inner{max-width:1100px;margin:0 auto;padding:0 5rem;text-align:center}
+  .rec-title{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;text-transform:uppercase;color:#fff;margin-bottom:.5rem}
+  .rec-sub{font-family:'Playfair Display',serif;font-style:italic;color:rgba(255,255,255,.5);margin-bottom:3rem}
+  .rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+  .rec-card{background:rgba(255,255,255,.04);padding:2.5rem 2rem;border-top:3px solid transparent;transition:border-color .3s}
+  .rec-card:nth-child(1){border-color:var(--amarillo)}
+  .rec-card:nth-child(2){border-color:var(--rojo)}
+  .rec-card:nth-child(3){border-color:var(--verde-c)}
+  .rec-ico{font-size:2.5rem;margin-bottom:1rem;display:block}
+  .rec-name{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;text-transform:uppercase;color:#fff;margin-bottom:.5rem;letter-spacing:.03em}
+  .rec-desc{font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.6}
+
+  /* FRAGMENTO */
+  .fragmento{padding:7rem 0;background:var(--blanco)}
+  .frag-inner{max-width:800px;margin:0 auto;padding:0 5rem;text-align:center}
+  .frag-comilla{font-family:'Playfair Display',serif;font-size:8rem;color:var(--gris-claro);line-height:.5;display:block;margin-bottom:1rem}
+  .frag-texto{font-family:'Playfair Display',serif;font-size:1.4rem;font-style:italic;line-height:1.75;color:var(--negro);margin-bottom:2rem}
+  .frag-autor{font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rojo)}
+  .frag-rainbow{height:3px;background:var(--grad);width:60px;margin:1.5rem auto 0}
+
+  /* FORMULARIO NOTIFICACIÓN */
+  .notificacion{background:var(--rojo);padding:6rem 0}
+  .noti-inner{max-width:700px;margin:0 auto;padding:0 5rem;text-align:center}
+  .noti-title{font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;font-weight:900;text-transform:uppercase;color:#fff;line-height:1;margin-bottom:.8rem}
+  .noti-sub{font-size:1rem;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:2.5rem;font-family:'Playfair Display',serif;font-style:italic}
+  .noti-form{display:flex;flex-direction:column;gap:1rem;background:rgba(0,0,0,.2);padding:2.5rem;position:relative}
+  .noti-form::before{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--grad)}
+  .noti-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .noti-input{padding:.9rem 1rem;border:2px solid transparent;background:rgba(255,255,255,.1);font-family:'DM Sans',sans-serif;font-size:.9rem;color:#fff;outline:none;transition:border-color .2s}
+  .noti-input::placeholder{color:rgba(255,255,255,.4)}
+  .noti-input:focus{border-color:var(--amarillo)}
+  .noti-btn{padding:1.1rem;background:var(--amarillo);color:var(--negro);border:none;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .25s}
+  .noti-btn:hover{background:#e0b010}
+  .noti-ok{display:none;text-align:center;padding:2rem;color:#fff}
+  .noti-ok-ico{font-size:3rem;display:block;margin-bottom:.8rem}
+  .noti-ok-txt{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:800;text-transform:uppercase}
+
+  footer{background:#ffffff;color:#555;padding:4rem 0 2rem;border-top:4px solid var(--rojo)}
+.container{max-width:1200px;margin:0 auto;padding:0 5rem}
+.f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:4rem;margin-bottom:3rem}
+.f-rainbow-ft{height:3px;background:var(--grad);width:80px;margin:1rem 0}
+.f-tag{font-size:.83rem;line-height:1.65}
+.f-col-h{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);margin-bottom:1.2rem}
+.f-lks{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.f-lks a{color:#777;text-decoration:none;font-size:.86rem;transition:color .2s}
+.f-lks a:hover{color:var(--rojo)}
+.f-bottom{border-top:1px solid #e8e8e8;padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.76rem;color:#999}
+@media(max-width:900px){.f-grid{grid-template-columns:1fr;gap:2rem}.container{padding:0 1.5rem}}
+
+@media(max-width:900px){.f-grid{grid-template-columns:1fr;gap:2rem}}
+
+  .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:none}
+
+  @media(max-width:900px){
+    nav{padding:0 1.5rem}.nav-links{display:none}
+    .hero{grid-template-columns:1fr}
+    .hero-left{display:none}
+    .hero-right{padding:3rem 2rem}
+    .sinopsis-inner,.autora-inner{grid-template-columns:1fr;gap:2rem;padding:0 1.5rem}
+    .rec-grid{grid-template-columns:1fr}
+    .frag-inner,.noti-inner,.rec-inner{padding:0 1.5rem}
+    .noti-row{grid-template-columns:1fr}
+    .autora-inner{padding:0 1.5rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="rainbow-bar"></div>
+
+<nav>
+  <a class="nav-logo" href="martha-ruiz-solera.html"><img src="fotos/logo.png" alt="Martha Ruiz" style="height:40px;width:auto;"></a>
+  <ul class="nav-links">
+    <li><a href="martha-ruiz-solera.html#agenda">Agenda</a></li>
+    <li><a href="martha-ruiz-solera.html#sos">S.O.S. Familias</a></li>
+    <li><a href="martha-ruiz-solera.html#perfil">Perfil</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="martha-ruiz-solera.html#contacto" class="nav-cta">Contáctame</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="libro-portada-wrap">
+      <div class="libro-portada-glow"></div>
+      <img class="libro-portada" src="fotos/portada.png" alt="Un Viaje al Fondo de mi Vida — Martha Ruiz Solera">
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-tag">Libro Autobiográfico · 2025</div>
+    <h1 class="hero-title">Un Viaje al<br>Fondo de<br><span>mi Vida</span></h1>
+    <p class="hero-autor">por Martha Ruiz Solera</p>
+    <div class="hero-rainbow"></div>
+    <p class="hero-desc">Una obra que trasciende lo autobiográfico para convertirse en una herramienta de sanación colectiva. Desde la pérdida, el conflicto armado y la resiliencia, Martha narra su historia con una honestidad que conmueve e inspira.</p>
+    <div class="hero-badges">
+      <div class="badge"><span class="badge-icon">🏆</span> Nominado Voice Arts Awards</div>
+      <div class="badge"><span class="badge-icon">📖</span> Feria del Libro Valledupar 2025</div>
+      <div class="badge"><span class="badge-icon">🎙️</span> Audiolibro disponible</div>
+    </div>
+    <div class="hero-cta">
+      <a href="#notificacion" class="btn-amarillo">📬 Avísame cuando esté disponible</a>
+      <a href="#sinopsis" class="btn-outline-w">Conocer más</a>
+    </div>
+  </div>
+</section>
+
+<!-- SINOPSIS -->
+<section class="sinopsis" id="sinopsis">
+  <div class="sinopsis-inner">
+    <div class="reveal">
+      <div class="sec-label">De qué trata</div>
+      <h2 class="sec-title">Una historia de <em>resiliencia</em></h2>
+      <p class="sin-p">A los 8 años, Martha perdió a su padre a manos de la violencia del conflicto armado colombiano. Ese dolor, que pudo haberla quebrado, se convirtió en el motor de una vida dedicada al servicio y a la transformación social.</p>
+      <p class="sin-p">En este libro autobiográfico, Martha recorre los momentos más profundos de su existencia — la pérdida, el miedo, la lucha por salir adelante, el amor por su tierra y la decisión de convertir el dolor en propósito.</p>
+      <div class="sin-quote">
+        <p>"No fue fácil entregar esta historia, porque hablar de la propia vida no lo es. Pero lo hago para demostrar que somos capaces de superar montañas rusas emocionales."</p>
+      </div>
+      <p class="sin-p">Más que una autobiografía, es un espejo para quienes han enfrentado la adversidad y una invitación a sanar desde la verdad y el amor propio.</p>
+    </div>
+    <div class="reveal">
+      <div class="sec-label">Temas del libro</div>
+      <h2 class="sec-title">Lo que <em>encontrarás</em></h2>
+      <div class="sin-temas">
+        <div class="sin-tema">
+          <div class="sin-tema-ico">💔</div>
+          <div><strong>Pérdida y duelo</strong><span>La historia de perder a su padre a manos de la violencia y aprender a vivir con esa ausencia.</span></div>
+        </div>
+        <div class="sin-tema">
+          <div class="sin-tema-ico">💪</div>
+          <div><strong>Resiliencia y superación</strong><span>Cómo transformar el dolor en fortaleza y construir una vida con propósito desde las cenizas.</span></div>
+        </div>
+        <div class="sin-tema">
+          <div class="sin-tema-ico">🕊️</div>
+          <div><strong>Paz y perdón</strong><span>El proceso interno de perdonar y encontrar paz en medio del conflicto armado colombiano.</span></div>
+        </div>
+        <div class="sin-tema">
+          <div class="sin-tema-ico">🌿</div>
+          <div><strong>Amor por Córdoba</strong><span>La tierra que la formó, las comunidades que la inspiraron y el compromiso de vida con su departamento.</span></div>
+        </div>
+        <div class="sin-tema">
+          <div class="sin-tema-ico">✨</div>
+          <div><strong>Vocación de servicio</strong><span>El camino que la llevó de psicóloga a gestora social y ahora a Representante en el Congreso.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE LA AUTORA -->
+<section class="autora">
+  <div class="autora-inner">
+    <div class="autora-foto-wrap reveal">
+      <img class="autora-foto" src="fotos/martha3.JPG" alt="Martha Ruiz Solera">
+      <div class="autora-foto-badge">
+        <strong>Martha Ruiz</strong>
+        <span>Autora</span>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="sec-label">La autora</div>
+      <div class="autora-nombre">Martha Ruiz Solera</div>
+      <div class="autora-rol">Psicóloga · Escritora · Representante a la Cámara por Córdoba</div>
+      <div class="autora-rainbow"></div>
+      <p class="autora-p">Martha Isabel Ruiz Solera nació en Montería, Córdoba. Psicóloga egresada de la Universidad del Sinú, especialista en Gerencia Administrativa de Salud y en Gobierno y Gestión Pública Territorial de la Universidad Javeriana.</p>
+      <p class="autora-p">Con más de 17 años de experiencia en el sector público, fue Secretaria de Salud de Montería, trabajó en la Defensoría del Pueblo y se desempeñó como Gestora Social de la Gobernación de Córdoba entre 2020 y 2023.</p>
+      <p class="autora-p">En marzo de 2026 fue elegida Representante a la Cámara por Córdoba con 92.925 votos, convirtiéndose en una de las voces más importantes de la región en el Congreso de Colombia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RECONOCIMIENTOS -->
+<section class="reconocimientos">
+  <div class="rec-inner reveal">
+    <div class="rec-title">Reconocimientos</div>
+    <p class="rec-sub">Un libro que ha trascendido fronteras</p>
+    <div class="rec-grid">
+      <div class="rec-card">
+        <span class="rec-ico">🏆</span>
+        <div class="rec-name">Voice Arts Awards</div>
+        <p class="rec-desc">La narradora del audiolibro, Isa Junca, fue nominada a los "Óscar de la voz" por su interpretación de esta obra. Una distinción internacional que reconoce la fuerza del relato.</p>
+      </div>
+      <div class="rec-card">
+        <span class="rec-ico">📚</span>
+        <div class="rec-name">Feria del Libro Valledupar</div>
+        <p class="rec-desc">Presentado en la Tercera Feria del Libro de Valledupar, donde Martha participó en el foro "La luz en lo profundo: sanar, resistir, vivir" conectando con el público caribeño.</p>
+      </div>
+      <div class="rec-card">
+        <span class="rec-ico">🎙️</span>
+        <div class="rec-name">Audiolibro narrado por Isa Junca</div>
+        <p class="rec-desc">La voz de Isa Junca, ganadora de dos Voice Arts Awards, da vida a esta historia con una interpretación que conecta emocionalmente con cada oyente desde la primera palabra.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FRAGMENTO -->
+<section class="fragmento">
+  <div class="frag-inner reveal">
+    <div class="sec-label" style="justify-content:center">Fragmento del libro</div>
+    <span class="frag-comilla">"</span>
+    <p class="frag-texto">Es un momento inolvidable poder escribir esta historia, esa que a mí me ha inspirado y motivado a seguir adelante. No fue fácil entregarla, porque hablar de la propia vida no lo es, pero lo hago para demostrar que somos capaces de superar montañas rusas emocionales.</p>
+    <div class="frag-autor">— Martha Ruiz Solera, Un Viaje al Fondo de mi Vida</div>
+    <div class="frag-rainbow"></div>
+  </div>
+</section>
+
+<!-- FORMULARIO NOTIFICACIÓN -->
+<section class="notificacion" id="notificacion">
+  <div class="noti-inner">
+    <h2 class="noti-title">¿Quieres el libro?</h2>
+    <p class="noti-sub">Déjanos tu información y serás el primero en saber cuándo esté disponible para compra online.</p>
+    <form class="noti-form" id="notiForm" action="https://formspree.io/f/xnjggvno" method="POST">
+    <input type="hidden" name="_subject" value="📚 Nuevo interesado en el libro — martharuizsol.com">
+      <div class="noti-row">
+        <input class="noti-input" type="text" placeholder="Tu nombre completo *" required>
+        <input class="noti-input" type="email" placeholder="Tu correo electrónico *" required>
+      </div>
+      <input class="noti-input" type="tel" placeholder="Tu WhatsApp (opcional)">
+      <button class="noti-btn" type="submit">📬 Avísame cuando esté disponible</button>
+    </form>
+    <div class="noti-ok" id="notiOk">
+      <span class="noti-ok-ico">✅</span>
+      <div class="noti-ok-txt">¡Listo! Te avisamos pronto.</div>
+      <p style="color:rgba(255,255,255,.7);font-size:.88rem;margin-top:.5rem">Recibirás un mensaje en cuanto el libro esté disponible para compra.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="f-grid">
+      <div>
+        <img src="fotos/logo.png" alt="Martha Ruiz" style="height:50px;width:auto;margin-bottom:1rem;display:block;">
+        <div class="f-rainbow-ft"></div>
+        <p class="f-tag">Representante a la Cámara por Córdoba · Período 2026–2030<br>Coalición Pr1mero Córdoba · Colombia Renaciente · #105</p>
+        <p style="font-size:.78rem;margin-top:1.2rem;opacity:.3;font-style:italic">"Cuando el corazón de Córdoba late con dignidad, coraje y propósito, somos un corazón fuerte."</p>
+      </div>
+      <div>
+        <div class="f-col-h">Navegación</div>
+        <ul class="f-lks">
+          <li><a href="martha-ruiz-solera.html#agenda">Agenda Legislativa</a></li>
+          <li><a href="martha-ruiz-solera.html#sos">S.O.S. Familias</a></li>
+          <li><a href="martha-ruiz-solera.html#perfil">Perfil y Trayectoria</a></li>
+          <li><a href="blog.html">Blog y Columnas</a></li>
+          <li><a href="martha-ruiz-solera.html#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="f-col-h">Recursos</div>
+        <ul class="f-lks">
+          <li><a href="libro.html">Libro: Un Viaje al Fondo de mi Vida</a></li>
+          <li><a href="prensa.html">Sala de Prensa</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 Martha Isabel Ruiz Solera · Representante a la Cámara por Córdoba</span>
+      <span>Hecho con 🤍 desde Montería, Córdoba</span>
+    </div>
+  </div>
+  <div class="rainbow-bar" style="margin-top:2rem"></div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e,i) => {
+      if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('visible'),i*80); obs.unobserve(e.target); }
+    });
+  },{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+    });
+  });
+</script>
+</body>
+</html>

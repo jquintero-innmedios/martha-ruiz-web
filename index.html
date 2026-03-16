@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Martha Isabel Ruiz Solera — Representante a la Cámara por Córdoba</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rojo: #cc1e2b;
+    --rojo-oscuro: #a01520;
+    --naranja: #e8631a;
+    --amarillo: #f5c518;
+    --verde-c: #2eaa4a;
+    --azul: #1a5fb4;
+    --blanco: #ffffff;
+    --gris-claro: #f4f4f4;
+    --gris-texto: #555555;
+    --negro: #111111;
+    --grad: linear-gradient(90deg,#cc1e2b 0%,#e8631a 28%,#f5c518 52%,#2eaa4a 74%,#1a5fb4 100%);
+    --grad-v: linear-gradient(180deg,#cc1e2b 0%,#e8631a 28%,#f5c518 52%,#2eaa4a 74%,#1a5fb4 100%);
+    --grad-rojo: linear-gradient(135deg,#cc1e2b 0%,#8b1018 100%);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;background:var(--blanco);color:var(--negro);overflow-x:hidden}
+
+  .rainbow-bar{height:5px;background:var(--grad);width:100%}
+  .top-banner{background:var(--rojo);color:#fff;text-align:center;padding:.55rem 2rem;font-size:.78rem;letter-spacing:.05em;font-weight:500}
+  .top-banner strong{font-weight:700}
+
+  nav{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #e8e8e8;display:flex;align-items:center;justify-content:space-between;padding:0 5rem;height:64px;box-shadow:0 2px 20px rgba(0,0,0,.06)}
+  .nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:.04em;color:var(--negro);text-decoration:none;display:flex;align-items:center;gap:.6rem}
+  .nav-logo-acc{background:var(--grad-rojo);color:#fff;padding:.15rem .7rem;font-size:1rem;letter-spacing:.06em}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--gris-texto);text-decoration:none;padding:.3rem 0;border-bottom:2px solid transparent;transition:all .2s}
+  .nav-links a:hover{color:var(--rojo);border-color:var(--rojo)}
+  .nav-cta{background:var(--rojo) !important;color:#fff !important;padding:.55rem 1.5rem !important;border:none !important;border-bottom:none !important;transition:background .2s !important}
+  .nav-cta:hover{background:var(--rojo-oscuro) !important}
+
+  /* HERO */
+  .hero{min-height:92vh;display:grid;grid-template-columns:1fr 520px;background:#fff;overflow:hidden;position:relative}
+  .hero::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--grad-v);z-index:2}
+  .hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem 5rem 7rem;position:relative;z-index:2}
+  .hero-partido{display:inline-flex;align-items:center;gap:.8rem;background:var(--gris-claro);padding:.5rem 1rem;margin-bottom:2rem;width:fit-content;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gris-texto);animation:fadeUp .7s ease both}
+  .partido-dot{width:10px;height:10px;border-radius:50%;background:var(--rojo);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.7}}
+  .hero-tag{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--rojo);margin-bottom:.8rem;animation:fadeUp .7s .05s ease both}
+  .hero-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(3.5rem,6vw,6.5rem);font-weight:900;line-height:.95;text-transform:uppercase;color:var(--negro);margin-bottom:.4rem;animation:fadeUp .7s .1s ease both}
+  .hero-name .martha{display:block;position:relative}
+  .hero-name .martha::after{content:'';position:absolute;bottom:2px;left:0;right:0;height:4px;background:var(--grad);opacity:.5}
+  .hero-name .hl{color:var(--rojo);display:block}
+  .hero-cargo{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-texto);margin-top:.8rem;}
+  .hero-subtitle{font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;color:var(--gris-texto);margin:1.2rem 0 2rem;animation:fadeUp .7s .15s ease both}
+  .hero-desc{font-size:1rem;line-height:1.8;color:var(--gris-texto);max-width:500px;margin-bottom:2.5rem;animation:fadeUp .7s .2s ease both}
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .7s .25s ease both}
+  .btn-red{background:var(--rojo);color:#fff;padding:.95rem 2.5rem;font-size:.85rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;transition:all .25s;display:inline-block;box-shadow:0 4px 20px rgba(204,30,43,.3)}
+  .btn-red:hover{background:var(--rojo-oscuro);transform:translateY(-2px)}
+  .btn-out{background:transparent;color:var(--negro);padding:.95rem 2.5rem;font-size:.85rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;text-decoration:none;border:2px solid var(--negro);cursor:pointer;transition:all .25s;display:inline-block}
+  .btn-out:hover{background:var(--negro);color:#fff}
+  .hero-stats{display:flex;gap:3rem;margin-top:3rem;padding-top:2rem;border-top:1px solid #e8e8e8;animation:fadeUp .7s .3s ease both}
+  .stat-num{font-family:'Barlow Condensed',sans-serif;font-size:2.8rem;font-weight:900;line-height:1;color:var(--rojo);display:block}
+  .stat-lbl{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--gris-texto);margin-top:.2rem}
+
+  .hero-right{position:relative;overflow:hidden;background:var(--gris-claro)}
+  .hero-right::before{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(204,30,43,.06) 0%,transparent 60%);z-index:1}
+  .hero-right::after{content:'';position:absolute;bottom:0;left:0;right:0;height:180px;background:linear-gradient(to top,rgba(255,255,255,.85) 0%,transparent 100%);z-index:2}
+  .hero-photo{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;min-height:600px}
+  .hero-badge{position:absolute;bottom:2rem;left:2rem;right:2rem;z-index:3;background:var(--rojo);color:#fff;padding:1.2rem 1.5rem;display:flex;align-items:center;gap:1rem;position:absolute}
+  .badge-num{font-family:'Barlow Condensed',sans-serif;font-size:3rem;font-weight:900;line-height:1;opacity:.35}
+  .badge-text strong{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;display:block}
+  .badge-text span{font-size:.78rem;opacity:.8}
+  .badge-rainbow{height:4px;background:var(--grad);position:absolute;bottom:0;left:0;right:0}
+
+  /* SECTIONS */
+  section{padding:6rem 0}
+  .container{max-width:1200px;margin:0 auto;padding:0 5rem}
+  .sec-label{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--rojo);display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+  .sec-label::before{content:'';width:28px;height:3px;background:var(--rojo)}
+  .sec-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:800;text-transform:uppercase;color:var(--negro);line-height:1.05;margin-bottom:1.5rem;letter-spacing:.01em}
+  .sec-title em{font-style:italic;color:var(--rojo);font-family:'Playfair Display',serif;text-transform:none;font-size:.95em}
+
+  /* AGENDA */
+  #agenda{background:#fafafa}
+  .agenda-head{display:grid;grid-template-columns:1fr 1.5fr;gap:4rem;align-items:end;margin-bottom:4rem}
+  .agenda-head-p{font-size:1rem;line-height:1.8;color:var(--gris-texto);font-family:'Playfair Display',serif;font-style:italic}
+  .agenda-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+  .ag-card{background:#fff;padding:2.5rem 2rem;border-top:4px solid transparent;transition:border-color .3s,box-shadow .3s,transform .3s}
+  .ag-card:hover{border-color:var(--rojo);box-shadow:0 20px 50px rgba(0,0,0,.08);transform:translateY(-5px)}
+  .ag-n{font-family:'Barlow Condensed',sans-serif;font-size:4rem;font-weight:900;color:var(--gris-claro);line-height:1;margin-bottom:.8rem}
+  .ag-ico{font-size:1.8rem;margin-bottom:.8rem;display:block}
+  .ag-title{font-family:'Barlow Condensed',sans-serif;font-size:1.25rem;font-weight:700;text-transform:uppercase;color:var(--negro);margin-bottom:.7rem;letter-spacing:.02em}
+  .ag-text{font-size:.88rem;line-height:1.7;color:var(--gris-texto)}
+  .ag-tag{display:inline-block;margin-top:1.2rem;font-size:.67rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--gris-claro);color:var(--gris-texto);padding:.3rem .7rem}
+
+  /* SOS */
+  #sos{background:var(--rojo);color:#fff;padding:7rem 0}
+  .sos-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:6rem;align-items:center}
+  .sos-pillars{display:flex;flex-direction:column}
+  .sos-pillar{display:grid;grid-template-columns:70px 1fr;padding:2rem 0;border-bottom:1px solid rgba(255,255,255,.12);gap:1.5rem}
+  .sos-pillar:first-of-type{border-top:1px solid rgba(255,255,255,.12)}
+  .sos-letter{font-family:'Barlow Condensed',sans-serif;font-size:4.5rem;font-weight:900;line-height:1;color:rgba(255,255,255,.2)}
+  .sos-ptitle{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;text-transform:uppercase;color:#fff;margin-bottom:.5rem;letter-spacing:.03em}
+  .sos-ptext{font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.72)}
+  .sos-panel{background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.15);padding:3rem;position:relative;overflow:hidden}
+  .sos-panel::before{content:'SOS';font-family:'Barlow Condensed',sans-serif;font-size:9rem;font-weight:900;color:rgba(255,255,255,.04);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none}
+  .sos-rainbow{height:4px;background:var(--grad);margin-bottom:2.5rem}
+  .sos-quote{font-family:'Playfair Display',serif;font-size:1.35rem;font-style:italic;line-height:1.65;color:rgba(255,255,255,.95);margin-bottom:2.5rem;position:relative;z-index:1}
+  .sos-quote::before{content:'"';font-size:3.5rem;line-height:0;vertical-align:-1.2rem;opacity:.3}
+  .sos-stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;position:relative;z-index:1}
+  .sos-stat{background:rgba(0,0,0,.2);padding:1.5rem;text-align:center}
+  .sos-sn{font-family:'Barlow Condensed',sans-serif;font-size:2.2rem;font-weight:900;color:var(--amarillo);display:block}
+  .sos-sl{font-size:.72rem;color:rgba(255,255,255,.5);letter-spacing:.05em;margin-top:.2rem}
+
+  /* PERFIL */
+  #perfil{background:#fff}
+  .perfil-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:6rem;align-items:start}
+  .tl-item{display:grid;grid-template-columns:90px 1fr;gap:1.5rem;margin-bottom:2rem}
+  .tl-year{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;color:var(--rojo);text-align:right;padding-top:.2rem;letter-spacing:.04em}
+  .tl-body{border-left:2px solid var(--gris-claro);padding-left:1.5rem;position:relative}
+  .tl-body::before{content:'';width:10px;height:10px;background:var(--rojo);border-radius:50%;position:absolute;left:-6px;top:6px}
+  .tl-role{font-weight:700;color:var(--negro);font-size:.95rem;margin-bottom:.25rem}
+  .tl-org{font-size:.82rem;color:var(--gris-texto);line-height:1.5}
+  .tl-item.hi .tl-body{border-color:var(--rojo)}
+  .tl-item.hi .tl-body::before{width:14px;height:14px;left:-8px;top:4px}
+  .tl-item.hi .tl-role{color:var(--rojo);font-size:1rem}
+  .bio-p{font-size:.97rem;line-height:1.82;color:var(--gris-texto);margin-bottom:1.2rem}
+  .bio-pull{border-left:4px solid var(--rojo);padding:1.2rem 1.8rem;background:var(--gris-claro);margin:0.5rem 0 1.2rem}
+  .bio-pull p{font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:var(--rojo-oscuro);line-height:1.6}
+  .formacion{margin-top:1.5rem;display:flex;flex-direction:column;gap:.6rem}
+  .fi{display:flex;align-items:start;gap:1rem;padding:.9rem 1rem;background:var(--gris-claro);font-size:.86rem}
+  .fi-ico{color:var(--rojo);font-size:1rem;flex-shrink:0;margin-top:.1rem}
+  .fi strong{color:var(--negro);display:block}
+  .fi span{color:var(--gris-texto);font-size:.8rem}
+
+  /* BLOG */
+  #blog{background:var(--gris-claro)}
+  .blog-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:3rem}
+  .blog-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:3px}
+  .blog-card{background:#fff;overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s}
+  .blog-card:hover{transform:translateY(-6px);box-shadow:0 30px 60px rgba(0,0,0,.1)}
+  .blog-img{height:230px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .blog-card:first-child .blog-img{height:280px}
+  .blog-img-ic{font-size:3rem;opacity:.15}
+  .blog-cat{position:absolute;top:1rem;left:1rem;color:#fff;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .8rem}
+  .blog-body{padding:1.8rem}
+  .blog-date{font-size:.72rem;color:var(--rojo);font-weight:700;letter-spacing:.05em;margin-bottom:.6rem}
+  .blog-title{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:700;text-transform:uppercase;color:var(--negro);line-height:1.25;margin-bottom:.7rem;letter-spacing:.01em}
+  .blog-card:first-child .blog-title{font-size:1.5rem}
+  .blog-exc{font-size:.85rem;color:var(--gris-texto);line-height:1.65}
+  .blog-link{display:inline-flex;align-items:center;gap:.4rem;margin-top:1.1rem;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--rojo);text-decoration:none;border-bottom:2px solid var(--rojo);padding-bottom:.1rem;transition:color .2s}
+  .blog-link:hover{color:var(--rojo-oscuro)}
+  .libro-ban{background:var(--negro);display:grid;grid-template-columns:260px 1fr;overflow:hidden;margin-top:3px}
+  .libro-izq{background:linear-gradient(160deg,#1a1a1a,#cc1e2b1a,#111);display:flex;align-items:center;justify-content:center;padding:3rem}
+  .libro-cover{width:130px;height:185px;background:var(--grad-rojo);box-shadow:-12px 12px 35px rgba(0,0,0,.6);transform:rotate(-4deg);display:flex;align-items:center;justify-content:center;padding:1.2rem;text-align:center;position:relative;overflow:hidden}
+  .libro-cover::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--grad)}
+  .libro-ct{font-family:'Playfair Display',serif;font-size:.8rem;font-weight:700;color:#fff;font-style:italic;line-height:1.4}
+  .libro-der{padding:3.5rem 4rem;color:#fff;display:flex;flex-direction:column;justify-content:center;gap:1rem}
+  .libro-tag-t{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amarillo)}
+  .libro-tit{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:800;text-transform:uppercase;line-height:1.1;letter-spacing:.02em}
+  .libro-desc{font-size:.92rem;line-height:1.75;color:rgba(255,255,255,.62)}
+  .libro-btn{display:inline-flex;align-items:center;gap:.7rem;width:fit-content;background:var(--amarillo);color:var(--negro);padding:.8rem 2rem;font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;transition:all .2s}
+  .libro-btn:hover{background:#fff}
+
+  /* CONTACTO */
+  #contacto{background:#fff}
+  .c-layout{display:grid;grid-template-columns:1fr 1.3fr;gap:6rem;align-items:start}
+  .c-info{display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem}
+  .ci{display:flex;gap:1rem;align-items:start}
+  .ci-ico{width:42px;height:42px;background:var(--rojo);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+  .ci-text strong{display:block;font-size:.78rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--negro);margin-bottom:.25rem}
+  .ci-text span{font-size:.88rem;color:var(--gris-texto)}
+  .form-box{background:var(--gris-claro);padding:2.8rem}
+  .form-rainbow{height:4px;background:var(--grad);margin:-2.8rem -2.8rem 2.5rem}
+  .form-title-h{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:800;text-transform:uppercase;color:var(--negro);margin-bottom:.4rem}
+  .form-sub{font-size:.87rem;color:var(--gris-texto);margin-bottom:2rem;line-height:1.5}
+  .f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .f-g{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
+  .f-g label{font-size:.73rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--negro)}
+  .f-g input,.f-g select,.f-g textarea{padding:.85rem 1rem;border:2px solid transparent;background:#fff;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--negro);outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none}
+  .f-g input:focus,.f-g select:focus,.f-g textarea:focus{border-color:var(--rojo)}
+  .f-g textarea{resize:vertical;min-height:120px}
+  .f-submit{width:100%;padding:1.1rem;background:var(--rojo);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .25s;margin-top:.5rem}
+  .f-submit:hover{background:var(--rojo-oscuro)}
+  .f-ok{display:none;text-align:center;padding:2rem}
+  .f-ok-ico{font-size:3rem;display:block;margin-bottom:.8rem}
+  .f-ok-txt{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;color:var(--rojo);text-transform:uppercase}
+
+  /* REDES */
+  .redes-bar{background:var(--negro);padding:2.5rem 0}
+  .redes-inner{max-width:1200px;margin:0 auto;padding:0 5rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+  .redes-lbl{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);flex-shrink:0}
+  .redes-div{width:1px;height:30px;background:rgba(255,255,255,.1)}
+  .redes-row{display:flex;gap:.8rem;flex-wrap:wrap}
+  .r-lnk{display:flex;align-items:center;gap:.6rem;padding:.6rem 1.2rem;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);text-decoration:none;font-size:.8rem;font-weight:600;letter-spacing:.04em;transition:all .2s}
+  .r-lnk:hover{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+
+  /* FOOTER */
+  footer{background:#0e0e0e;color:rgba(255,255,255,.5);padding:4rem 0 2rem}
+  .f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:4rem;margin-bottom:3rem}
+  .f-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;text-transform:uppercase;color:#fff;letter-spacing:.04em;margin-bottom:.8rem}
+  .f-logo span{color:var(--rojo)}
+  .f-rainbow-ft{height:3px;background:var(--grad);width:80px;margin:1rem 0}
+  .f-tag{font-size:.83rem;line-height:1.65}
+  .f-col-h{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);margin-bottom:1.2rem}
+  .f-lks{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+  .f-lks a{color:rgba(255,255,255,.45);text-decoration:none;font-size:.86rem;transition:color .2s}
+  .f-lks a:hover{color:var(--rojo)}
+  .f-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.76rem}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+  .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:none}
+
+  @media(max-width:960px){
+    nav{padding:0 1.5rem}
+    .nav-links{display:none}
+    .hero{grid-template-columns:1fr}
+    .hero-right{height:70vw;min-height:300px}
+    .hero-left{padding:3rem 2rem}
+    .container,.redes-inner{padding:0 1.5rem}
+    .agenda-grid{grid-template-columns:1fr 1fr}
+    .agenda-head{grid-template-columns:1fr}
+    .sos-layout,.perfil-layout,.c-layout{grid-template-columns:1fr}
+    .blog-grid{grid-template-columns:1fr}
+    .f-grid{grid-template-columns:1fr;gap:2rem}
+    .libro-ban{grid-template-columns:1fr}
+    .libro-izq{display:none}
+    .f-row{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="rainbow-bar"></div>
+<div class="top-banner">🎉 <strong>¡Elegida Representante a la Cámara por Córdoba!</strong> — Coalición Pr1mero Córdoba · Colombia Renaciente · Período 2026–2030</div>
+
+<nav>
+  <a class="nav-logo" href="#inicio"><img src="fotos/logo.png" alt="Martha Ruiz" style="height:40px;width:auto;"></a>
+  <ul class="nav-links">
+    <li><a href="#agenda">Agenda</a></li>
+    <li><a href="#sos">S.O.S. Familias</a></li>
+    <li><a href="#perfil">Perfil</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#contacto" class="nav-cta">Contáctame</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="inicio" style="padding:0">
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-partido"><div class="partido-dot"></div>PR1MERO CÓRDOBA · Colombia Renaciente</div>
+    <div class="hero-tag">Representante a la Cámara · Córdoba, Colombia</div>
+    <h1 class="hero-name"><span class="martha">Martha</span></h1>
+    <p class="hero-cargo">¡El corazón del pueblo!</p>
+    <p class="hero-subtitle">Psicóloga y escritora por vocación</p>
+    <p class="hero-desc">Más de 17 años al servicio de las familias cordobesas. Hoy llevo al Congreso la voz de las mujeres, la niñez y las comunidades vulnerables de Córdoba.</p>
+    <div class="hero-actions">
+      <a href="#agenda" class="btn-red">Ver Agenda Legislativa</a>
+      <a href="#contacto" class="btn-out">Habla con Martha</a>
+    </div>
+    <div class="hero-stats">
+      <div><span class="stat-num">1</span><span class="stat-lbl">Libro publicado · Un Viaje al Fondo de mi Vida</span></div>
+      <div><span class="stat-num">101.053</span><span class="stat-lbl">Corazones que creyeron</span></div>
+      <div><span class="stat-num">17+</span><span class="stat-lbl">Años liderando programas sociales</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img class="hero-photo" src="fotos/martha2.JPG" alt="Martha Isabel Ruiz Solera">
+    <div class="hero-badge">
+      <div class="badge-num">105</div>
+      <div class="badge-text">
+        <strong>PR1MERO CÓRDOBA</strong>
+        <span>Cámara de Representantes · Período 2026–2030</span>
+      </div>
+      <div class="badge-rainbow"></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda">
+  <div class="container">
+    <div class="agenda-head reveal">
+      <div>
+        <div class="sec-label">Mi Trabajo Legislativo</div>
+        <h2 class="sec-title">Agenda en la <em>Cámara</em></h2>
+      </div>
+      <p class="agenda-head-p">Llego al Congreso no con promesas vacías, sino con una hoja de ruta construida desde el territorio, escuchando a comunidades que merecen leyes que realmente funcionen.</p>
+    </div>
+    <div class="agenda-grid">
+      <div class="ag-card reveal"><div class="ag-n">01</div><span class="ag-ico">🏥</span><div class="ag-title">Salud Digna para Córdoba</div><p class="ag-text">Acceso real, humano y oportuno a la salud. Reforma al sistema de salud mental, atención primaria en zonas rurales y reducción de barreras burocráticas para los más vulnerables.</p><span class="ag-tag">Prioridad máxima</span></div>
+      <div class="ag-card reveal"><div class="ag-n">02</div><span class="ag-ico">👩‍👧</span><div class="ag-title">Protección a Mujeres y Familias</div><p class="ag-text">Fortalecer la legislación contra la violencia intrafamiliar. Ampliar la red de Casas Refugio en toda la Costa Caribe. Garantizar derechos reales para madres cabeza de hogar.</p><span class="ag-tag">Agenda central</span></div>
+      <div class="ag-card reveal"><div class="ag-n">03</div><span class="ag-ico">📚</span><div class="ag-title">Educación con Equidad</div><p class="ag-text">Defender la educación pública en regiones apartadas. Reducir la deserción escolar juvenil y garantizar sostenibilidad de sedes universitarias en municipios de Córdoba.</p><span class="ag-tag">Compromiso regional</span></div>
+      <div class="ag-card reveal"><div class="ag-n">04</div><span class="ag-ico">🌾</span><div class="ag-title">Oportunidades Rurales</div><p class="ag-text">Cerrar la brecha entre campo y ciudad. Trabajo digno, vías terciarias, acceso a agua potable y energía para las comunidades campesinas e indígenas de los 30 municipios.</p><span class="ag-tag">Agenda territorial</span></div>
+      <div class="ag-card reveal"><div class="ag-n">05</div><span class="ag-ico">🧒</span><div class="ag-title">Primera Infancia</div><p class="ag-text">Garantizar desde el Congreso los derechos de niños, niñas y adolescentes. Nutrición, salud infantil y prevención del trabajo infantil como causas irrenunciables.</p><span class="ag-tag">Causa de vida</span></div>
+      <div class="ag-card reveal"><div class="ag-n">06</div><span class="ag-ico">🤝</span><div class="ag-title">Comunidades Étnicas</div><p class="ag-text">Representar a comunidades afrodescendientes e indígenas de Córdoba. Defender sus derechos territoriales, identidad cultural y acceso real a los servicios del Estado.</p><span class="ag-tag">Representación diversa</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOS -->
+<section id="sos">
+  <div class="container">
+    <div class="sos-layout">
+      <div class="reveal">
+        <div class="sec-label" style="color:rgba(255,255,255,.5)"><span style="background:rgba(255,255,255,.4);width:28px;height:3px;display:inline-block;flex-shrink:0"></span>Propuesta Central</div>
+        <h2 class="sec-title" style="color:#fff">S.O.S. <em style="color:rgba(255,255,255,.65)">Familias</em></h2>
+        <p style="color:rgba(255,255,255,.62);margin-bottom:2.5rem;line-height:1.8;font-size:.95rem">Una reforma integral que ataca desde tres frentes las desigualdades que mantienen atrapadas a miles de familias cordobesas.</p>
+        <div class="sos-pillars">
+          <div class="sos-pillar"><div class="sos-letter">S</div><div><div class="sos-ptitle">Salud</div><p class="sos-ptext">Sistema reformado con atención en salud mental, reducción de listas de espera y presencia real en los municipios más apartados del departamento.</p></div></div>
+          <div class="sos-pillar"><div class="sos-letter">O</div><div><div class="sos-ptitle">Oportunidades</div><p class="sos-ptext">Empleo digno, apoyo al emprendimiento informal, reducción de la deserción escolar y fortalecimiento de la economía rural en Córdoba.</p></div></div>
+          <div class="sos-pillar"><div class="sos-letter">S</div><div><div class="sos-ptitle">Seguridad</div><p class="sos-ptext">Agua potable, energía, vías, protección contra la violencia. Seguridad no es solo ausencia de violencia — es presencia real del Estado.</p></div></div>
+        </div>
+      </div>
+      <div class="sos-panel reveal">
+        <div class="sos-rainbow"></div>
+        <p class="sos-quote">Colombia necesita congresistas con vocación de servicio público, que trabajen por amor con el pueblo y hagan que las leyes funcionen.</p>
+        <div class="sos-stats">
+          <div class="sos-stat"><span class="sos-sn">25,7%</span><span class="sos-sl">de Córdoba en pobreza multidimensional · DANE 2024</span></div>
+          <div class="sos-stat"><span class="sos-sn">720</span><span class="sos-sl">feminicidios en Colombia en 2024 · el año más violento en una década</span></div>
+          <div class="sos-stat"><span class="sos-sn">39%</span><span class="sos-sl">de municipios rurales sin agua potable suficiente · ISR 2024</span></div>
+          <div class="sos-stat"><span class="sos-sn">+2,2M</span><span class="sos-sl">colombianos con barreras de acceso a salud en 2024 · DANE</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERFIL -->
+<section id="perfil">
+  <div class="container">
+    <div class="perfil-layout">
+      <div class="reveal">
+        <div class="sec-label">Trayectoria</div>
+        <h2 class="sec-title">Una vida al <em>servicio</em></h2>
+        <p style="color:var(--gris-texto);margin-bottom:2.5rem;line-height:1.8;font-size:.95rem">17+ años de trabajo sostenido, desde el sector social de base hasta la gestión departamental y ahora la legislación nacional.</p>
+        <div class="tl-item hi"><div class="tl-year">2026</div><div class="tl-body"><div class="tl-role">✦ Representante a la Cámara por Córdoba</div><div class="tl-org">Coalición Pr1mero Córdoba · Colombia Renaciente · 92.925 votos</div></div></div>
+        <div class="tl-item"><div class="tl-year">2020–23</div><div class="tl-body"><div class="tl-role">Gestora Social — Gobernación de Córdoba</div><div class="tl-org">Seguridad alimentaria · Primera Casa Refugio de la Costa Caribe · Primera infancia y mujeres</div></div></div>
+        <div class="tl-item"><div class="tl-year">2015-2019</div><div class="tl-body"><div class="tl-role">Jefatura Bienestar Universitario</div><div class="tl-org">Universidad de Córdoba</div></div></div>
+        <div class="tl-item"><div class="tl-year">2015</div><div class="tl-body"><div class="tl-role">Secretaria de Salud Municipal</div><div class="tl-org">Alcaldía de Montería · Salud pública, discapacidad y adulto mayor</div></div></div>
+        <div class="tl-item"><div class="tl-year">Anterior</div><div class="tl-body"><div class="tl-role">Dupla de Género — Defensoría del Pueblo</div><div class="tl-org">Defensa de derechos de las mujeres cordobesas</div></div></div>
+        <div class="tl-item"><div class="tl-year">Inicio</div><div class="tl-body"><div class="tl-role">Practicante — ICBF</div><div class="tl-org">Niñez y familias vulnerables de Córdoba</div></div></div>
+      </div>
+      <div class="reveal">
+        <p class="bio-p">Martha Isabel Ruiz Solera nació y creció en Montería, Córdoba. A los 8 años la violencia del conflicto armado colombiano le arrebató a su padre. Fue su madre, sola, quien la llevó a convertirse en profesional y en la mujer que es hoy.</p>
+        <div class="bio-pull"><p>"Mi esencia es servir, y esa esencia se refleja en cada decisión que he tomado a lo largo de mi vida."</p></div>
+        <p class="bio-p">Es psicóloga de formación, especialista en salud y en gestión pública territorial. Pero más que sus títulos, lo que la define es haber recorrido durante casi dos décadas barrios, veredas, resguardos indígenas y municipios apartados de Córdoba, escuchando a las familias que el Estado ignora.</p>
+        <p class="bio-p">También es escritora. Su libro autobiográfico <strong>"Un Viaje al Fondo de mi Vida"</strong> (2025) fue nominado en los Voice Arts Awards internacionales y la llevó a ferias del libro en toda la región Caribe.</p>
+        <div class="formacion">
+          <div class="fi"><div class="fi-ico">🎓</div><div><strong>Psicología</strong><span>Universidad del Sinú — Montería</span></div></div>
+          <div class="fi"><div class="fi-ico">🎓</div><div><strong>Especialización en Gerencia Administrativa de Salud</strong><span>Universidad de Córdoba</span></div></div>
+          <div class="fi"><div class="fi-ico">🎓</div><div><strong>Especialización en Gobierno y Gestión Pública Territorial</strong><span>Universidad Javeriana — Bogotá</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="container">
+    <div class="blog-head reveal">
+      <div><div class="sec-label">Columnas & Reflexiones</div><h2 class="sec-title">Martha <em>escribe</em></h2></div>
+      <a href="#" class="btn-out">Ver todos los artículos</a>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card reveal">
+        <div class="blog-img" style="background:linear-gradient(135deg,#a01520,#cc1e2b)"><div class="blog-img-ic">🏛️</div><span class="blog-cat" style="background:var(--rojo)">Columna Legislativa</span></div>
+        <div class="blog-body"><div class="blog-date">Marzo 2026</div><h3 class="blog-title">Lo que Córdoba le pide al Congreso: una carta desde el territorio</h3><p class="blog-exc">Después de años recorriendo barrios, veredas y municipios, llegué a la Cámara con una maleta llena de historias, no de promesas. Este es mi compromiso con los cordobeses que creyeron en mí…</p><a href="#" class="blog-link">Leer columna →</a></div>
+      </div>
+      <div class="blog-card reveal">
+        <div class="blog-img" style="background:linear-gradient(135deg,#b54d0a,#e8631a)"><div class="blog-img-ic">👩</div><span class="blog-cat" style="background:var(--naranja)">Mujer & Política</span></div>
+        <div class="blog-body"><div class="blog-date">Febrero 2026</div><h3 class="blog-title">Ser mujer en la política cordobesa. Lo hago desde el corazón</h3><p class="blog-exc">La política en el Caribe colombiano ha sido históricamente un espacio de hombres. Decidí entrar no para imitar ese modelo, sino para transformarlo…</p><a href="#" class="blog-link">Leer columna →</a></div>
+      </div>
+      <div class="blog-card reveal">
+        <div class="blog-img" style="background:linear-gradient(135deg,#1040a0,#1a5fb4)"><div class="blog-img-ic">📖</div><span class="blog-cat" style="background:var(--azul)">Reflexión Personal</span></div>
+        <div class="blog-body"><div class="blog-date">Enero 2026</div><h3 class="blog-title">Mi padre, la violencia y por qué hago política desde el amor</h3><p class="blog-exc">A los 8 años la vida me quitó a mi padre. Ese dolor pudo haberme roto. En cambio, se convirtió en el motor que me trajo hasta aquí…</p><a href="#" class="blog-link">Leer columna →</a></div>
+      </div>
+    </div>
+    <div class="libro-ban reveal">
+  <div class="libro-izq">
+    <img src="fotos/portada.png" alt="Un Viaje al Fondo de mi Vida" style="width:150px;transform:rotate(-4deg);box-shadow:-12px 12px 35px rgba(0,0,0,.6);">
+  </div>
+  <div class="libro-der">
+    <span class="libro-tag-t">📚 Libro Autobiográfico · 2025 · Nominado a los Voice Arts Awards</span>
+    <h3 class="libro-tit">Un Viaje al Fondo<br>de mi Vida</h3>
+    <p class="libro-desc">Una obra que trasciende lo autobiográfico para convertirse en una herramienta de sanación colectiva. Desde la pérdida, el conflicto armado y la resiliencia, Martha narra su historia con una honestidad que conmueve e inspira.</p>
+    <a href="libro.html" class="libro-btn">📖 Conocer el libro</a>
+  </div>
+</div>
+  </div>
+</section>
+
+<!-- REDES -->
+<div style="background:var(--gris-claro);padding:3rem 0;border-top:3px solid transparent;border-image:var(--grad) 1;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 5rem;text-align:center;">
+    <div style="font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gris-texto);margin-bottom:1.5rem;">Sígueme en redes sociales</div>
+    <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
+      <a href="https://www.facebook.com/martharuizsol" target="_blank" style="display:flex;align-items:center;gap:.7rem;padding:.9rem 2rem;background:#fff;border:2px solid #e0e0e0;color:#1877f2;text-decoration:none;font-size:.85rem;font-weight:700;letter-spacing:.04em;transition:all .2s;" onmouseover="this.style.background='#1877f2';this.style.color='#fff';this.style.borderColor='#1877f2'" onmouseout="this.style.background='#fff';this.style.color='#1877f2';this.style.borderColor='#e0e0e0'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook
+      </a>
+      <a href="https://www.instagram.com/martharuizsol" target="_blank" style="display:flex;align-items:center;gap:.7rem;padding:.9rem 2rem;background:#fff;border:2px solid #e0e0e0;color:#e1306c;text-decoration:none;font-size:.85rem;font-weight:700;letter-spacing:.04em;transition:all .2s;" onmouseover="this.style.background='#e1306c';this.style.color='#fff';this.style.borderColor='#e1306c'" onmouseout="this.style.background='#fff';this.style.color='#e1306c';this.style.borderColor='#e0e0e0'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Instagram
+      </a>
+      <a href="https://www.x.com/martharuizsol" target="_blank" style="display:flex;align-items:center;gap:.7rem;padding:.9rem 2rem;background:#fff;border:2px solid #e0e0e0;color:#000;text-decoration:none;font-size:.85rem;font-weight:700;letter-spacing:.04em;transition:all .2s;" onmouseover="this.style.background='#000';this.style.color='#fff';this.style.borderColor='#000'" onmouseout="this.style.background='#fff';this.style.color='#000';this.style.borderColor='#e0e0e0'">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X / Twitter
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <div class="c-layout">
+      <div class="reveal">
+        <div class="sec-label">Contacto Directo</div>
+        <h2 class="sec-title">Habla con <em>Martha</em></h2>
+        <p style="color:var(--gris-texto);line-height:1.8;font-size:.95rem;margin-bottom:.5rem">Mi despacho legislativo está al servicio de los cordobeses. Si tienes una propuesta, un problema comunitario o simplemente quieres hacerte escuchar, este es el espacio.</p>
+        <div class="c-info"></div>
+      </div>
+      <div class="form-box reveal">
+        <div class="form-rainbow"></div>
+        <h3 class="form-title-h">Envíame un mensaje</h3>
+        <p class="form-sub">Cada mensaje es leído. Si tu situación requiere atención urgente, indícalo en el tema.</p>
+        <form id="cf" action="https://formspree.io/f/xykndlpr" method="POST">
+          <div class="f-row">
+            <div class="f-g"><label>Nombre *</label><input type="text" placeholder="Tu nombre completo" required></div>
+            <div class="f-g"><label>Municipio *</label><input type="text" placeholder="¿De qué municipio eres?" required></div>
+          </div>
+          <div class="f-row">
+            <div class="f-g"><label>Correo electrónico</label><input type="email" placeholder="tu@correo.com"></div>
+            <div class="f-g"><label>Teléfono / WhatsApp</label><input type="tel" placeholder="3XX XXX XXXX"></div>
+          </div>
+          <div class="f-g"><label>Tema *</label>
+            <select required><option value="">Selecciona un tema...</option><option>Salud y sistema de salud</option><option>Educación pública</option><option>Violencia contra la mujer</option><option>Necesidades comunitarias rurales</option><option>Propuesta legislativa</option><option>Invitación a evento</option><option>Solicitud de gestión</option><option>Otro tema</option></select>
+          </div>
+          <div class="f-g"><label>Tu mensaje *</label><textarea placeholder="Cuéntame tu situación, propuesta o comentario..." required></textarea></div>
+          <button type="submit" class="f-submit">Enviar mensaje →</button>
+        </form>
+        <div class="f-ok" id="fok">
+          <span class="f-ok-ico">✅</span>
+          <div class="f-ok-txt">¡Gracias por escribirme!</div>
+          <p style="font-size:.88rem;color:var(--gris-texto);margin-top:.5rem">Tu mensaje fue recibido y será leído con atención.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#1a1a1a;color:rgba(255,255,255,.5);padding:4rem 0 2rem">
+  <div class="container">
+    <div class="f-grid">
+      <div>
+        <img src="fotos/logo.png" alt="Martha Ruiz" style="height:50px;width:auto;margin-bottom:1rem;display:block;">
+        <div class="f-rainbow-ft"></div>
+        <p class="f-tag">Representante a la Cámara por Córdoba · Período 2026–2030<br>Coalición Pr1mero Córdoba · Colombia Renaciente · #105</p>
+        <p style="font-size:.78rem;margin-top:1.2rem;opacity:.3;font-style:italic">"Cuando el corazón de Córdoba late con dignidad, coraje y propósito, somos un corazón fuerte."</p>
+      </div>
+      <div>
+        <div class="f-col-h">Navegación</div>
+        <ul class="f-lks">
+          <li><a href="#agenda">Agenda Legislativa</a></li>
+          <li><a href="#sos">S.O.S. Familias</a></li>
+          <li><a href="#perfil">Perfil y Trayectoria</a></li>
+          <li><a href="blog.html">Blog y Columnas</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="f-col-h">Recursos</div>
+        <ul class="f-lks">
+          <li><a href="libro.html">Libro: Un Viaje al Fondo de mi Vida</a></li>
+          <li><a href="prensa.html">Sala de Prensa</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 Martha Isabel Ruiz Solera · Representante a la Cámara por Córdoba</span>
+      <span>Hecho con 🤍 desde Montería, Córdoba</span>
+    </div>
+  </div>
+  <div class="rainbow-bar" style="margin-top:2rem"></div>
+</footer>
+
+<script>
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*70);obs.unobserve(e.target)}});
+  },{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}});
+  });
+</script>
+</body>
+</html>

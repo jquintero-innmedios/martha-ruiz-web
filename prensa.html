@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sala de Prensa — Martha Ruiz · Representante por Córdoba</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rojo:#cc1e2b;--rojo-oscuro:#a01520;--naranja:#e8631a;--amarillo:#f5c518;
+    --verde-c:#2eaa4a;--azul:#1a5fb4;--blanco:#fff;--gris-claro:#f4f4f4;
+    --gris-texto:#555;--negro:#111;
+    --grad:linear-gradient(90deg,#cc1e2b 0%,#e8631a 28%,#f5c518 52%,#2eaa4a 74%,#1a5fb4 100%);
+    --grad-rojo:linear-gradient(135deg,#cc1e2b 0%,#8b1018 100%);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'DM Sans',sans-serif;background:var(--blanco);color:var(--negro);overflow-x:hidden}
+  .rainbow-bar{height:5px;background:var(--grad);width:100%}
+  .container{max-width:1200px;margin:0 auto;padding:0 5rem}
+
+  nav{background:#fff;border-bottom:1px solid #e8e8e8;display:flex;align-items:center;justify-content:space-between;padding:0 5rem;height:64px;box-shadow:0 2px 20px rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+  .nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:.04em;color:var(--negro);text-decoration:none;display:flex;align-items:center;gap:.6rem}
+  .nav-logo img{height:40px;width:auto}
+  .nav-links{display:flex;gap:2rem;list-style:none}
+  .nav-links a{font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--gris-texto);text-decoration:none;padding:.3rem 0;border-bottom:2px solid transparent;transition:all .2s}
+  .nav-links a:hover,.nav-links a.active{color:var(--rojo);border-color:var(--rojo)}
+  .nav-cta{background:var(--rojo)!important;color:#fff!important;padding:.55rem 1.5rem!important;border:none!important;border-bottom:none!important}
+
+  /* HERO */
+  .hero{background:#3d2314;padding:5rem 0 4rem;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(204,30,43,.15) 0%,transparent 60%)}
+  .hero-inner{position:relative;z-index:1}
+  .hero-tag{font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+  .hero-tag::before{content:'';width:28px;height:3px;background:var(--rojo)}
+  .hero-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:900;text-transform:uppercase;color:#fff;line-height:.95;margin-bottom:1rem}
+  .hero-title span{color:var(--rojo)}
+  .hero-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:rgba(255,255,255,.55);max-width:500px}
+  .hero-rainbow{height:3px;background:var(--grad);width:80px;margin-top:2rem}
+
+  /* TABS */
+  .tabs{background:#fff;border-bottom:2px solid var(--gris-claro);position:sticky;top:64px;z-index:50}
+  .tabs-inner{display:flex;max-width:1200px;margin:0 auto;padding:0 5rem}
+  .tab-btn{padding:1.2rem 2rem;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-texto);background:transparent;border:none;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;display:flex;align-items:center;gap:.6rem}
+  .tab-btn:hover,.tab-btn.active{color:var(--rojo);border-color:var(--rojo)}
+  .tab-count{background:var(--gris-claro);color:var(--gris-texto);padding:.1rem .5rem;font-size:.7rem;border-radius:10px}
+  .tab-btn.active .tab-count{background:var(--rojo);color:#fff}
+
+  /* CONTENIDO */
+  .content{padding:4rem 0}
+
+  /* BOLETINES */
+  .boletines-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+  .boletin-card{background:#fff;border:1px solid #f0f0f0;overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s}
+  .boletin-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.1)}
+  .boletin-img{height:200px;background:var(--rojo);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .boletin-img img{width:100%;height:100%;object-fit:cover}
+  .boletin-img-placeholder{font-size:3rem;opacity:.15}
+  .boletin-cat{position:absolute;top:1rem;left:1rem;background:var(--rojo);color:#fff;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .8rem}
+  .boletin-body{padding:1.8rem}
+  .boletin-fecha{font-size:.72rem;color:var(--rojo);font-weight:700;letter-spacing:.05em;margin-bottom:.6rem}
+  .boletin-title{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;text-transform:uppercase;color:var(--negro);line-height:1.2;margin-bottom:.7rem}
+  .boletin-excerpt{font-size:.85rem;color:var(--gris-texto);line-height:1.65}
+  .boletin-link{display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--rojo);text-decoration:none;border-bottom:2px solid var(--rojo);padding-bottom:.1rem}
+
+  /* MEDIOS */
+  .medios-grid{display:flex;flex-direction:column;gap:3px}
+  .medio-card{background:#fff;border:1px solid #f0f0f0;padding:1.8rem 2rem;display:grid;grid-template-columns:120px 1fr auto;align-items:center;gap:2rem;transition:background .2s,box-shadow .2s;cursor:pointer;text-decoration:none;color:inherit}
+  .medio-card:hover{background:var(--gris-claro);box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .medio-logo{background:var(--gris-claro);height:60px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--gris-texto);text-align:center;padding:.5rem}
+  .medio-info{}
+  .medio-nombre{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rojo);margin-bottom:.4rem}
+  .medio-titular{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:800;text-transform:uppercase;color:var(--negro);line-height:1.2;margin-bottom:.3rem}
+  .medio-fecha{font-size:.75rem;color:var(--gris-texto)}
+  .medio-arrow{font-size:1.5rem;color:var(--gris-claro);transition:color .2s}
+  .medio-card:hover .medio-arrow{color:var(--rojo)}
+
+  /* LOADING / EMPTY */
+  .loading{text-align:center;padding:4rem;color:var(--gris-texto)}
+  .spinner{width:40px;height:40px;border:3px solid var(--gris-claro);border-top-color:var(--rojo);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .empty{text-align:center;padding:4rem;color:var(--gris-texto)}
+  .empty-icon{font-size:3rem;margin-bottom:1rem}
+
+  /* MODAL BOLETIN */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:none;align-items:start;justify-content:center;padding:2rem;overflow-y:auto}
+  .modal-overlay.show{display:flex}
+  .modal-box{background:#fff;max-width:700px;width:100%;margin:auto;position:relative}
+  .modal-img{height:300px;background:var(--rojo);display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .modal-img img{width:100%;height:100%;object-fit:cover}
+  .modal-img-ph{font-size:4rem;opacity:.15}
+  .modal-body{padding:2.5rem}
+  .modal-cat{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rojo);margin-bottom:.8rem}
+  .modal-title{font-family:'Barlow Condensed',sans-serif;font-size:2rem;font-weight:900;text-transform:uppercase;color:var(--negro);line-height:1.1;margin-bottom:1rem}
+  .modal-fecha{font-size:.78rem;color:var(--gris-texto);margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--gris-claro)}
+  .modal-content{font-size:.95rem;line-height:1.85;color:#333}
+  .modal-content p{margin-bottom:1rem}
+  .modal-close{position:absolute;top:1rem;right:1rem;width:36px;height:36px;background:rgba(0,0,0,.5);color:#fff;border:none;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .modal-close:hover{background:var(--rojo)}
+
+  /* FOOTER */
+  footer{background:#ffffff;color:#555;padding:4rem 0 2rem;border-top:4px solid var(--rojo)}
+  .f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:4rem;margin-bottom:3rem}
+  .f-rainbow-ft{height:3px;background:var(--grad);width:80px;margin:1rem 0}
+  .f-tag{font-size:.83rem;line-height:1.65;color:#555}
+  .f-col-h{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);margin-bottom:1.2rem}
+  .f-lks{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+  .f-lks a{color:#777;text-decoration:none;font-size:.86rem;transition:color .2s}
+  .f-lks a:hover{color:var(--rojo)}
+  .f-bottom{border-top:1px solid #e8e8e8;padding-top:1.8rem;display:flex;justify-content:space-between;font-size:.76rem;color:#999}
+  @media(max-width:900px){
+    nav{padding:0 1.5rem}.nav-links{display:none}
+    .container,.tabs-inner{padding:0 1.5rem}
+    .boletines-grid{grid-template-columns:1fr}
+    .medio-card{grid-template-columns:1fr;gap:1rem}
+    .medio-logo{display:none}
+    .f-grid{grid-template-columns:1fr;gap:2rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="rainbow-bar"></div>
+
+<nav>
+  <a class="nav-logo" href="martha-ruiz-solera.html">
+    <img src="logo.png" alt="Martha Ruiz">
+  </a>
+  <ul class="nav-links">
+    <li><a href="martha-ruiz-solera.html#agenda">Agenda</a></li>
+    <li><a href="martha-ruiz-solera.html#sos">S.O.S. Familias</a></li>
+    <li><a href="martha-ruiz-solera.html#perfil">Perfil</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="prensa.html" class="active">Prensa</a></li>
+    <li><a href="martha-ruiz-solera.html#contacto" class="nav-cta">Contáctame</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="container hero-inner">
+    <div class="hero-tag">Comunicaciones oficiales</div>
+    <h1 class="hero-title">Sala de <span>Prensa</span></h1>
+    <p class="hero-sub">Boletines oficiales, declaraciones y cobertura mediática de Martha Ruiz — Representante a la Cámara por Córdoba.</p>
+    <div class="hero-rainbow"></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="mostrarTab('boletines',this)">
+      📋 Boletines de Prensa <span class="tab-count" id="cnt-boletines">0</span>
+    </button>
+    <button class="tab-btn" onclick="mostrarTab('medios',this)">
+      📰 En los Medios <span class="tab-count" id="cnt-medios">0</span>
+    </button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="container">
+    <div id="sec-boletines">
+      <div id="boletines-grid" class="boletines-grid">
+        <div class="loading"><div class="spinner"></div>Cargando boletines...</div>
+      </div>
+    </div>
+    <div id="sec-medios" style="display:none">
+      <div id="medios-list" class="medios-grid">
+        <div class="loading"><div class="spinner"></div>Cargando noticias...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL BOLETIN -->
+<div class="modal-overlay" id="modalBoletin">
+  <div class="modal-box">
+    <button class="modal-close" onclick="cerrarModal()">✕</button>
+    <div class="modal-img" id="modal-img"><div class="modal-img-ph">📋</div></div>
+    <div class="modal-body">
+      <div class="modal-cat" id="modal-cat"></div>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <div class="modal-fecha" id="modal-fecha"></div>
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="f-grid">
+      <div>
+        <img src="logo.png" alt="Martha Ruiz" style="height:50px;width:auto;margin-bottom:1rem;display:block;">
+        <div class="f-rainbow-ft"></div>
+        <p class="f-tag">Representante a la Cámara por Córdoba · Período 2026–2030<br>Coalición Pr1mero Córdoba · Colombia Renaciente · #105</p>
+        <p style="font-size:.78rem;margin-top:1.2rem;opacity:.5;font-style:italic;color:#555">"Cuando el corazón de Córdoba late con dignidad, coraje y propósito, somos un corazón fuerte."</p>
+      </div>
+      <div>
+        <div class="f-col-h">Navegación</div>
+        <ul class="f-lks">
+          <li><a href="martha-ruiz-solera.html#agenda">Agenda Legislativa</a></li>
+          <li><a href="martha-ruiz-solera.html#sos">S.O.S. Familias</a></li>
+          <li><a href="martha-ruiz-solera.html#perfil">Perfil y Trayectoria</a></li>
+          <li><a href="blog.html">Blog y Columnas</a></li>
+          <li><a href="martha-ruiz-solera.html#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="f-col-h">Recursos</div>
+        <ul class="f-lks">
+          <li><a href="libro.html">Libro: Un Viaje al Fondo de mi Vida</a></li>
+          <li><a href="prensa.html">Sala de Prensa</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 Martha Isabel Ruiz Solera · Representante a la Cámara por Córdoba</span>
+      <span>Hecho con 🤍 desde Montería, Córdoba</span>
+    </div>
+  </div>
+  <div class="rainbow-bar" style="margin-top:2rem"></div>
+</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC-FZcABicW9VkgCcJtIlMaOX1KdDHWO-k",
+    authDomain: "martha-ruiz-blog.firebaseapp.com",
+    projectId: "martha-ruiz-blog",
+    storageBucket: "martha-ruiz-blog.firebasestorage.app",
+    messagingSenderId: "572271986147",
+    appId: "1:572271986147:web:e4e958abd9c8aefd678cd6"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  let boletines = [];
+  let medios = [];
+
+  async function cargar() {
+    try {
+      // Boletines
+      const qb = query(collection(db,"boletines"), orderBy("fecha","desc"));
+      const sb = await getDocs(qb);
+      boletines = sb.docs.map(d=>({id:d.id,...d.data()}));
+      renderBoletines();
+      document.getElementById('cnt-boletines').textContent = boletines.length;
+    } catch(e) {
+      document.getElementById('boletines-grid').innerHTML = '<div class="empty"><div class="empty-icon">📋</div><p>No hay boletines publicados aún.</p></div>';
+    }
+    try {
+      // Medios
+      const qm = query(collection(db,"medios"), orderBy("fecha","desc"));
+      const sm = await getDocs(qm);
+      medios = sm.docs.map(d=>({id:d.id,...d.data()}));
+      renderMedios();
+      document.getElementById('cnt-medios').textContent = medios.length;
+    } catch(e) {
+      document.getElementById('medios-list').innerHTML = '<div class="empty"><div class="empty-icon">📰</div><p>No hay noticias de medios aún.</p></div>';
+    }
+  }
+
+  function renderBoletines() {
+    if(boletines.length===0){
+      document.getElementById('boletines-grid').innerHTML='<div class="empty"><div class="empty-icon">📋</div><p>No hay boletines publicados aún.</p></div>';
+      return;
+    }
+    document.getElementById('boletines-grid').innerHTML = boletines.map(b=>{
+      const fecha = b.fecha?.toDate ? b.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'}) : '';
+      return `<div class="boletin-card" onclick="abrirBoletin('${b.id}')">
+        <div class="boletin-img" style="background:linear-gradient(135deg,#cc1e2b,#8b1018)">
+          ${b.imagen ? `<img src="${b.imagen}" alt="${b.titulo}">` : '<div class="boletin-img-placeholder">📋</div>'}
+          <span class="boletin-cat">Boletín Oficial</span>
+        </div>
+        <div class="boletin-body">
+          <div class="boletin-fecha">${fecha}</div>
+          <h3 class="boletin-title">${b.titulo}</h3>
+          <p class="boletin-excerpt">${b.resumen}</p>
+          <span class="boletin-link">Leer boletín →</span>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderMedios() {
+    if(medios.length===0){
+      document.getElementById('medios-list').innerHTML='<div class="empty"><div class="empty-icon">📰</div><p>No hay noticias de medios aún.</p></div>';
+      return;
+    }
+    document.getElementById('medios-list').innerHTML = medios.map(m=>{
+      const fecha = m.fecha?.toDate ? m.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'}) : '';
+      return `<a class="medio-card" href="${m.link}" target="_blank">
+        <div class="medio-logo">${m.medio}</div>
+        <div class="medio-info">
+          <div class="medio-nombre">${m.medio}</div>
+          <div class="medio-titular">${m.titular}</div>
+          <div class="medio-fecha">${fecha}</div>
+        </div>
+        <div class="medio-arrow">→</div>
+      </a>`;
+    }).join('');
+  }
+
+  window.abrirBoletin = function(id) {
+    const b = boletines.find(x=>x.id===id);
+    if(!b) return;
+    const fecha = b.fecha?.toDate ? b.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'}) : '';
+    document.getElementById('modal-cat').textContent = 'Boletín Oficial · Despacho Martha Ruiz';
+    document.getElementById('modal-title').textContent = b.titulo;
+    document.getElementById('modal-fecha').textContent = `📅 ${fecha}`;
+    document.getElementById('modal-content').innerHTML = b.contenido;
+    if(b.imagen){
+      document.getElementById('modal-img').innerHTML = `<img src="${b.imagen}" alt="${b.titulo}">`;
+    }
+    document.getElementById('modalBoletin').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.cerrarModal = function() {
+    document.getElementById('modalBoletin').classList.remove('show');
+    document.body.style.overflow = '';
+  };
+
+  window.mostrarTab = function(tab, btn) {
+    document.getElementById('sec-boletines').style.display = tab==='boletines' ? 'block' : 'none';
+    document.getElementById('sec-medios').style.display = tab==='medios' ? 'block' : 'none';
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  };
+
+  // Cerrar modal al click fuera
+  document.getElementById('modalBoletin').addEventListener('click', function(e){
+    if(e.target===this) cerrarModal();
+  });
+
+  cargar();
+</script>
+</body>
+</html>

@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Blog Martha Ruiz</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rojo:#cc1e2b;--rojo-oscuro:#a01520;--blanco:#fff;--gris-claro:#f4f4f4;
+    --gris-texto:#555;--negro:#111;
+    --grad:linear-gradient(90deg,#cc1e2b 0%,#e8631a 28%,#f5c518 52%,#2eaa4a 74%,#1a5fb4 100%);
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:var(--negro);min-height:100vh}
+
+  /* LOGIN */
+  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--negro);position:relative;overflow:hidden}
+  .login-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(204,30,43,.2) 0%,transparent 70%)}
+  .login-box{background:#fff;padding:3rem;width:100%;max-width:420px;position:relative;z-index:1}
+  .login-rainbow{height:4px;background:var(--grad);margin-bottom:2rem}
+  .login-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;text-transform:uppercase;color:var(--negro);margin-bottom:.3rem}
+  .login-logo span{color:var(--rojo)}
+  .login-sub{font-size:.85rem;color:var(--gris-texto);margin-bottom:2rem}
+  .login-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+  .login-group label{font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--negro)}
+  .login-group input{padding:.9rem 1rem;border:2px solid transparent;background:var(--gris-claro);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s}
+  .login-group input:focus{border-color:var(--rojo)}
+  .login-btn{width:100%;padding:1rem;background:var(--rojo);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .25s;margin-top:.5rem}
+  .login-btn:hover{background:var(--rojo-oscuro)}
+  .login-error{background:#fee;border:1px solid var(--rojo);color:var(--rojo);padding:.7rem 1rem;font-size:.83rem;margin-bottom:1rem;display:none}
+
+  /* ADMIN LAYOUT */
+  .admin-wrap{display:none;min-height:100vh}
+  .admin-sidebar{width:260px;background:var(--negro);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:50}
+  .admin-sidebar-logo{padding:1.5rem 1.5rem 1rem;border-bottom:1px solid rgba(255,255,255,.08)}
+  .admin-logo-txt{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;text-transform:uppercase;color:#fff}
+  .admin-logo-txt span{color:var(--rojo)}
+  .admin-logo-sub{font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.2rem}
+  .admin-rainbow{height:3px;background:var(--grad)}
+  .admin-nav{padding:1rem 0;flex:1}
+  .admin-nav-item{display:flex;align-items:center;gap:.8rem;padding:.8rem 1.5rem;font-size:.85rem;font-weight:600;color:rgba(255,255,255,.55);cursor:pointer;transition:all .2s;border-left:3px solid transparent}
+  .admin-nav-item:hover,.admin-nav-item.active{color:#fff;background:rgba(255,255,255,.05);border-color:var(--rojo)}
+  .admin-nav-item .nav-ico{font-size:1.1rem;width:20px;text-align:center}
+  .admin-footer{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.08)}
+  .admin-logout{width:100%;padding:.7rem;background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.15);font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+  .admin-logout:hover{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+
+  .admin-main{margin-left:260px;padding:2rem;min-height:100vh}
+  .admin-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #e0e0e0}
+  .admin-page-title{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;text-transform:uppercase;color:var(--negro)}
+  .admin-btn{padding:.7rem 1.5rem;font-size:.82rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+  .admin-btn-red{background:var(--rojo);color:#fff}
+  .admin-btn-red:hover{background:var(--rojo-oscuro)}
+  .admin-btn-gray{background:var(--gris-claro);color:var(--negro)}
+  .admin-btn-gray:hover{background:#e0e0e0}
+
+  /* STATS */
+  .admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+  .stat-card{background:#fff;padding:1.5rem;border-top:3px solid var(--rojo)}
+  .stat-card:nth-child(2){border-color:#e8631a}
+  .stat-card:nth-child(3){border-color:#2eaa4a}
+  .stat-card:nth-child(4){border-color:#1a5fb4}
+  .stat-n{font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;font-weight:900;line-height:1;color:var(--negro)}
+  .stat-l{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--gris-texto);margin-top:.3rem}
+
+  /* TABLA ARTÍCULOS */
+  .tabla-wrap{background:#fff;overflow:hidden}
+  .tabla-head{display:grid;grid-template-columns:1fr 160px 140px 100px 120px;padding:1rem 1.5rem;background:var(--gris-claro);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-texto);gap:1rem}
+  .tabla-row{display:grid;grid-template-columns:1fr 160px 140px 100px 120px;padding:1.2rem 1.5rem;border-bottom:1px solid var(--gris-claro);align-items:center;gap:1rem;transition:background .2s}
+  .tabla-row:hover{background:#fafafa}
+  .tabla-titulo{font-weight:600;font-size:.9rem;color:var(--negro);line-height:1.3}
+  .tabla-cat{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;padding:.25rem .6rem;width:fit-content}
+  .tabla-fecha{font-size:.82rem;color:var(--gris-texto)}
+  .tabla-estado{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .6rem}
+  .estado-pub{background:#e8f5e9;color:#2e7d32}
+  .estado-bor{background:#fff3e0;color:#e65100}
+  .tabla-acciones{display:flex;gap:.5rem}
+  .tbl-btn{padding:.4rem .8rem;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border:none;cursor:pointer;transition:all .2s}
+  .tbl-edit{background:var(--gris-claro);color:var(--negro)}
+  .tbl-edit:hover{background:#e0e0e0}
+  .tbl-del{background:#fee;color:var(--rojo)}
+  .tbl-del:hover{background:var(--rojo);color:#fff}
+
+  /* FORMULARIO */
+  .form-panel{background:#fff;padding:2rem;display:none}
+  .form-panel.visible{display:block}
+  .form-title{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;text-transform:uppercase;color:var(--negro);margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--rojo)}
+  .form-rainbow{height:3px;background:var(--grad);margin-bottom:1.5rem}
+  .f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .f-g{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+  .f-g label{font-size:.73rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--negro)}
+  .f-g input,.f-g select,.f-g textarea{padding:.85rem 1rem;border:2px solid transparent;background:var(--gris-claro);font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--negro);outline:none;transition:border-color .2s;-webkit-appearance:none}
+  .f-g input:focus,.f-g select:focus,.f-g textarea:focus{border-color:var(--rojo)}
+  .f-g textarea{resize:vertical;min-height:300px;font-size:.9rem;line-height:1.6}
+  .editor-hint{font-size:.75rem;color:var(--gris-texto);margin-top:.3rem;line-height:1.4}
+  .form-actions{display:flex;gap:1rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--gris-claro)}
+
+  /* TOAST */
+  .toast{position:fixed;bottom:2rem;right:2rem;background:var(--negro);color:#fff;padding:1rem 1.5rem;font-size:.85rem;font-weight:600;z-index:1000;transform:translateY(100px);opacity:0;transition:all .3s;max-width:300px}
+  .toast.show{transform:translateY(0);opacity:1}
+  .toast.success{border-left:4px solid #2eaa4a}
+  .toast.error{border-left:4px solid var(--rojo)}
+
+  /* EMPTY */
+  .tabla-empty{text-align:center;padding:4rem;color:var(--gris-texto)}
+  .tabla-empty-icon{font-size:3rem;margin-bottom:1rem}
+  .loading-tabla{text-align:center;padding:3rem;color:var(--gris-texto)}
+  .spinner{width:30px;height:30px;border:3px solid var(--gris-claro);border-top-color:var(--rojo);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* CONFIRM MODAL */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center}
+  .modal-overlay.show{display:flex}
+  .modal-box{background:#fff;padding:2rem;max-width:400px;width:90%}
+  .modal-title{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;text-transform:uppercase;margin-bottom:.8rem}
+  .modal-text{font-size:.88rem;color:var(--gris-texto);margin-bottom:1.5rem;line-height:1.5}
+  .modal-actions{display:flex;gap:.8rem}
+
+  @media(max-width:768px){
+    .admin-sidebar{transform:translateX(-100%)}
+    .admin-main{margin-left:0}
+    .admin-stats{grid-template-columns:1fr 1fr}
+    .tabla-head,.tabla-row{grid-template-columns:1fr auto}
+    .tabla-head>*:not(:first-child):not(:last-child){display:none}
+    .tabla-row>*:not(:first-child):not(:last-child){display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-rainbow"></div>
+    <div class="login-logo">Martha <span>Admin</span></div>
+    <div class="login-sub">Panel de administración del blog · Acceso restringido</div>
+    <div class="login-error" id="loginError">Contraseña incorrecta. Intenta de nuevo.</div>
+    <form onsubmit="login(event)">
+      <div class="login-group">
+        <label>Usuario</label>
+        <input type="text" id="loginUser" placeholder="admin" autocomplete="username">
+      </div>
+      <div class="login-group">
+        <label>Contraseña</label>
+        <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="login-btn" type="submit">Ingresar →</button>
+    </form>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="admin-wrap" id="adminWrap">
+  <aside class="admin-sidebar">
+    <div>
+      <div class="admin-sidebar-logo">
+        <div class="admin-logo-txt">Martha <span>Admin</span></div>
+        <div class="admin-logo-sub">Panel de Contenidos · Representante Córdoba</div>
+      </div>
+      <div class="admin-rainbow"></div>
+      <nav class="admin-nav">
+        <div style="font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.8rem 1.5rem .3rem">Blog</div>
+        <div class="admin-nav-item active" onclick="mostrarSeccion('articulos',this)">
+          <span class="nav-ico">📝</span> Artículos
+        </div>
+        <div class="admin-nav-item" onclick="mostrarSeccion('nuevo',this)">
+          <span class="nav-ico">✍️</span> Nuevo Artículo
+        </div>
+        <div class="admin-nav-item" onclick="window.open('blog.html','_blank')">
+          <span class="nav-ico">👁️</span> Ver Blog
+        </div>
+
+        <div style="font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.8rem 1.5rem .3rem;margin-top:.5rem">Sala de Prensa</div>
+        <div class="admin-nav-item" onclick="mostrarSeccion('boletines',this)">
+          <span class="nav-ico">📋</span> Boletines
+        </div>
+        <div class="admin-nav-item" onclick="mostrarSeccion('nuevoBoletin',this)">
+          <span class="nav-ico">➕</span> Nuevo Boletín
+        </div>
+        <div class="admin-nav-item" onclick="mostrarSeccion('medios',this)">
+          <span class="nav-ico">📰</span> En los Medios
+        </div>
+        <div class="admin-nav-item" onclick="mostrarSeccion('nuevoMedio',this)">
+          <span class="nav-ico">🔗</span> Agregar Medio
+        </div>
+        <div class="admin-nav-item" onclick="window.open('prensa.html','_blank')">
+          <span class="nav-ico">👁️</span> Ver Sala de Prensa
+        </div>
+
+        <div style="font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.8rem 1.5rem .3rem;margin-top:.5rem">General</div>
+        <div class="admin-nav-item" onclick="window.open('index.html','_blank')">
+          <span class="nav-ico">🏠</span> Ver Página Principal
+        </div>
+      </nav>
+    </div>
+    <div class="admin-footer">
+      <button class="admin-logout" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <!-- SECCIÓN ARTÍCULOS -->
+    <div id="sec-articulos">
+      <div class="admin-topbar">
+        <div class="admin-page-title">Artículos</div>
+        <button class="admin-btn admin-btn-red" onclick="mostrarSeccion('nuevo', document.querySelector('.admin-nav-item:nth-child(2)'))">+ Nuevo Artículo</button>
+      </div>
+      <div class="admin-stats">
+        <div class="stat-card"><div class="stat-n" id="stat-total">0</div><div class="stat-l">Total artículos</div></div>
+        <div class="stat-card"><div class="stat-n" id="stat-pub">0</div><div class="stat-l">Publicados</div></div>
+        <div class="stat-card"><div class="stat-n" id="stat-bor">0</div><div class="stat-l">Borradores</div></div>
+        <div class="stat-card"><div class="stat-n" id="stat-cats">0</div><div class="stat-l">Categorías usadas</div></div>
+      </div>
+      <div class="tabla-wrap">
+        <div class="tabla-head">
+          <div>Título</div><div>Categoría</div><div>Fecha</div><div>Estado</div><div>Acciones</div>
+        </div>
+        <div id="tabla-body"><div class="loading-tabla"><div class="spinner"></div>Cargando...</div></div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN NUEVO / EDITAR -->
+    <div id="sec-nuevo" style="display:none">
+      <div class="admin-topbar">
+        <div class="admin-page-title" id="form-page-title">Nuevo Artículo</div>
+        <button class="admin-btn admin-btn-gray" onclick="mostrarSeccion('articulos', document.querySelector('.admin-nav-item'))">← Volver</button>
+      </div>
+      <div class="form-panel visible">
+        <div class="form-rainbow"></div>
+        <input type="hidden" id="edit-id">
+        <div class="f-row">
+          <div class="f-g" style="grid-column:1/-1">
+            <label>Título del artículo *</label>
+            <input type="text" id="f-titulo" placeholder="Escribe el título aquí...">
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-g">
+            <label>Categoría *</label>
+            <select id="f-cat">
+              <option value="">Selecciona...</option>
+              <option>Columna Legislativa</option>
+              <option>Mujer & Política</option>
+              <option>Reflexión Personal</option>
+              <option>Salud</option>
+              <option>Familia</option>
+              <option>Córdoba</option>
+            </select>
+          </div>
+          <div class="f-g">
+            <label>Estado</label>
+            <select id="f-estado">
+              <option value="publicado">Publicado</option>
+              <option value="borrador">Borrador</option>
+            </select>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="f-g">
+            <label>Emoji representativo</label>
+            <input type="text" id="f-emoji" placeholder="🏛️" maxlength="4">
+          </div>
+          <div class="f-g">
+            <label>Tiempo de lectura (minutos)</label>
+            <input type="number" id="f-tiempo" placeholder="3" min="1" max="30">
+          </div>
+        </div>
+        <div class="f-g">
+          <label>Resumen / Introducción *</label>
+          <textarea id="f-resumen" style="min-height:100px" placeholder="Escribe un resumen corto del artículo (2-3 oraciones)..."></textarea>
+        </div>
+        <div class="f-g">
+          <label>Contenido completo *</label>
+          <textarea id="f-contenido" placeholder="Escribe el contenido completo del artículo aquí...&#10;&#10;Puedes usar HTML básico:&#10;&lt;p&gt;Párrafo&lt;/p&gt;&#10;&lt;h2&gt;Subtítulo&lt;/h2&gt;&#10;&lt;blockquote&gt;Cita destacada&lt;/blockquote&gt;&#10;&lt;strong&gt;Texto en negrita&lt;/strong&gt;"></textarea>
+          <div class="editor-hint">
+            💡 Puedes usar HTML básico: &lt;p&gt; párrafos, &lt;h2&gt; subtítulos, &lt;blockquote&gt; citas, &lt;strong&gt; negritas, &lt;ul&gt;&lt;li&gt; listas
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="admin-btn admin-btn-red" onclick="guardarArticulo()">💾 Guardar Artículo</button>
+          <button class="admin-btn admin-btn-gray" onclick="limpiarForm()">🗑️ Limpiar</button>
+        </div>
+      </div>
+    </div>
+    <!-- SECCIÓN BOLETINES -->
+    <div id="sec-boletines" style="display:none">
+      <div class="admin-topbar">
+        <div class="admin-page-title">Boletines de Prensa</div>
+        <button class="admin-btn admin-btn-red" onclick="mostrarSeccion('nuevoBoletin', document.querySelector('.admin-nav-item:nth-child(8)'))">+ Nuevo Boletín</button>
+      </div>
+      <div class="tabla-wrap">
+        <div class="tabla-head" style="grid-template-columns:1fr 160px 120px">
+          <div>Título</div><div>Fecha</div><div>Acciones</div>
+        </div>
+        <div id="tabla-boletines"><div class="loading-tabla"><div class="spinner"></div>Cargando...</div></div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN NUEVO BOLETÍN -->
+    <div id="sec-nuevoBoletin" style="display:none">
+      <div class="admin-topbar">
+        <div class="admin-page-title" id="form-boletin-title">Nuevo Boletín</div>
+        <button class="admin-btn admin-btn-gray" onclick="mostrarSeccion('boletines', document.querySelector('.admin-nav-item:nth-child(7)'))">← Volver</button>
+      </div>
+      <div class="form-panel visible">
+        <div class="form-rainbow"></div>
+        <input type="hidden" id="edit-boletin-id">
+        <div class="f-g">
+          <label>Título del boletín *</label>
+          <input type="text" id="b-titulo" placeholder="Título del boletín...">
+        </div>
+        <div class="f-g">
+          <label>Resumen *</label>
+          <textarea id="b-resumen" style="min-height:80px" placeholder="Resumen corto del boletín..."></textarea>
+        </div>
+        <div class="f-g">
+          <label>Contenido completo *</label>
+          <textarea id="b-contenido" placeholder="Contenido del boletín... Puedes usar HTML básico."></textarea>
+        </div>
+        <div class="f-g">
+          <label>URL de imagen (opcional)</label>
+          <input type="text" id="b-imagen" placeholder="https://...">
+        </div>
+        <div class="form-actions">
+          <button class="admin-btn admin-btn-red" onclick="guardarBoletin()">💾 Guardar Boletín</button>
+          <button class="admin-btn admin-btn-gray" onclick="limpiarBoletin()">🗑️ Limpiar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN MEDIOS -->
+    <div id="sec-medios" style="display:none">
+      <div class="admin-topbar">
+        <div class="admin-page-title">En los Medios</div>
+        <button class="admin-btn admin-btn-red" onclick="mostrarSeccion('nuevoMedio', document.querySelector('.admin-nav-item:nth-child(11)'))">+ Agregar Medio</button>
+      </div>
+      <div class="tabla-wrap">
+        <div class="tabla-head" style="grid-template-columns:1fr 160px 160px 120px">
+          <div>Titular</div><div>Medio</div><div>Fecha</div><div>Acciones</div>
+        </div>
+        <div id="tabla-medios"><div class="loading-tabla"><div class="spinner"></div>Cargando...</div></div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN NUEVO MEDIO -->
+    <div id="sec-nuevoMedio" style="display:none">
+      <div class="admin-topbar">
+        <div class="admin-page-title" id="form-medio-title">Agregar Medio</div>
+        <button class="admin-btn admin-btn-gray" onclick="mostrarSeccion('medios', document.querySelector('.admin-nav-item:nth-child(10)'))">← Volver</button>
+      </div>
+      <div class="form-panel visible">
+        <div class="form-rainbow"></div>
+        <input type="hidden" id="edit-medio-id">
+        <div class="f-row">
+          <div class="f-g">
+            <label>Nombre del medio *</label>
+            <input type="text" id="m-medio" placeholder="Ej: El Tiempo, RCN, Caracol...">
+          </div>
+          <div class="f-g">
+            <label>Fecha de publicación *</label>
+            <input type="date" id="m-fecha">
+          </div>
+        </div>
+        <div class="f-g">
+          <label>Titular de la noticia *</label>
+          <input type="text" id="m-titular" placeholder="Titular exacto de la noticia...">
+        </div>
+        <div class="f-g">
+          <label>Link a la noticia *</label>
+          <input type="url" id="m-link" placeholder="https://...">
+        </div>
+        <div class="f-g">
+          <label>URL de imagen de la noticia (opcional)</label>
+          <input type="url" id="m-imagen" placeholder="https://... (URL de la foto que publicó el medio)">
+        </div>
+        <div class="form-actions">
+          <button class="admin-btn admin-btn-red" onclick="guardarMedio()">💾 Guardar</button>
+          <button class="admin-btn admin-btn-gray" onclick="limpiarMedio()">🗑️ Limpiar</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL CONFIRMAR ELIMINACIÓN -->
+<div class="modal-overlay" id="modalEliminar">
+  <div class="modal-box">
+    <div class="modal-title">¿Eliminar artículo?</div>
+    <p class="modal-text">Esta acción no se puede deshacer. El artículo se eliminará permanentemente.</p>
+    <div class="modal-actions">
+      <button class="admin-btn admin-btn-red" onclick="confirmarEliminar()">Sí, eliminar</button>
+      <button class="admin-btn admin-btn-gray" onclick="cerrarModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC-FZcABicW9VkgCcJtIlMaOX1KdDHWO-k",
+    authDomain: "martha-ruiz-blog.firebaseapp.com",
+    projectId: "martha-ruiz-blog",
+    storageBucket: "martha-ruiz-blog.firebasestorage.app",
+    messagingSenderId: "572271986147",
+    appId: "1:572271986147:web:e4e958abd9c8aefd678cd6"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const ADMIN_USER = "martha";
+  const ADMIN_PASS = "cordoba2026";
+
+  let articulos = [];
+  let idAEliminar = null;
+
+  const COLORES_CAT = {
+    'Columna Legislativa':'#cc1e2b','Mujer & Política':'#e8631a',
+    'Reflexión Personal':'#1a5fb4','Salud':'#2eaa4a','Familia':'#a01520','Córdoba':'#f5c518'
+  };
+
+  // ── LOGIN ──
+  window.login = function(e) {
+    e.preventDefault();
+    const user = document.getElementById('loginUser').value;
+    const pass = document.getElementById('loginPass').value;
+    if (user === ADMIN_USER && pass === ADMIN_PASS) {
+      document.getElementById('loginWrap').style.display = 'none';
+      document.getElementById('adminWrap').style.display = 'flex';
+      cargarArticulos();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+    }
+  };
+
+  window.logout = function() {
+    document.getElementById('adminWrap').style.display = 'none';
+    document.getElementById('loginWrap').style.display = 'flex';
+    document.getElementById('loginPass').value = '';
+  };
+
+  // ── NAVEGACIÓN ──
+  window.mostrarSeccion = function(sec, btn) {
+    ['articulos','nuevo','boletines','nuevoBoletin','medios','nuevoMedio'].forEach(s => {
+      const el = document.getElementById('sec-'+s);
+      if(el) el.style.display = s === sec ? 'block' : 'none';
+    });
+    document.querySelectorAll('.admin-nav-item').forEach(b => b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+    if(sec === 'boletines') cargarBoletines();
+    if(sec === 'medios') cargarMedios();
+    if(sec === 'nuevo' && !document.getElementById('edit-id').value)
+      document.getElementById('form-page-title').textContent = 'Nuevo Artículo';
+  };
+
+  // ── ARTÍCULOS ──
+  async function cargarArticulos() {
+    try {
+      const q = query(collection(db, "articulos"), orderBy("fecha", "desc"));
+      const snap = await getDocs(q);
+      articulos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderTabla();
+      actualizarStats();
+    } catch(e) {
+      document.getElementById('tabla-body').innerHTML = '<div class="tabla-empty"><div class="tabla-empty-icon">⚠️</div><p>Error al cargar. Verifica la conexión.</p></div>';
+    }
+  }
+
+  function renderTabla() {
+    if (articulos.length === 0) {
+      document.getElementById('tabla-body').innerHTML = '<div class="tabla-empty"><div class="tabla-empty-icon">📝</div><p>No hay artículos aún. ¡Crea el primero!</p></div>';
+      return;
+    }
+    document.getElementById('tabla-body').innerHTML = articulos.map(a => {
+      const color = COLORES_CAT[a.categoria] || '#cc1e2b';
+      const fecha = a.fecha?.toDate ? a.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'short',day:'numeric'}) : '';
+      return `<div class="tabla-row">
+        <div class="tabla-titulo">${a.titulo}</div>
+        <div><span class="tabla-cat" style="background:${color}">${a.categoria}</span></div>
+        <div class="tabla-fecha">${fecha}</div>
+        <div><span class="tabla-estado ${a.estado === 'publicado' ? 'estado-pub' : 'estado-bor'}">${a.estado || 'publicado'}</span></div>
+        <div class="tabla-acciones">
+          <button class="tbl-btn tbl-edit" onclick="editarArticulo('${a.id}')">Editar</button>
+          <button class="tbl-btn tbl-del" onclick="pedirEliminar('${a.id}')">Eliminar</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function actualizarStats() {
+    const pub = articulos.filter(a => a.estado !== 'borrador').length;
+    const bor = articulos.filter(a => a.estado === 'borrador').length;
+    const cats = new Set(articulos.map(a => a.categoria)).size;
+    document.getElementById('stat-total').textContent = articulos.length;
+    document.getElementById('stat-pub').textContent = pub;
+    document.getElementById('stat-bor').textContent = bor;
+    document.getElementById('stat-cats').textContent = cats;
+  }
+
+  window.guardarArticulo = async function() {
+    const titulo = document.getElementById('f-titulo').value.trim();
+    const cat = document.getElementById('f-cat').value;
+    const resumen = document.getElementById('f-resumen').value.trim();
+    const contenido = document.getElementById('f-contenido').value.trim();
+    const estado = document.getElementById('f-estado').value;
+    const emoji = document.getElementById('f-emoji').value.trim() || '✍️';
+    const tiempo = document.getElementById('f-tiempo').value || '3';
+    const editId = document.getElementById('edit-id').value;
+    if (!titulo || !cat || !resumen || !contenido) { toast('Completa todos los campos obligatorios (*)', 'error'); return; }
+    const data = { titulo, categoria: cat, resumen, contenido, estado, emoji, tiempoLectura: tiempo, fecha: Timestamp.now() };
+    try {
+      if (editId) { await updateDoc(doc(db, "articulos", editId), data); toast('✅ Artículo actualizado', 'success'); }
+      else { await addDoc(collection(db, "articulos"), data); toast('✅ Artículo publicado', 'success'); }
+      limpiarForm();
+      await cargarArticulos();
+      mostrarSeccion('articulos', document.querySelector('.admin-nav-item'));
+    } catch(e) { toast('❌ Error al guardar', 'error'); }
+  };
+
+  window.editarArticulo = function(id) {
+    const a = articulos.find(x => x.id === id);
+    if (!a) return;
+    document.getElementById('edit-id').value = id;
+    document.getElementById('f-titulo').value = a.titulo;
+    document.getElementById('f-cat').value = a.categoria;
+    document.getElementById('f-resumen').value = a.resumen;
+    document.getElementById('f-contenido').value = a.contenido;
+    document.getElementById('f-estado').value = a.estado || 'publicado';
+    document.getElementById('f-emoji').value = a.emoji || '✍️';
+    document.getElementById('f-tiempo').value = a.tiempoLectura || '3';
+    document.getElementById('form-page-title').textContent = 'Editar Artículo';
+    mostrarSeccion('nuevo', document.querySelectorAll('.admin-nav-item')[1]);
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+
+  window.pedirEliminar = function(id) {
+    idAEliminar = id;
+    document.getElementById('modalEliminar').classList.add('show');
+  };
+  window.cerrarModal = function() {
+    idAEliminar = null;
+    document.getElementById('modalEliminar').classList.remove('show');
+  };
+  window.confirmarEliminar = async function() {
+    if (!idAEliminar) return;
+    try {
+      await deleteDoc(doc(db, "articulos", idAEliminar));
+      toast('🗑️ Artículo eliminado', 'success');
+      cerrarModal();
+      await cargarArticulos();
+    } catch(e) { toast('❌ Error al eliminar', 'error'); }
+  };
+
+  window.limpiarForm = function() {
+    document.getElementById('edit-id').value = '';
+    document.getElementById('f-titulo').value = '';
+    document.getElementById('f-cat').value = '';
+    document.getElementById('f-resumen').value = '';
+    document.getElementById('f-contenido').value = '';
+    document.getElementById('f-estado').value = 'publicado';
+    document.getElementById('f-emoji').value = '';
+    document.getElementById('f-tiempo').value = '';
+    document.getElementById('form-page-title').textContent = 'Nuevo Artículo';
+  };
+
+  // ── BOLETINES ──
+  async function cargarBoletines() {
+    try {
+      const q = query(collection(db,"boletines"), orderBy("fecha","desc"));
+      const snap = await getDocs(q);
+      const boletines = snap.docs.map(d=>({id:d.id,...d.data()}));
+      if(boletines.length===0){
+        document.getElementById('tabla-boletines').innerHTML='<div class="tabla-empty"><div class="tabla-empty-icon">📋</div><p>No hay boletines aún.</p></div>';
+        return;
+      }
+      document.getElementById('tabla-boletines').innerHTML = boletines.map(b=>{
+        const fecha = b.fecha?.toDate ? b.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'short',day:'numeric'}) : '';
+        return `<div class="tabla-row" style="grid-template-columns:1fr 160px 120px">
+          <div class="tabla-titulo">${b.titulo}</div>
+          <div class="tabla-fecha">${fecha}</div>
+          <div class="tabla-acciones">
+            <button class="tbl-btn tbl-edit" onclick="editarBoletin('${b.id}')">Editar</button>
+            <button class="tbl-btn tbl-del" onclick="eliminarBoletin('${b.id}')">Eliminar</button>
+          </div>
+        </div>`;
+      }).join('');
+    } catch(e) { console.error(e); }
+  }
+
+  window.guardarBoletin = async function() {
+    const titulo = document.getElementById('b-titulo').value.trim();
+    const resumen = document.getElementById('b-resumen').value.trim();
+    const contenido = document.getElementById('b-contenido').value.trim();
+    const imagen = document.getElementById('b-imagen').value.trim();
+    const editId = document.getElementById('edit-boletin-id').value;
+    if(!titulo||!resumen||!contenido){toast('Completa todos los campos obligatorios','error');return;}
+    const data = {titulo,resumen,contenido,imagen,fecha:Timestamp.now()};
+    try {
+      if(editId){ await updateDoc(doc(db,"boletines",editId),data); toast('✅ Boletín actualizado','success'); }
+      else { await addDoc(collection(db,"boletines"),data); toast('✅ Boletín publicado','success'); }
+      limpiarBoletin();
+      cargarBoletines();
+      mostrarSeccion('boletines', document.querySelectorAll('.admin-nav-item')[6]);
+    } catch(e){ toast('❌ Error al guardar','error'); }
+  };
+
+  window.editarBoletin = function(id) {
+    const cargar = async () => {
+      const snap = await getDocs(query(collection(db,"boletines"),orderBy("fecha","desc")));
+      const b = snap.docs.map(d=>({id:d.id,...d.data()})).find(x=>x.id===id);
+      if(!b) return;
+      document.getElementById('edit-boletin-id').value = id;
+      document.getElementById('b-titulo').value = b.titulo;
+      document.getElementById('b-resumen').value = b.resumen;
+      document.getElementById('b-contenido').value = b.contenido;
+      document.getElementById('b-imagen').value = b.imagen||'';
+      document.getElementById('form-boletin-title').textContent = 'Editar Boletín';
+      mostrarSeccion('nuevoBoletin', document.querySelectorAll('.admin-nav-item')[7]);
+    };
+    cargar();
+  };
+
+  window.eliminarBoletin = async function(id) {
+    if(!confirm('¿Eliminar este boletín?')) return;
+    await deleteDoc(doc(db,"boletines",id));
+    toast('🗑️ Boletín eliminado','success');
+    cargarBoletines();
+  };
+
+  window.limpiarBoletin = function() {
+    document.getElementById('edit-boletin-id').value='';
+    document.getElementById('b-titulo').value='';
+    document.getElementById('b-resumen').value='';
+    document.getElementById('b-contenido').value='';
+    document.getElementById('b-imagen').value='';
+    document.getElementById('form-boletin-title').textContent='Nuevo Boletín';
+  };
+
+  // ── MEDIOS ──
+  async function cargarMedios() {
+    try {
+      const q = query(collection(db,"medios"), orderBy("fecha","desc"));
+      const snap = await getDocs(q);
+      const medios = snap.docs.map(d=>({id:d.id,...d.data()}));
+      if(medios.length===0){
+        document.getElementById('tabla-medios').innerHTML='<div class="tabla-empty"><div class="tabla-empty-icon">📰</div><p>No hay noticias de medios aún.</p></div>';
+        return;
+      }
+      document.getElementById('tabla-medios').innerHTML = medios.map(m=>{
+        const fecha = m.fecha?.toDate ? m.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'short',day:'numeric'}) : m.fecha||'';
+        return `<div class="tabla-row" style="grid-template-columns:1fr 160px 160px 120px">
+          <div class="tabla-titulo">${m.titular}</div>
+          <div class="tabla-fecha">${m.medio}</div>
+          <div class="tabla-fecha">${fecha}</div>
+          <div class="tabla-acciones">
+            <button class="tbl-btn tbl-edit" onclick="editarMedio('${m.id}')">Editar</button>
+            <button class="tbl-btn tbl-del" onclick="eliminarMedio('${m.id}')">Eliminar</button>
+          </div>
+        </div>`;
+      }).join('');
+    } catch(e){ console.error(e); }
+  }
+
+  window.guardarMedio = async function() {
+    const medio = document.getElementById('m-medio').value.trim();
+    const titular = document.getElementById('m-titular').value.trim();
+    const link = document.getElementById('m-link').value.trim();
+    const fechaVal = document.getElementById('m-fecha').value;
+    const editId = document.getElementById('edit-medio-id').value;
+    if(!medio||!titular||!link){toast('Completa todos los campos obligatorios','error');return;}
+    const imagen = document.getElementById('m-imagen').value.trim();
+    const data = {medio,titular,link,imagen,fecha:fechaVal ? Timestamp.fromDate(new Date(fechaVal)) : Timestamp.now()};
+    try {
+      if(editId){ await updateDoc(doc(db,"medios",editId),data); toast('✅ Medio actualizado','success'); }
+      else { await addDoc(collection(db,"medios"),data); toast('✅ Medio agregado','success'); }
+      limpiarMedio();
+      cargarMedios();
+      mostrarSeccion('medios', document.querySelectorAll('.admin-nav-item')[9]);
+    } catch(e){ toast('❌ Error al guardar','error'); }
+  };
+
+  window.editarMedio = function(id) {
+    const cargar = async () => {
+      const snap = await getDocs(query(collection(db,"medios"),orderBy("fecha","desc")));
+      const m = snap.docs.map(d=>({id:d.id,...d.data()})).find(x=>x.id===id);
+      if(!m) return;
+      document.getElementById('edit-medio-id').value = id;
+      document.getElementById('m-medio').value = m.medio;
+      document.getElementById('m-titular').value = m.titular;
+      document.getElementById('m-link').value = m.link;
+      document.getElementById('form-medio-title').textContent = 'Editar Medio';
+      mostrarSeccion('nuevoMedio', document.querySelectorAll('.admin-nav-item')[10]);
+    };
+    cargar();
+  };
+
+  window.eliminarMedio = async function(id) {
+    if(!confirm('¿Eliminar esta noticia?')) return;
+    await deleteDoc(doc(db,"medios",id));
+    toast('🗑️ Noticia eliminada','success');
+    cargarMedios();
+  };
+
+  window.limpiarMedio = function() {
+    document.getElementById('edit-medio-id').value='';
+    document.getElementById('m-medio').value='';
+    document.getElementById('m-titular').value='';
+    document.getElementById('m-link').value='';
+    document.getElementById('m-fecha').value='';
+    document.getElementById('m-imagen').value='';
+    document.getElementById('form-medio-title').textContent='Agregar Medio';
+  };
+
+  // ── TOAST ──
+  function toast(msg, tipo) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `toast ${tipo} show`;
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+</script>
+</body>
+</html>
