@@ -329,15 +329,6 @@ footer{background:#ffffff;color:#555;padding:4rem 0 2rem;border-top:4px solid va
     document.getElementById('paginacion').innerHTML = html;
   }
 
-  function renderPaginacion(total) {
-    const paginas = Math.ceil(total / POR_PAGINA);
-    if (paginas <= 1) { document.getElementById('paginacion').innerHTML = ''; return; }
-    let html = '';
-    for (let i = 1; i <= paginas; i++) {
-      html += `<button class="pag-btn ${i === paginaActual ? 'active' : ''}" onclick="irPagina(${i})">${i}</button>`;
-    }
-    document.getElementById('paginacion').innerHTML = html;
-  }
 
   function renderRecientes() {
     const recientes = todosLosArticulos.slice(0, 5);
