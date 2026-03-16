@@ -301,7 +301,7 @@ footer{background:#ffffff;color:#555;padding:4rem 0 2rem;border-top:4px solid va
         <div class="articulo-card ${featured ? 'featured' : ''}" onclick="window.location='articulo.html?id=${a.id}'">
           <div class="articulo-img" style="background:linear-gradient(135deg,${color}dd,${color}88);position:relative;overflow:hidden">
             ${a.imagen ? `<img src="${a.imagen}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">` : `<div class="articulo-img-icon">${a.emoji || '✍️'}</div>`}
-            <span class="articulo-cat" style="background:${color};position:relative;z-index:1">${a.categoria}</span>
+            <span class="articulo-cat" style="background:${color};position:absolute;top:1rem;left:1rem;z-index:2">${a.categoria}</span>
           </div>
           <div class="articulo-body">
             <div class="articulo-meta">
