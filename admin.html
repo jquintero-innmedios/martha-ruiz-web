@@ -723,7 +723,16 @@ async function subirImagenCloudinary() {
       document.getElementById('b-titulo').value = b.titulo;
       document.getElementById('b-resumen').value = b.resumen;
       document.getElementById('b-contenido').value = b.contenido;
-      document.getElementById('b-imagen').value = b.imagen||'';
+      document.getElementById('b-imagen-url').value = b.imagen||'';
+      if(b.imagen){
+        document.getElementById('b-preview-img').src = b.imagen;
+        document.getElementById('b-imagen-preview').style.display = 'block';
+      }
+      if(b.galeria && b.galeria.length > 0){
+        document.getElementById('b-galeria-urls').value = JSON.stringify(b.galeria);
+        const preview = document.getElementById('b-galeria-preview');
+        preview.innerHTML = b.galeria.map(url=>`<img src="${url}" style="width:100px;height:70px;object-fit:cover;">`).join('');
+      }
       document.getElementById('form-boletin-title').textContent = 'Editar Boletín';
       mostrarSeccion('nuevoBoletin', document.querySelectorAll('.admin-nav-item')[7]);
     };
