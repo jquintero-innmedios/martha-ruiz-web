@@ -269,7 +269,7 @@
     }
     document.getElementById('boletines-grid').innerHTML = boletines.map(b=>{
       const fecha = b.fecha?.toDate ? b.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'}) : '';
-      return `<div class="boletin-card" onclick="abrirBoletin('${b.id}')">
+      return `<div class="boletin-card" onclick="window.location='boletin.html?id=${b.id}'">
         <div class="boletin-img" style="background:linear-gradient(135deg,#cc1e2b,#8b1018)">
           ${b.imagen ? `<img src="${b.imagen}" alt="${b.titulo}">` : '<div class="boletin-img-placeholder">📋</div>'}
           <span class="boletin-cat">Boletín Oficial</span>
@@ -278,7 +278,7 @@
           <div class="boletin-fecha">${fecha}</div>
           <h3 class="boletin-title">${b.titulo}</h3>
           <p class="boletin-excerpt">${b.resumen}</p>
-          <span class="boletin-link">Leer boletín →</span>
+          <a class="boletin-link" href="boletin.html?id=${b.id}">Leer boletín →</a>
         </div>
       </div>`;
     }).join('');
