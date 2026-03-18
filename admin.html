@@ -328,8 +328,19 @@
           <textarea id="b-contenido" placeholder="Contenido del boletín... Puedes usar HTML básico."></textarea>
         </div>
         <div class="f-g">
-          <label>URL de imagen (opcional)</label>
-          <input type="text" id="b-imagen" placeholder="https://...">
+          <label>Foto principal del boletín</label>
+          <input type="file" id="b-imagen-file" accept="image/*" onchange="previsualizarBoletin(this)">
+          <div id="b-imagen-preview" style="margin-top:.8rem;display:none">
+            <img id="b-preview-img" style="max-height:200px;max-width:100%;object-fit:cover;">
+            <p style="font-size:.75rem;color:var(--gris-texto);margin-top:.4rem">✅ Foto principal seleccionada</p>
+          </div>
+          <input type="hidden" id="b-imagen-url">
+        </div>
+        <div class="f-g">
+          <label>Galería de fotos adicionales (puedes seleccionar varias)</label>
+          <input type="file" id="b-galeria-files" accept="image/*" multiple onchange="previsualizarGaleria(this)">
+          <div id="b-galeria-preview" style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem"></div>
+          <input type="hidden" id="b-galeria-urls">
         </div>
         <div class="form-actions">
           <button class="admin-btn admin-btn-red" onclick="guardarBoletin()">💾 Guardar Boletín</button>
@@ -630,14 +641,70 @@ async function subirImagenCloudinary() {
     } catch(e) { console.error(e); }
   }
 
+  window.previsualizarBoletin = function(input) {
+    if(input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('b-preview-img').src = e.target.result;
+        document.getElementById('b-imagen-preview').style.display = 'block';
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  };
+
+  window.previsualizarGaleria = function(input) {
+    const preview = document.getElementById('b-galeria-preview');
+    preview.innerHTML = '';
+    Array.from(input.files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.style = 'width:100px;height:70px;object-fit:cover;';
+        preview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  async function subirImagenBoletin() {
+    const file = document.getElementById('b-imagen-file').files[0];
+    const urlExistente = document.getElementById('b-imagen-url').value;
+    if(!file) return urlExistente || '';
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'martha-blog');
+    const res = await fetch('https://api.cloudinary.com/v1_1/dav4yhq85/image/upload', {method:'POST',body:formData});
+    const data = await res.json();
+    return data.secure_url || '';
+  }
+
+  async function subirGaleriaBoletin() {
+    const files = document.getElementById('b-galeria-files').files;
+    const urlsExistentes = document.getElementById('b-galeria-urls').value;
+    if(!files || files.length === 0) return urlsExistentes ? JSON.parse(urlsExistentes) : [];
+    const urls = [];
+    for(const file of Array.from(files)) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'martha-blog');
+      const res = await fetch('https://api.cloudinary.com/v1_1/dav4yhq85/image/upload', {method:'POST',body:formData});
+      const data = await res.json();
+      if(data.secure_url) urls.push(data.secure_url);
+    }
+    return urls;
+  }
+
   window.guardarBoletin = async function() {
     const titulo = document.getElementById('b-titulo').value.trim();
     const resumen = document.getElementById('b-resumen').value.trim();
     const contenido = document.getElementById('b-contenido').value.trim();
-    const imagen = document.getElementById('b-imagen').value.trim();
     const editId = document.getElementById('edit-boletin-id').value;
     if(!titulo||!resumen||!contenido){toast('Completa todos los campos obligatorios','error');return;}
-    const data = {titulo,resumen,contenido,imagen,fecha:Timestamp.now()};
+    toast('⏳ Subiendo imágenes...','success');
+    const imagen = await subirImagenBoletin();
+    const galeria = await subirGaleriaBoletin();
+    const data = {titulo,resumen,contenido,imagen,galeria,fecha:Timestamp.now()};
     try {
       if(editId){ await updateDoc(doc(db,"boletines",editId),data); toast('✅ Boletín actualizado','success'); }
       else { await addDoc(collection(db,"boletines"),data); toast('✅ Boletín publicado','success'); }
@@ -675,7 +742,12 @@ async function subirImagenCloudinary() {
     document.getElementById('b-titulo').value='';
     document.getElementById('b-resumen').value='';
     document.getElementById('b-contenido').value='';
-    document.getElementById('b-imagen').value='';
+    document.getElementById('b-imagen-file').value='';
+    document.getElementById('b-imagen-url').value='';
+    document.getElementById('b-imagen-preview').style.display='none';
+    document.getElementById('b-galeria-files').value='';
+    document.getElementById('b-galeria-urls').value='';
+    document.getElementById('b-galeria-preview').innerHTML='';
     document.getElementById('form-boletin-title').textContent='Nuevo Boletín';
   };
 

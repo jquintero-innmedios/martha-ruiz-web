@@ -310,9 +310,28 @@
     document.getElementById('modal-cat').textContent = 'Boletín Oficial · Despacho Martha Ruiz';
     document.getElementById('modal-title').textContent = b.titulo;
     document.getElementById('modal-fecha').textContent = `📅 ${fecha}`;
-    document.getElementById('modal-content').innerHTML = b.contenido;
+
+    // Contenido + galería
+    let galeriaHtml = '';
+    if(b.galeria && b.galeria.length > 0) {
+      galeriaHtml = `
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid #f0f0f0">
+          <div style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rojo);margin-bottom:1rem">Galería fotográfica</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.5rem">
+            ${b.galeria.map(url=>`
+              <div style="aspect-ratio:4/3;overflow:hidden;cursor:pointer" onclick="window.open('${url}','_blank')">
+                <img src="${url}" style="width:100%;height:100%;object-fit:cover;transition:transform .3s" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+              </div>`).join('')}
+          </div>
+        </div>`;
+    }
+
+    document.getElementById('modal-content').innerHTML = b.contenido + galeriaHtml;
+
     if(b.imagen){
-      document.getElementById('modal-img').innerHTML = `<img src="${b.imagen}" alt="${b.titulo}">`;
+      document.getElementById('modal-img').innerHTML = `<img src="${b.imagen}" alt="${b.titulo}" style="width:100%;height:100%;object-fit:cover;">`;
+    } else {
+      document.getElementById('modal-img').innerHTML = `<div class="modal-img-ph">📋</div>`;
     }
     document.getElementById('modalBoletin').classList.add('show');
     document.body.style.overflow = 'hidden';
