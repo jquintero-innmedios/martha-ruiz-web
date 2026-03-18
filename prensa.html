@@ -271,7 +271,7 @@
       const fecha = b.fecha?.toDate ? b.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'}) : '';
       return `<div class="boletin-card" onclick="window.location='boletin.html?id=${b.id}'">
         <div class="boletin-img" style="background:linear-gradient(135deg,#cc1e2b,#8b1018)">
-          ${b.imagen ? `<img src="${b.imagen}" alt="${b.titulo}">` : '<div class="boletin-img-placeholder">📋</div>'}
+          ${b.imagen ? `<img src="${b.imagen.replace('/upload/', '/upload/g_auto:faces,c_fill,w_600,h_400/')}" alt="${b.titulo}">` : '<div class="boletin-img-placeholder">📋</div>'}
           <span class="boletin-cat">Boletín Oficial</span>
         </div>
         <div class="boletin-body">
