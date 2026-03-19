@@ -375,7 +375,7 @@
         <div class="f-row">
           <div class="f-g">
             <label>Nombre del medio *</label>
-            <input type="text" id="m-medio" placeholder="Ej: El Tiempo, RCN, Caracol...">
+            <input type="text" id="m-medio" placeholder="Ej: El Tiempo, RCN, Instagram @medio...">
           </div>
           <div class="f-g">
             <label>Fecha de publicación *</label>
@@ -388,11 +388,16 @@
         </div>
         <div class="f-g">
           <label>Link a la noticia *</label>
-          <input type="url" id="m-link" placeholder="https://...">
+          <input type="url" id="m-link" placeholder="https://... o https://instagram.com/p/...">
         </div>
         <div class="f-g">
-          <label>URL de imagen de la noticia (opcional)</label>
-          <input type="url" id="m-imagen" placeholder="https://... (URL de la foto que publicó el medio)">
+          <label>Imagen de la noticia (opcional) — sube screenshot si es de Instagram</label>
+          <input type="file" id="m-imagen-file" accept="image/*" onchange="previsualizarMedio(this)">
+          <div id="m-imagen-preview" style="margin-top:.8rem;display:none">
+            <img id="m-preview-img" style="max-height:150px;max-width:100%;object-fit:cover;">
+            <p style="font-size:.75rem;color:var(--gris-texto);margin-top:.4rem">✅ Imagen seleccionada</p>
+          </div>
+          <input type="hidden" id="m-imagen-url">
         </div>
         <div class="form-actions">
           <button class="admin-btn admin-btn-red" onclick="guardarMedio()">💾 Guardar</button>
@@ -785,6 +790,29 @@ async function subirImagenCloudinary() {
     } catch(e){ console.error(e); }
   }
 
+  window.previsualizarMedio = function(input) {
+    if(input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        document.getElementById('m-preview-img').src = e.target.result;
+        document.getElementById('m-imagen-preview').style.display = 'block';
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  };
+
+  async function subirImagenMedio() {
+    const file = document.getElementById('m-imagen-file').files[0];
+    const urlExistente = document.getElementById('m-imagen-url').value;
+    if(!file) return urlExistente || '';
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'martha-blog');
+    const res = await fetch('https://api.cloudinary.com/v1_1/dav4yhq85/image/upload', {method:'POST',body:formData});
+    const data = await res.json();
+    return data.secure_url || '';
+  }
+
   window.guardarMedio = async function() {
     const medio = document.getElementById('m-medio').value.trim();
     const titular = document.getElementById('m-titular').value.trim();
@@ -792,7 +820,8 @@ async function subirImagenCloudinary() {
     const fechaVal = document.getElementById('m-fecha').value;
     const editId = document.getElementById('edit-medio-id').value;
     if(!medio||!titular||!link){toast('Completa todos los campos obligatorios','error');return;}
-    const imagen = document.getElementById('m-imagen').value.trim();
+    toast('⏳ Subiendo imagen...','success');
+    const imagen = await subirImagenMedio();
     const data = {medio,titular,link,imagen,fecha:fechaVal ? Timestamp.fromDate(new Date(fechaVal)) : Timestamp.now()};
     try {
       if(editId){ await updateDoc(doc(db,"medios",editId),data); toast('✅ Medio actualizado','success'); }
@@ -831,7 +860,9 @@ async function subirImagenCloudinary() {
     document.getElementById('m-titular').value='';
     document.getElementById('m-link').value='';
     document.getElementById('m-fecha').value='';
-    document.getElementById('m-imagen').value='';
+    document.getElementById('m-imagen-file').value='';
+    document.getElementById('m-imagen-url').value='';
+    document.getElementById('m-imagen-preview').style.display='none';
     document.getElementById('form-medio-title').textContent='Agregar Medio';
   };
 
