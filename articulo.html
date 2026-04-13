@@ -114,6 +114,11 @@
   gtag('js', new Date());
   gtag('config', 'G-29T25JBK9J');
 </script>
+<meta property="og:title" content="Martha Ruiz — Representante por Córdoba">
+<meta property="og:description" content="Artículo de Martha Ruiz Solera">
+<meta property="og:image" content="">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Martha Ruiz Solera">
 </head>
 <body>
 
@@ -221,6 +226,10 @@
     const color = COLORES_CAT[a.categoria] || '#cc1e2b';
     const fecha = a.fecha?.toDate ? a.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'long',day:'numeric'}) : a.fecha || '';
     document.title = `${a.titulo} — Martha Ruiz`;
+    // Meta tags para compartir
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', `${a.titulo} — Martha Ruiz`);
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', a.resumen);
+    document.querySelector('meta[property="og:image"]')?.setAttribute('content', a.imagen || '');
     document.getElementById('bc-titulo').textContent = a.titulo;
     const url = encodeURIComponent(window.location.href);
     const texto = encodeURIComponent(a.titulo);
