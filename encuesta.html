@@ -229,10 +229,16 @@ const API='https://nico.innmedios.com/api';
 const PW='martha2026';
 let SID='',survey=null,curQ=0,answers={};
 
-// Get survey ID from URL: ?id=xxx param > path > default
+// Get survey ID: ?id=xxx param > path > default to eventos-martha
 const params=new URLSearchParams(window.location.search);
-const pathParts=window.location.pathname.split('/').filter(p=>p&&!p.endsWith('.html'));
-const sidFromPath=pathParts.length?pathParts[pathParts.length-1]:'';
+const pathSegs=window.location.pathname.split('/').filter(Boolean);
+let sidFromPath='';
+for(let i=pathSegs.length-1;i>=0;i--){
+  const seg=pathSegs[i];
+  if(seg.includes('.html')||seg.includes('.htm'))continue;
+  if(seg==='encuesta')continue;
+  sidFromPath=seg;break;
+}
 SID=params.get('id')||sidFromPath||'eventos-martha';
 
 // If on static site without ID, default to eventos-martha (handled by SID default above)
