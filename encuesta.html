@@ -3,128 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Encuesta — Martha Ruiz Solera</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Tu voz cuenta — Martha Ruiz Solera</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --esmeralda: #0D9488; --esmeralda-dark: #0F766E; --esmeralda-light: #14B8A6;
-  --cream: #F5F0E8; --dark: #1A1A18; --surface: #FFFFFF; --border: #E5E7EB;
-  --text: #374151; --text-light: #6B7280; --danger: #C8152A; --success: #1A7A4A;
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --rojo:#cc1e2b;--rojo-oscuro:#a01520;--naranja:#e8631a;--amarillo:#f5c518;
+  --verde:#2eaa4a;--azul:#1a5fb4;--blanco:#fff;--gris:#f4f4f4;--gris-t:#555;
+  --negro:#111;--grad:linear-gradient(90deg,#cc1e2b 0%,#e8631a 28%,#f5c518 52%,#2eaa4a 74%,#1a5fb4 100%);
+  --grad-rojo:linear-gradient(135deg,#cc1e2b 0%,#8b1018 100%);
 }
-body { font-family: 'Poppins', sans-serif; background: var(--cream); color: var(--dark); min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--blanco);color:var(--negro);min-height:100vh;display:flex;flex-direction:column;align-items:center}
 
-.survey-closed { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 20px; }
-.closed-icon { width: 80px; height: 80px; border-radius: 50%; background: var(--danger); display: flex; align-items: center; justify-content: center; font-size: 36px; color: white; margin-bottom: 24px; }
-.closed-title { font-size: 28px; font-weight: 700; color: var(--dark); margin-bottom: 12px; }
-.closed-text { font-size: 16px; color: var(--text-light); max-width: 400px; line-height: 1.6; }
+/* RAINBOW BAR */
+.rainbow-bar{height:5px;background:var(--grad);width:100%;position:fixed;top:0;z-index:100}
 
-.survey-container { width: 100%; max-width: 640px; padding: 24px 20px 40px; }
-.survey-header { text-align: center; margin-bottom: 32px; padding-top: 20px; }
-.survey-logo { width: 56px; height: 56px; border-radius: 16px; background: linear-gradient(135deg, var(--esmeralda), var(--esmeralda-light)); display: inline-flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 16px; box-shadow: 0 4px 20px rgba(13,148,136,0.3); }
-.survey-title { font-size: 24px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
-.survey-subtitle { font-size: 14px; color: var(--text-light); line-height: 1.5; }
+/* CLOSED */
+.closed{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px}
+.closed-icon{width:80px;height:80px;border-radius:50%;background:var(--rojo);display:flex;align-items:center;justify-content:center;font-size:36px;color:#fff;margin-bottom:24px}
+.closed-title{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;text-transform:uppercase;color:var(--negro);margin-bottom:12px}
+.closed-text{font-size:16px;color:var(--gris-t);max-width:400px;line-height:1.6}
 
-.progress-bar-container { width: 100%; height: 4px; background: var(--border); border-radius: 4px; margin-bottom: 32px; overflow: hidden; }
-.progress-bar { height: 100%; background: linear-gradient(90deg, var(--esmeralda), var(--esmeralda-light)); border-radius: 4px; transition: width 0.4s ease; }
+/* SURVEY */
+.survey{width:100%;max-width:680px;padding:40px 24px 60px}
+.survey-header{text-align:center;margin-bottom:36px;padding-top:12px}
+.survey-badge{display:inline-flex;align-items:center;gap:.6rem;background:var(--rojo);color:#fff;padding:.45rem 1.2rem;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px}
+.badge-dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.6}}
+.survey-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;text-transform:uppercase;color:var(--negro);line-height:1;margin-bottom:8px}
+.survey-title .hl{color:var(--rojo)}
+.survey-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:1.05rem;color:var(--gris-t)}
 
-.question-card { display: none; background: var(--surface); border-radius: 16px; padding: 28px 24px; margin-bottom: 16px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.04); animation: fadeIn 0.3s ease; }
-.question-card.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* Progress */
+.prog-bar{width:100%;height:4px;background:#e8e8e8;border-radius:4px;margin-bottom:32px;overflow:hidden}
+.prog-fill{height:100%;background:var(--grad);border-radius:4px;transition:width .4s ease}
 
-.question-number { font-size: 12px; font-weight: 600; color: var(--esmeralda); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-.question-text { font-size: 17px; font-weight: 600; color: var(--dark); margin-bottom: 20px; line-height: 1.5; }
+/* Cards */
+.card{display:none;background:var(--blanco);border:1px solid #e8e8e8;border-radius:2px;padding:32px 28px;margin-bottom:16px;animation:fadeUp .3s ease both}
+.card.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.card-num{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rojo);display:flex;align-items:center;gap:.6rem;margin-bottom:10px}
+.card-num::before{content:'';width:20px;height:3px;background:var(--rojo)}
+.card-q{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.2rem,3vw,1.5rem);font-weight:800;text-transform:uppercase;color:var(--negro);margin-bottom:20px;line-height:1.2}
 
-.text-input { width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 15px; color: var(--dark); background: #FAFAFA; transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
-.text-input:focus { border-color: var(--esmeralda); box-shadow: 0 0 0 3px rgba(13,148,136,0.1); background: white; }
-.text-input::placeholder { color: var(--text-light); }
-textarea.text-input { min-height: 100px; resize: vertical; }
-.select-input { width: 100%; padding: 14px 16px; border: 2px solid var(--border); border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 15px; color: var(--dark); background: #FAFAFA; appearance: none; cursor: pointer; outline: none; transition: border-color 0.2s; }
-.select-input:focus { border-color: var(--esmeralda); box-shadow: 0 0 0 3px rgba(13,148,136,0.1); }
+/* Inputs */
+.inp{width:100%;padding:14px 16px;border:2px solid #e8e8e8;border-radius:0;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--negro);background:var(--gris);transition:border-color .2s;outline:none}
+.inp:focus{border-color:var(--rojo);background:#fff}
+.inp::placeholder{color:#aaa}
+textarea.inp{min-height:100px;resize:vertical}
+select.inp{width:100%;padding:14px 16px;border:2px solid #e8e8e8;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--negro);background:var(--gris);appearance:none;-webkit-appearance:none;cursor:pointer;outline:none;transition:border-color .2s;border-radius:0}
+select.inp:focus{border-color:var(--rojo);background:#fff}
 
-.options-grid { display: grid; gap: 10px; }
-.option-card { padding: 14px 16px; border: 2px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.2s; font-size: 14px; color: var(--text); background: #FAFAFA; }
-.option-card:hover { border-color: var(--esmeralda-light); background: rgba(13,148,136,0.04); }
-.option-card.selected { border-color: var(--esmeralda); background: rgba(13,148,136,0.08); color: var(--esmeralda-dark); font-weight: 500; }
-.option-card .option-letter { display: inline-flex; width: 24px; height: 24px; border-radius: 50%; background: var(--border); color: var(--text-light); font-size: 12px; font-weight: 600; align-items: center; justify-content: center; margin-right: 10px; transition: all 0.2s; }
-.option-card.selected .option-letter { background: var(--esmeralda); color: white; }
+/* Options */
+.opts{display:grid;gap:8px}
+.opt{padding:14px 16px;border:2px solid #e8e8e8;cursor:pointer;transition:all .2s;font-size:14px;color:var(--gris-t);background:var(--gris)}
+.opt:hover{border-color:var(--naranja);background:rgba(232,99,26,.04)}
+.opt.sel{border-color:var(--rojo);background:rgba(204,30,43,.06);color:var(--rojo-oscuro);font-weight:600}
+.opt-l{display:inline-flex;width:22px;height:22px;border-radius:50%;background:#e8e8e8;color:var(--gris-t);font-size:11px;font-weight:700;align-items:center;justify-content:center;margin-right:10px;transition:all .2s}
+.opt.sel .opt-l{background:var(--rojo);color:#fff}
 
-.btn-row { display: flex; gap: 12px; margin-top: 24px; }
-.btn { flex: 1; padding: 14px 24px; border: none; border-radius: 12px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.btn-primary { background: linear-gradient(135deg, var(--esmeralda), var(--esmeralda-light)); color: white; box-shadow: 0 4px 12px rgba(13,148,136,0.3); }
-.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(13,148,136,0.4); }
-.btn-secondary { background: var(--surface); color: var(--text); border: 2px solid var(--border); }
-.btn-secondary:hover { border-color: var(--esmeralda-light); }
+/* Buttons */
+.btns{display:flex;gap:12px;margin-top:24px}
+.btn{flex:1;padding:14px 24px;border:none;font-family:'Barlow Condensed',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-red{background:var(--rojo);color:#fff;box-shadow:0 4px 16px rgba(204,30,43,.25)}
+.btn-red:hover{background:var(--rojo-oscuro);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--negro);border:2px solid #e8e8e8}
+.btn-ghost:hover{border-color:var(--negro)}
 
-.success-screen { display: none; text-align: center; padding: 60px 20px; }
-.success-icon { width: 80px; height: 80px; border-radius: 50%; background: var(--success); display: inline-flex; align-items: center; justify-content: center; font-size: 40px; color: white; margin-bottom: 24px; }
-.success-title { font-size: 24px; font-weight: 700; color: var(--dark); margin-bottom: 12px; }
-.success-text { font-size: 15px; color: var(--text-light); line-height: 1.6; max-width: 400px; margin: 0 auto; }
-.error-msg { color: var(--danger); font-size: 13px; margin-top: 8px; display: none; }
+/* Success */
+.ok{display:none;text-align:center;padding:60px 20px}
+.ok-icon{width:80px;height:80px;border-radius:50%;background:var(--verde);display:inline-flex;align-items:center;justify-content:center;font-size:40px;color:#fff;margin-bottom:24px}
+.ok-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;color:var(--negro);margin-bottom:12px}
+.ok-text{font-size:15px;color:var(--gris-t);line-height:1.6;max-width:400px;margin:0 auto}
 
-.admin-link { text-align: center; margin-top: 40px; font-size: 12px; color: var(--text-light); }
-.admin-link a { color: var(--esmeralda); text-decoration: none; cursor: pointer; }
+.err{color:var(--rojo);font-size:13px;margin-top:8px;display:none}
+.admin-l{text-align:center;margin-top:40px;font-size:12px;color:#aaa}
+.admin-l a{color:var(--rojo);text-decoration:none;cursor:pointer}
 
 /* ADMIN */
-.admin-panel { display: none; max-width: 800px; width: 100%; padding: 24px 20px; }
-.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
-.admin-title { font-size: 22px; font-weight: 700; color: var(--dark); }
-.admin-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.toggle-btn { padding: 8px 16px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
-.toggle-open { background: var(--success); color: white; }
-.toggle-closed { background: var(--danger); color: white; }
-.toggle-btn:hover { opacity: 0.9; }
-.export-btn { padding: 8px 16px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; border: 2px solid var(--esmeralda); background: transparent; color: var(--esmeralda); transition: all 0.2s; }
-.export-btn:hover { background: var(--esmeralda); color: white; }
-.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
-.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
-.stat-value { font-size: 28px; font-weight: 800; color: var(--esmeralda); }
-.stat-label { font-size: 12px; color: var(--text-light); margin-top: 4px; }
-.results-section { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
-.results-title { font-size: 15px; font-weight: 600; color: var(--dark); margin-bottom: 16px; }
-.result-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
-.result-item:last-child { border-bottom: none; }
-.result-label { font-size: 14px; color: var(--text); flex: 1; }
-.result-bar-container { flex: 2; height: 8px; background: var(--border); border-radius: 4px; margin: 0 12px; overflow: hidden; }
-.result-bar { height: 100%; background: var(--esmeralda); border-radius: 4px; transition: width 0.4s ease; }
-.result-count { font-size: 13px; font-weight: 600; color: var(--esmeralda); min-width: 30px; text-align: right; }
-.responses-list { max-height: 300px; overflow-y: auto; }
-.response-item { padding: 12px; border-bottom: 1px solid var(--border); font-size: 13px; line-height: 1.5; }
-.response-municipio { font-weight: 600; color: var(--esmeralda); }
-.response-time { font-size: 11px; color: var(--text-light); }
+.admin{display:none;max-width:860px;width:100%;padding:24px 20px}
+.admin-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.admin-t{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;color:var(--negro)}
+.admin-acts{display:flex;gap:8px;flex-wrap:wrap}
+.tgl{padding:8px 16px;border-radius:0;font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;border:none;transition:all .2s}
+.tgl-open{background:var(--verde);color:#fff}
+.tgl-closed{background:var(--rojo);color:#fff}
+.tgl:hover{opacity:.9}
+.exp{padding:8px 16px;border-radius:0;font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;border:2px solid var(--rojo);background:transparent;color:var(--rojo);transition:all .2s}
+.exp:hover{background:var(--rojo);color:#fff}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+.st{background:var(--blanco);border:1px solid #e8e8e8;border-radius:0;padding:16px;text-align:center}
+.st-v{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--rojo)}
+.st-l{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-t);margin-top:4px}
+.rsec{background:var(--blanco);border:1px solid #e8e8e8;border-radius:0;padding:20px;margin-bottom:16px}
+.rsec-t{font-family:'Barlow Condensed',sans-serif;font-size:.92rem;font-weight:800;text-transform:uppercase;color:var(--negro);margin-bottom:16px;letter-spacing:.04em}
+.ri{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #e8e8e8}
+.ri:last-child{border-bottom:none}
+.ri-l{font-size:14px;color:var(--gris-t);flex:1}
+.ri-bc{flex:2;height:6px;background:#e8e8e8;margin:0 12px;overflow:hidden}
+.ri-b{height:100%;background:var(--rojo);transition:width .4s}
+.ri-c{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--rojo);min-width:28px;text-align:right}
+.rlist{max-height:300px;overflow-y:auto}
+.rli{padding:12px;border-bottom:1px solid #e8e8e8;font-size:13px;line-height:1.5}
+.rli-m{font-weight:700;color:var(--rojo)}
 
-.loading { text-align: center; padding: 40px; font-size: 14px; color: var(--text-light); }
-
-@media (max-width: 480px) {
-  .survey-title { font-size: 20px; } .question-text { font-size: 15px; }
-  .survey-container { padding: 16px 16px 32px; } .question-card { padding: 20px 16px; }
+@media(max-width:480px){
+  .survey{padding:28px 16px 40px}
+  .card{padding:24px 20px}
+  .survey-title{font-size:1.8rem}
 }
 </style>
 </head>
 <body>
 
-<div id="closedState" class="survey-closed" style="display:none;">
+<div class="rainbow-bar"></div>
+
+<div id="closedState" class="closed" style="display:none">
   <div class="closed-icon">✕</div>
   <div class="closed-title">Encuesta cerrada</div>
   <div class="closed-text">Esta encuesta ya no está recibiendo respuestas. Gracias por tu interés.</div>
 </div>
 
-<div id="loadingState" class="survey-closed" style="display:flex;">
-  <div class="loading">Cargando...</div>
+<div id="loadingState" class="closed" style="display:flex">
+  <div style="font-size:14px;color:var(--gris-t)">Cargando...</div>
 </div>
 
-<div id="surveyContainer" class="survey-container" style="display:none;">
+<div id="surveyEl" class="survey" style="display:none">
   <div class="survey-header">
-    <div class="survey-logo">📊</div>
-    <div class="survey-title">Tu voz cuenta</div>
-    <div class="survey-subtitle">Encuesta digital — Martha Ruiz Solera</div>
+    <div class="survey-badge"><div class="badge-dot"></div>ENCUESTA DIGITAL</div>
+    <div class="survey-title">Tu <span class="hl">voz</span> cuenta</div>
+    <div class="survey-sub">Martha Isabel Ruiz Solera — Representante a la Cámara por Córdoba</div>
   </div>
-  <div class="progress-bar-container"><div id="progressBar" class="progress-bar" style="width:0%"></div></div>
+  <div class="prog-bar"><div id="prog" class="prog-fill" style="width:0%"></div></div>
 
-  <div id="q1" class="question-card active">
-    <div class="question-number">Pregunta 1 de 5</div>
-    <div class="question-text">¿De qué municipio eres?</div>
-    <select id="municipio" class="select-input">
+  <div id="q1" class="card active">
+    <div class="card-num">Pregunta 1 de 5</div>
+    <div class="card-q">¿De qué municipio eres?</div>
+    <select id="municipio" class="inp">
       <option value="">Selecciona tu municipio...</option>
       <option value="Montería">Montería</option><option value="Cereté">Cereté</option>
       <option value="Lorica">Lorica</option><option value="Sahagún">Sahagún</option>
@@ -143,225 +159,165 @@ textarea.text-input { min-height: 100px; resize: vertical; }
       <option value="Tuchín">Tuchín</option><option value="Villa Nueva">Villa Nueva</option>
       <option value="Otro">Otro</option>
     </select>
-    <div id="err1" class="error-msg">Selecciona un municipio</div>
-    <div class="btn-row"><button class="btn btn-primary" onclick="nextQ(1)">Siguiente →</button></div>
+    <div id="err1" class="err">Selecciona un municipio</div>
+    <div class="btns"><button class="btn btn-red" onclick="nxt(1)">Siguiente →</button></div>
   </div>
 
-  <div id="q2" class="question-card">
-    <div class="question-number">Pregunta 2 de 5</div>
-    <div class="question-text">¿Sobre qué temas te gustaría que legisláramos?</div>
-    <textarea id="temas" class="text-input" placeholder="Ej: educación rural, salud, empleo, seguridad, infraestructura..."></textarea>
-    <div id="err2" class="error-msg">Escribe al menos un tema</div>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="prevQ(2)">← Anterior</button>
-      <button class="btn btn-primary" onclick="nextQ(2)">Siguiente →</button>
+  <div id="q2" class="card">
+    <div class="card-num">Pregunta 2 de 5</div>
+    <div class="card-q">¿Sobre qué temas te gustaría que legisláramos?</div>
+    <textarea id="temas" class="inp" placeholder="Ej: educación rural, salud, empleo, seguridad, infraestructura..."></textarea>
+    <div id="err2" class="err">Escribe al menos un tema</div>
+    <div class="btns">
+      <button class="btn btn-ghost" onclick="prv(2)">← Anterior</button>
+      <button class="btn btn-red" onclick="nxt(2)">Siguiente →</button>
     </div>
   </div>
 
-  <div id="q3" class="question-card">
-    <div class="question-number">Pregunta 3 de 5</div>
-    <div class="question-text">¿Cuál consideras que debe ser el proyecto prioritario para tu municipio?</div>
-    <textarea id="proyecto" class="text-input" placeholder="Describe el proyecto o necesidad más urgente..."></textarea>
-    <div id="err3" class="error-msg">Describe el proyecto prioritario</div>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="prevQ(3)">← Anterior</button>
-      <button class="btn btn-primary" onclick="nextQ(3)">Siguiente →</button>
+  <div id="q3" class="card">
+    <div class="card-num">Pregunta 3 de 5</div>
+    <div class="card-q">¿Cuál debe ser el proyecto prioritario para tu municipio?</div>
+    <textarea id="proyecto" class="inp" placeholder="Describe el proyecto o necesidad más urgente..."></textarea>
+    <div id="err3" class="err">Describe el proyecto prioritario</div>
+    <div class="btns">
+      <button class="btn btn-ghost" onclick="prv(3)">← Anterior</button>
+      <button class="btn btn-red" onclick="nxt(3)">Siguiente →</button>
     </div>
   </div>
 
-  <div id="q4" class="question-card">
-    <div class="question-number">Pregunta 4 de 5</div>
-    <div class="question-text">¿Desde qué comisión quieres que mi voz te represente?</div>
-    <div class="options-grid" id="comisionOptions">
-      <div class="option-card" onclick="selCard(this,'comision')" data-value="Pacto Histórico"><span class="option-letter">A</span>Pacto Histórico</div>
-      <div class="option-card" onclick="selCard(this,'comision')" data-value="Comisión Primera (Constitucional)"><span class="option-letter">B</span>Comisión Primera (Constitucional)</div>
-      <div class="option-card" onclick="selCard(this,'comision')" data-value="Comisión Segunda (Política)"><span class="option-letter">C</span>Comisión Segunda (Política)</div>
-      <div class="option-card" onclick="selCard(this,'comision')" data-value="Comisión Tercera (Económica)"><span class="option-letter">D</span>Comisión Tercera (Económica)</div>
-      <div class="option-card" onclick="selCard(this,'comision')" data-value="Comisión Cuarta (Social)"><span class="option-letter">E</span>Comisión Cuarta (Social)</div>
-      <div class="option-card" onclick="selCard(this,'comision')" data-value="Comisión Quinta (Reglamentación)"><span class="option-letter">F</span>Comisión Quinta (Reglamentación)</div>
-      <div class="option-card" onclick="selCard(this,'comision')" data-value="Comisión Sexta (Medio Ambiente)"><span class="option-letter">G</span>Comisión Sexta (Medio Ambiente)</div>
-      <div class="option-card" onclick="selCard(this,'comision')" data-value="Comisión Séptima (Vivienda)"><span class="option-letter">H</span>Comisión Séptima (Vivienda)</div>
+  <div id="q4" class="card">
+    <div class="card-num">Pregunta 4 de 5</div>
+    <div class="card-q">¿Desde qué comisión quieres que mi voz te represente?</div>
+    <div class="opts" id="comOpts">
+      <div class="opt" onclick="selC(this)" data-v="Pacto Histórico"><span class="opt-l">A</span>Pacto Histórico</div>
+      <div class="opt" onclick="selC(this)" data-v="Comisión Primera (Constitucional)"><span class="opt-l">B</span>Comisión Primera — Constitucional</div>
+      <div class="opt" onclick="selC(this)" data-v="Comisión Segunda (Política)"><span class="opt-l">C</span>Comisión Segunda — Política</div>
+      <div class="opt" onclick="selC(this)" data-v="Comisión Tercera (Económica)"><span class="opt-l">D</span>Comisión Tercera — Económica</div>
+      <div class="opt" onclick="selC(this)" data-v="Comisión Cuarta (Social)"><span class="opt-l">E</span>Comisión Cuarta — Social</div>
+      <div class="opt" onclick="selC(this)" data-v="Comisión Quinta (Reglamentación)"><span class="opt-l">F</span>Comisión Quinta — Reglamentación</div>
+      <div class="opt" onclick="selC(this)" data-v="Comisión Sexta (Medio Ambiente)"><span class="opt-l">G</span>Comisión Sexta — Medio Ambiente</div>
+      <div class="opt" onclick="selC(this)" data-v="Comisión Séptima (Vivienda)"><span class="opt-l">H</span>Comisión Séptima — Vivienda</div>
     </div>
-    <div id="err4" class="error-msg">Selecciona una comisión</div>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="prevQ(4)">← Anterior</button>
-      <button class="btn btn-primary" onclick="nextQ(4)">Siguiente →</button>
-    </div>
-  </div>
-
-  <div id="q5" class="question-card">
-    <div class="question-number">Pregunta 5 de 5</div>
-    <div class="question-text">Tu nombre (opcional)</div>
-    <input type="text" id="nombre" class="text-input" placeholder="Si quieres, escribe tu nombre...">
-    <div class="btn-row" style="margin-top:24px">
-      <button class="btn btn-secondary" onclick="prevQ(5)">← Anterior</button>
-      <button class="btn btn-primary" onclick="submitSurvey()" id="submitBtn">Enviar ✓</button>
+    <div id="err4" class="err">Selecciona una comisión</div>
+    <div class="btns">
+      <button class="btn btn-ghost" onclick="prv(4)">← Anterior</button>
+      <button class="btn btn-red" onclick="nxt(4)">Siguiente →</button>
     </div>
   </div>
 
-  <div id="successScreen" class="success-screen">
-    <div class="success-icon">✓</div>
-    <div class="success-title">¡Gracias por tu voz!</div>
-    <div class="success-text">Tu respuesta fue registrada. Martha cuenta contigo.</div>
+  <div id="q5" class="card">
+    <div class="card-num">Pregunta 5 de 5</div>
+    <div class="card-q">Tu nombre <span style="font-family:'Playfair Display',serif;font-style:italic;text-transform:none;font-size:.85em;color:var(--gris-t)">(opcional)</span></div>
+    <input type="text" id="nombre" class="inp" placeholder="Si quieres, escribe tu nombre...">
+    <div class="btns" style="margin-top:24px">
+      <button class="btn btn-ghost" onclick="prv(5)">← Anterior</button>
+      <button class="btn btn-red" onclick="submit()" id="subBtn">Enviar ✓</button>
+    </div>
   </div>
 
-  <div id="errorMsg" class="error-msg" style="text-align:center;margin-top:16px;font-size:14px;"></div>
-  <div class="admin-link"><a href="#" onclick="showAdmin(); return false;">Resultados</a></div>
+  <div id="okScreen" class="ok">
+    <div class="ok-icon">✓</div>
+    <div class="ok-title">¡Gracias por tu voz!</div>
+    <div class="ok-text">Tu respuesta fue registrada. Martha cuenta contigo.</div>
+  </div>
+  <div id="errMsg" class="err" style="text-align:center;margin-top:16px;font-size:14px"></div>
+  <div class="admin-l"><a href="#" onclick="showAdm();return false">Resultados</a></div>
 </div>
 
-<div id="adminPanel" class="admin-panel" style="display:none;">
-  <div class="admin-header">
-    <div class="admin-title">📊 Resultados en vivo</div>
-    <div class="admin-actions">
-      <button id="toggleBtn" class="toggle-btn toggle-closed" onclick="toggleSurvey()">Abrir encuesta</button>
-      <button class="export-btn" onclick="exportCSV()">📥 CSV</button>
+<!-- ADMIN -->
+<div id="adm" class="admin" style="display:none">
+  <div class="admin-hd">
+    <div class="admin-t">📊 Resultados en vivo</div>
+    <div class="admin-acts">
+      <button id="tglBtn" class="tgl tgl-closed" onclick="tglSrv()">Abrir encuesta</button>
+      <button class="exp" onclick="expCSV()">📥 CSV</button>
     </div>
   </div>
-  <div class="stats-row">
-    <div class="stat-card"><div id="totalResponses" class="stat-value">0</div><div class="stat-label">Respuestas</div></div>
-    <div class="stat-card"><div id="openStatus" class="stat-value" style="font-size:16px;color:var(--danger)">—</div><div class="stat-label">Estado</div></div>
-    <div class="stat-card"><div id="lastResponse" class="stat-value" style="font-size:14px">—</div><div class="stat-label">Última respuesta</div></div>
+  <div class="stats">
+    <div class="st"><div id="tResp" class="st-v">0</div><div class="st-l">Respuestas</div></div>
+    <div class="st"><div id="oStat" class="st-v" style="font-size:16px;color:var(--rojo)">—</div><div class="st-l">Estado</div></div>
+    <div class="st"><div id="lResp" class="st-v" style="font-size:14px">—</div><div class="st-l">Última respuesta</div></div>
   </div>
-  <div class="results-section"><div class="results-title">🏛️ Municipios</div><div id="municipioResults"></div></div>
-  <div class="results-section"><div class="results-title">📋 Comisión preferida</div><div id="comisionResults"></div></div>
-  <div class="results-section"><div class="results-title">💡 Temas de legislación</div><div id="temasResults" class="responses-list"></div></div>
-  <div class="results-section"><div class="results-title">🏗️ Proyectos prioritarios</div><div id="proyectoResults" class="responses-list"></div></div>
-  <div class="admin-link" style="margin-top:20px"><a href="#" onclick="hideAdmin(); return false;">← Volver a la encuesta</a></div>
+  <div class="rsec"><div class="rsec-t">🏛️ Municipios</div><div id="mRes"></div></div>
+  <div class="rsec"><div class="rsec-t">📋 Comisión preferida</div><div id="cRes"></div></div>
+  <div class="rsec"><div class="rsec-t">💡 Temas de legislación</div><div id="tRes" class="rlist"></div></div>
+  <div class="rsec"><div class="rsec-t">🏗️ Proyectos prioritarios</div><div id="pRes" class="rlist"></div></div>
+  <div class="admin-l" style="margin-top:20px"><a href="#" onclick="hideAdm();return false">← Volver a la encuesta</a></div>
 </div>
 
 <script>
-const API = 'https://nico.innmedios.com/api/encuesta';
-let selectedComision = '';
-let currentQ = 1;
+const API='https://nico.innmedios.com/api/encuesta';
+let selCom='',curQ=1;
 
-async function checkStatus() {
-  try {
-    const res = await fetch(API);
-    const data = await res.json();
-    document.getElementById('loadingState').style.display = 'none';
-    if (data.open) {
-      document.getElementById('surveyContainer').style.display = 'block';
-      document.getElementById('closedState').style.display = 'none';
-    } else {
-      document.getElementById('surveyContainer').style.display = 'none';
-      document.getElementById('closedState').style.display = 'flex';
-    }
-  } catch(e) {
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('surveyContainer').style.display = 'block';
-  }
+async function chk(){
+  try{const r=await fetch(API),d=await r.json();
+    document.getElementById('loadingState').style.display='none';
+    if(d.open){document.getElementById('surveyEl').style.display='block';document.getElementById('closedState').style.display='none'}
+    else{document.getElementById('surveyEl').style.display='none';document.getElementById('closedState').style.display='flex'}
+  }catch(e){document.getElementById('loadingState').style.display='none';document.getElementById('surveyEl').style.display='block'}
 }
 
-function updateProgress() {
-  const pct = ((currentQ - 1) / 5) * 100;
-  document.getElementById('progressBar').style.width = pct + '%';
+function upProg(){document.getElementById('prog').style.width=((curQ-1)/5*100)+'%'}
+function hErr(n){document.getElementById('err'+n).style.display='none'}
+
+function nxt(f){
+  hErr(f);
+  if(f===1&&!document.getElementById('municipio').value){document.getElementById('err1').style.display='block';return}
+  if(f===2&&!document.getElementById('temas').value.trim()){document.getElementById('err2').style.display='block';return}
+  if(f===3&&!document.getElementById('proyecto').value.trim()){document.getElementById('err3').style.display='block';return}
+  if(f===4&&!selCom){document.getElementById('err4').style.display='block';return}
+  document.getElementById('q'+f).classList.remove('active');curQ=f+1;
+  document.getElementById('q'+curQ).classList.add('active');upProg();
 }
 
-function hideErr(n) { document.getElementById('err'+n).style.display = 'none'; }
+function prv(f){hErr(f);document.getElementById('q'+f).classList.remove('active');curQ=f-1;
+  document.getElementById('q'+curQ).classList.add('active');upProg()}
 
-function nextQ(from) {
-  hideErr(from);
-  if (from===1 && !document.getElementById('municipio').value) { document.getElementById('err1').style.display='block'; return; }
-  if (from===2 && !document.getElementById('temas').value.trim()) { document.getElementById('err2').style.display='block'; return; }
-  if (from===3 && !document.getElementById('proyecto').value.trim()) { document.getElementById('err3').style.display='block'; return; }
-  if (from===4 && !selectedComision) { document.getElementById('err4').style.display='block'; return; }
-  document.getElementById('q'+from).classList.remove('active');
-  currentQ = from + 1;
-  document.getElementById('q'+currentQ).classList.add('active');
-  updateProgress();
-}
+function selC(el){document.querySelectorAll('#comOpts .opt').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');selCom=el.dataset.v;hErr(4)}
 
-function prevQ(from) {
-  hideErr(from);
-  document.getElementById('q'+from).classList.remove('active');
-  currentQ = from - 1;
-  document.getElementById('q'+currentQ).classList.add('active');
-  updateProgress();
-}
-
-function selCard(el, field) {
-  document.querySelectorAll('#comisionOptions .option-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedComision = el.dataset.value;
-  hideErr(4);
-}
-
-async function submitSurvey() {
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true; btn.textContent = 'Enviando...';
-  try {
-    const res = await fetch(API, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        municipio: document.getElementById('municipio').value,
-        temas: document.getElementById('temas').value.trim(),
-        proyecto: document.getElementById('proyecto').value.trim(),
-        comision: selectedComision,
-        nombre: document.getElementById('nombre').value.trim()
-      })
-    });
-    if (res.status === 403) { document.getElementById('errorMsg').textContent = 'La encuesta está cerrada'; document.getElementById('errorMsg').style.display='block'; return; }
-    if (!res.ok) throw new Error('Error al enviar');
+async function submit(){
+  const b=document.getElementById('subBtn');b.disabled=true;b.textContent='Enviando...';
+  try{const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({municipio:document.getElementById('municipio').value,
+      temas:document.getElementById('temas').value.trim(),
+      proyecto:document.getElementById('proyecto').value.trim(),
+      comision:selCom,nombre:document.getElementById('nombre').value.trim()})});
+    if(r.status===403){document.getElementById('errMsg').textContent='La encuesta está cerrada';document.getElementById('errMsg').style.display='block';return}
+    if(!r.ok)throw new Error();
     document.getElementById('q5').classList.remove('active');
-    document.getElementById('successScreen').style.display = 'block';
-    document.querySelector('.progress-bar-container').style.display = 'none';
-  } catch(e) {
-    document.getElementById('errorMsg').textContent = 'Error de conexión. Intenta de nuevo.';
-    document.getElementById('errorMsg').style.display = 'block';
-    btn.disabled = false; btn.textContent = 'Enviar ✓';
-  }
+    document.getElementById('okScreen').style.display='block';document.querySelector('.prog-bar').style.display='none';
+  }catch(e){document.getElementById('errMsg').textContent='Error de conexión';document.getElementById('errMsg').style.display='block';b.disabled=false;b.textContent='Enviar ✓'}
 }
 
-function showAdmin() {
-  const code = prompt('Código de administrador:');
-  if (code === 'martha2026') {
-    document.getElementById('surveyContainer').style.display = 'none';
-    document.getElementById('closedState').style.display = 'none';
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
-    renderAdmin();
-    setInterval(renderAdmin, 10000);
-  }
-}
+function showAdm(){const c=prompt('Código de administrador:');if(c==='martha2026'){
+  document.getElementById('surveyEl').style.display='none';document.getElementById('closedState').style.display='none';
+  document.getElementById('loadingState').style.display='none';document.getElementById('adm').style.display='block';
+  rAdm();setInterval(rAdm,10000)}}
+function hideAdm(){document.getElementById('adm').style.display='none';chk()}
 
-function hideAdmin() { document.getElementById('adminPanel').style.display = 'none'; checkStatus(); }
+async function rAdm(){try{const r=await fetch(API),d=await r.json();
+  document.getElementById('tResp').textContent=d.total;
+  document.getElementById('oStat').textContent=d.open?'Abierta':'Cerrada';
+  document.getElementById('oStat').style.color=d.open?'var(--verde)':'var(--rojo)';
+  const b=document.getElementById('tglBtn');b.textContent=d.open?'Cerrar encuesta':'Abrir encuesta';
+  b.className=d.open?'tgl tgl-open':'tgl tgl-closed';
+  if(d.responses.length>0){const l=new Date(d.responses[d.responses.length-1].timestamp);
+    document.getElementById('lResp').textContent=l.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})}
+  const rr=d.responses,mc={};rr.forEach(x=>mc[x.municipio]=(mc[x.municipio]||0)+1);
+  const mx=Math.max(...Object.values(mc),1);
+  document.getElementById('mRes').innerHTML=Object.entries(mc).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="ri"><span class="ri-l">${n}</span><div class="ri-bc"><div class="ri-b" style="width:${c/mx*100}%"></div></div><span class="ri-c">${c}</span></div>`).join('');
+  const cc={};rr.forEach(x=>{if(x.comision)cc[x.comision]=(cc[x.comision]||0)+1});
+  const cx=Math.max(...Object.values(cc),1);
+  document.getElementById('cRes').innerHTML=Object.entries(cc).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="ri"><span class="ri-l">${n}</span><div class="ri-bc"><div class="ri-b" style="width:${c/cx*100}%"></div></div><span class="ri-c">${c}</span></div>`).join('');
+  document.getElementById('tRes').innerHTML=rr.map(x=>`<div class="rli">${x.temas||'—'}</div>`).join('');
+  document.getElementById('pRes').innerHTML=rr.map(x=>`<div class="rli"><span class="rli-m">${x.municipio}</span>: ${x.proyecto||'—'}</div>`).join('');
+  }catch(e){}}
 
-async function renderAdmin() {
-  try {
-    const res = await fetch(API);
-    const data = await res.json();
-    document.getElementById('totalResponses').textContent = data.total;
-    document.getElementById('openStatus').textContent = data.open ? 'Abierta' : 'Cerrada';
-    document.getElementById('openStatus').style.color = data.open ? 'var(--success)' : 'var(--danger)';
-    const btn = document.getElementById('toggleBtn');
-    btn.textContent = data.open ? 'Cerrar encuesta' : 'Abrir encuesta';
-    btn.className = data.open ? 'toggle-btn toggle-open' : 'toggle-btn toggle-closed';
-    if (data.responses.length > 0) {
-      const last = new Date(data.responses[data.responses.length-1].timestamp);
-      document.getElementById('lastResponse').textContent = last.toLocaleTimeString('es-CO', {hour:'2-digit',minute:'2-digit'});
-    }
-    const r = data.responses;
-    const muniC = {}; r.forEach(x => muniC[x.municipio]=(muniC[x.municipio]||0)+1);
-    const maxM = Math.max(...Object.values(muniC),1);
-    document.getElementById('municipioResults').innerHTML = Object.entries(muniC).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="result-item"><span class="result-label">${n}</span><div class="result-bar-container"><div class="result-bar" style="width:${(c/maxM)*100}%"></div></div><span class="result-count">${c}</span></div>`).join('');
-    const comC = {}; r.forEach(x => {if(x.comision) comC[x.comision]=(comC[x.comision]||0)+1});
-    const maxC = Math.max(...Object.values(comC),1);
-    document.getElementById('comisionResults').innerHTML = Object.entries(comC).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="result-item"><span class="result-label">${n}</span><div class="result-bar-container"><div class="result-bar" style="width:${(c/maxC)*100}%"></div></div><span class="result-count">${c}</span></div>`).join('');
-    document.getElementById('temasResults').innerHTML = r.map(x=>`<div class="response-item">${x.temas||'—'}</div>`).join('');
-    document.getElementById('proyectoResults').innerHTML = r.map(x=>`<div class="response-item"><span class="response-municipio">${x.municipio}</span>: ${x.proyecto||'—'}</div>`).join('');
-  } catch(e) { console.error(e); }
-}
+async function tglSrv(){await fetch(API+'/toggle',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:'martha2026'})});rAdm()}
+function expCSV(){window.open(API+'/export','_blank')}
 
-async function toggleSurvey() {
-  await fetch(API+'/toggle', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:'martha2026'}) });
-  renderAdmin();
-}
-
-function exportCSV() { window.open(API+'/export', '_blank'); }
-
-checkStatus();
-updateProgress();
+chk();upProg();
 </script>
 </body>
 </html>
