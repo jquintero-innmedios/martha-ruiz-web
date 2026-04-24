@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encuestas — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--rojo:#cc1e2b;--rojo-oscuro:#a01520;--naranja:#e8631a;--verde:#2eaa4a;--blanco:#fff;--gris:#f4f4f4;--gris-t:#555;--negro:#111;--grad:linear-gradient(90deg,#cc1e2b 0%,#e8631a 28%,#f5c518 52%,#2eaa4a 74%,#1a5fb4 100%)}
+body{font-family:'DM Sans',sans-serif;background:var(--gris);color:var(--negro);min-height:100vh}
+
+.rainbow-bar{height:5px;background:var(--grad);width:100%;position:fixed;top:0;z-index:100}
+
+.header{background:var(--blanco);border-bottom:1px solid #e8e8e8;padding:20px 32px;position:sticky;top:5px;z-index:50;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.header-title{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;text-transform:uppercase;color:var(--negro);letter-spacing:.02em}
+.header-title span{color:var(--rojo)}
+
+.container{max-width:960px;margin:0 auto;padding:24px 20px}
+
+/* Login */
+.login{max-width:380px;margin:80px auto;background:var(--blanco);border:1px solid #e8e8e8;padding:40px 32px;text-align:center}
+.login-title{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;text-transform:uppercase;margin-bottom:8px}
+.login-sub{font-size:14px;color:var(--gris-t);margin-bottom:24px}
+.login .inp{width:100%;margin-bottom:16px}
+
+/* Survey list */
+.slist{display:grid;gap:12px;margin-top:20px}
+.sitem{background:var(--blanco);border:1px solid #e8e8e8;padding:20px 24px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px}
+.sitem:hover{border-color:var(--rojo);box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.sitem-title{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase}
+.sitem-meta{font-size:12px;color:var(--gris-t);margin-top:2px}
+.sitem-badge{padding:4px 12px;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:0}
+.sitem-badge.open{background:rgba(46,170,74,.1);color:var(--verde)}
+.sitem-badge.closed{background:rgba(204,30,43,.1);color:var(--rojo)}
+
+/* Buttons */
+.btn{padding:12px 24px;border:none;font-family:'Barlow Condensed',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;border-radius:0}
+.btn-red{background:var(--rojo);color:#fff;box-shadow:0 4px 16px rgba(204,30,43,.25)}
+.btn-red:hover{background:var(--rojo-oscuro)}
+.btn-outline{background:transparent;color:var(--rojo);border:2px solid var(--rojo)}
+.btn-outline:hover{background:var(--rojo);color:#fff}
+.btn-ghost{background:transparent;color:var(--negro);border:2px solid #e8e8e8}
+.btn-ghost:hover{border-color:var(--negro)}
+.btn-danger{background:transparent;color:#999;border:2px solid #ddd}
+.btn-danger:hover{border-color:var(--rojo);color:var(--rojo)}
+.btn-sm{padding:8px 16px;font-size:.78rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.st{background:var(--blanco);border:1px solid #e8e8e8;padding:20px;text-align:center}
+.st-v{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--rojo)}
+.st-l{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-t);margin-top:4px}
+
+/* Sections */
+.rsec{background:var(--blanco);border:1px solid #e8e8e8;padding:20px 24px;margin-bottom:16px}
+.rsec-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.rsec-t{font-family:'Barlow Condensed',sans-serif;font-size:.92rem;font-weight:800;text-transform:uppercase;color:var(--negro);letter-spacing:.04em}
+.ri{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #e8e8e8}
+.ri:last-child{border-bottom:none}
+.ri-l{font-size:14px;color:var(--gris-t);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ri-bc{flex:1.5;height:6px;background:#e8e8e8;margin:0 12px;overflow:hidden;border-radius:3px}
+.ri-b{height:100%;background:var(--rojo);border-radius:3px;transition:width .4s}
+.ri-c{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--rojo);min-width:28px;text-align:right}
+
+/* Response cards */
+.rcard{background:var(--blanco);border:1px solid #e8e8e8;padding:14px 20px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;transition:all .2s}
+.rcard:hover{border-color:var(--naranja)}
+.rcard-info{flex:1}
+.rcard-time{font-size:11px;color:#aaa;letter-spacing:.04em}
+.rcard-body{font-size:13px;color:var(--negro);line-height:1.5;margin-top:3px}
+.rcard-body strong{color:var(--rojo)}
+.rcard-del{background:none;border:none;color:#ccc;cursor:pointer;font-size:16px;padding:4px 8px;transition:color .2s}
+.rcard-del:hover{color:var(--rojo)}
+
+/* Create form */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;justify-content:center;align-items:center}
+.modal-bg.active{display:flex}
+.modal{background:var(--blanco);max-width:480px;width:90%;padding:32px;border:1px solid #e8e8e8}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;text-transform:uppercase;margin-bottom:20px;letter-spacing:.02em}
+
+.inp{width:100%;padding:12px 14px;border:2px solid #e8e8e8;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--negro);background:var(--blanco);outline:none;transition:border-color .2s}
+.inp:focus{border-color:var(--rojo)}
+.inp::placeholder{color:#aaa}
+
+.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--rojo);font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;text-decoration:none;margin-bottom:20px;font-size:.9rem}
+.back-link:hover{text-decoration:underline}
+
+.link-copy{display:flex;gap:8px;align-items:center;margin-top:8px}
+.link-copy .inp{flex:1;font-size:13px;background:var(--gris)}
+.copy-btn{padding:10px 16px;background:var(--negro);color:#fff;border:none;font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap}
+.copy-btn:hover{opacity:.8}
+
+.empty{text-align:center;padding:40px 20px;color:var(--gris-t)}
+.empty-icon{font-size:48px;margin-bottom:12px;opacity:.4}
+
+@media(max-width:600px){
+  .header{padding:16px}
+  .container{padding:16px}
+  .sitem{grid-template-columns:1fr;gap:8px}
+  .stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="rainbow-bar"></div>
+
+<!-- LOGIN -->
+<div id="loginScreen" style="display:flex;min-height:100vh;align-items:center;justify-content:center;padding:20px">
+  <div class="login">
+    <div style="font-size:48px;margin-bottom:16px">📊</div>
+    <div class="login-title">Panel de Encuestas</div>
+    <div class="login-sub">Ingresa el código de administrador</div>
+    <input type="password" id="pwInput" class="inp" placeholder="Código de administrador" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn btn-red" style="width:100%" onclick="doLogin()">Ingresar</button>
+    <div id="loginErr" style="color:var(--rojo);font-size:13px;margin-top:12px;display:none">Código incorrecto</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" style="display:none">
+  <div class="header">
+    <div class="header-title">Encuestas <span>Admin</span></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-outline btn-sm" onclick="showCreate()">+ Nueva encuesta</button>
+      <button class="btn btn-ghost btn-sm" onclick="doLogout()">Salir</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Survey list -->
+    <div id="surveyListView">
+      <div id="surveyList" class="slist"></div>
+    </div>
+
+    <!-- Survey detail -->
+    <div id="surveyDetailView" style="display:none">
+      <a class="back-link" onclick="showList()">← Volver a encuestas</a>
+
+      <div id="detailHeader" style="margin-bottom:20px"></div>
+      <div id="detailStats" class="stats"></div>
+      <div id="detailActions" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap"></div>
+
+      <div id="detailMun" class="rsec"></div>
+      <div id="detailCom" class="rsec"></div>
+      <div id="detailResp" class="rsec"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CREATE MODAL -->
+<div id="createModal" class="modal-bg">
+  <div class="modal">
+    <div class="modal-title">Crear nueva encuesta</div>
+    <input id="newId" class="inp" placeholder="ID (ej: eventos-monteria, sin espacios)" style="margin-bottom:10px">
+    <input id="newTitle" class="inp" placeholder="Título (ej: Tu voz cuenta — Evento Montería)" style="margin-bottom:10px">
+    <input id="newSubtitle" class="inp" placeholder="Subtítulo (ej: Martha Ruiz Solera)" style="margin-bottom:10px">
+    <div style="font-size:12px;color:var(--gris-t);margin-bottom:16px;line-height:1.5">
+      Se crearán 5 preguntas estándar:<br>
+      Municipio · Temas de legislación · Proyecto prioritario · Comisión · Nombre
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-ghost" style="flex:1" onclick="hideCreate()">Cancelar</button>
+      <button class="btn btn-red" style="flex:1" onclick="createSurvey()">Crear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const API='https://nico.innmedios.com/api';
+const PW='martha2026';
+let loggedIn=false,currentId='';
+
+function doLogin(){
+  const pw=document.getElementById('pwInput').value;
+  if(pw===PW){loggedIn=true;document.getElementById('loginScreen').style.display='none';document.getElementById('dashboard').style.display='block';loadSurveys()}
+  else{document.getElementById('loginErr').style.display='block'}
+}
+function doLogout(){loggedIn=false;document.getElementById('dashboard').style.display='none';document.getElementById('loginScreen').style.display='flex';document.getElementById('pwInput').value=''}
+
+async function loadSurveys(){
+  const r=await fetch(`${API}/surveys`);
+  const d=await r.json();
+  const list=document.getElementById('surveyList');
+  if(!d.surveys.length){list.innerHTML='<div class="empty"><div class="empty-icon">📋</div>No hay encuestas aún. Crea la primera.</div>';return}
+  list.innerHTML=d.surveys.map(s=>`
+    <div class="sitem" onclick="showDetail('${s.id}')">
+      <div>
+        <div class="sitem-title">${s.title}</div>
+        <div class="sitem-meta">${s.responses} respuestas · Creada ${new Date(s.created).toLocaleDateString('es-CO')}</div>
+      </div>
+      <span class="sitem-badge ${s.open?'open':'closed'}">${s.open?'Abierta':'Cerrada'}</span>
+    </div>
+  `).join('');
+}
+
+function showCreate(){document.getElementById('createModal').classList.add('active')}
+function hideCreate(){document.getElementById('createModal').classList.remove('active')}
+
+async function createSurvey(){
+  const id=document.getElementById('newId').value.trim().replace(/[^a-z0-9-]/gi,'-').toLowerCase();
+  const title=document.getElementById('newTitle').value.trim();
+  const subtitle=document.getElementById('newSubtitle').value.trim();
+  if(!id||!title){alert('ID y título son requeridos');return}
+  const r=await fetch(`${API}/surveys`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,title,subtitle,password:PW})});
+  if(!r.ok){const e=await r.json();alert(e.detail||'Error');return}
+  hideCreate();
+  document.getElementById('newId').value='';document.getElementById('newTitle').value='';document.getElementById('newSubtitle').value='';
+  loadSurveys();
+}
+
+async function showDetail(sid){
+  currentId=sid;
+  document.getElementById('surveyListView').style.display='none';
+  document.getElementById('surveyDetailView').style.display='block';
+  await loadDetail();
+}
+
+async function loadDetail(){
+  const r=await fetch(`${API}/surveys/${currentId}`);
+  const d=await r.json();
+  const s=d.survey;
+  const resp=d.responses;
+
+  // Header
+  document.getElementById('detailHeader').innerHTML=`
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;text-transform:uppercase">${s.title}</div>
+    <div class="link-copy">
+      <input class="inp" value="https://martharuizsol.com/encuesta.html?id=${s.id}" readonly id="surveyLink">
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('surveyLink').value);this.textContent='✓ Copiado'">Copiar link</button>
+    </div>
+  `;
+
+  // Stats
+  document.getElementById('detailStats').innerHTML=`
+    <div class="st"><div class="st-v">${d.total}</div><div class="st-l">Respuestas</div></div>
+    <div class="st"><div class="st-v" style="font-size:18px;color:${d.open?'var(--verde)':'var(--rojo)'}">${d.open?'Abierta':'Cerrada'}</div><div class="st-l">Estado</div></div>
+  `;
+
+  // Actions
+  document.getElementById('detailActions').innerHTML=`
+    <button class="btn ${d.open?'btn-red':'btn-outline'} btn-sm" onclick="tglSurvey()">${d.open?'Cerrar encuesta':'Abrir encuesta'}</button>
+    <button class="btn btn-outline btn-sm" onclick="expCSV()">📥 Exportar CSV</button>
+    <button class="btn btn-danger btn-sm" onclick="clearAll()">🗑️ Borrar todas</button>
+  `;
+
+  // Municipios
+  const mc={};resp.forEach(x=>{if(x.municipio)mc[x.municipio]=(mc[x.municipio]||0)+1});
+  const mx=Math.max(...Object.values(mc),1);
+  document.getElementById('detailMun').innerHTML=`<div class="rsec-t">📊 Municipios</div>`+Object.entries(mc).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="ri"><span class="ri-l">${n}</span><div class="ri-bc"><div class="ri-b" style="width:${c/mx*100}%"></div></div><span class="ri-c">${c}</span></div>`).join('');
+
+  // Comisiones
+  const cc={};resp.forEach(x=>{if(x.comision)cc[x.comision]=(cc[x.comision]||0)+1});
+  const cx=Math.max(...Object.values(cc),1);
+  document.getElementById('detailCom').innerHTML=`<div class="rsec-t">🏛️ Comisiones</div>`+Object.entries(cc).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="ri"><span class="ri-l">${n}</span><div class="ri-bc"><div class="ri-b" style="width:${c/cx*100}%"></div></div><span class="ri-c">${c}</span></div>`).join('');
+
+  // Responses
+  document.getElementById('detailResp').innerHTML=`<div class="rsec-t">💬 Respuestas (${resp.length})</div>`+(resp.length?resp.map(r=>`<div class="rcard"><div class="rcard-info"><div class="rcard-time">${new Date(r.timestamp).toLocaleString('es-CO',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</div><div class="rcard-body"><strong>${r.municipio||'—'}</strong> · ${r.comision||'—'}<br>${(r.temas||'—').substring(0,80)}${(r.temas||'').length>80?'...':''}</div></div><button class="rcard-del" onclick="delResp('${r.id}')" title="Eliminar">✕</button></div>`).join(''):'<div class="empty" style="padding:20px"><div class="empty-icon">📭</div>Aún no hay respuestas</div>');
+}
+
+function showList(){
+  document.getElementById('surveyListView').style.display='block';
+  document.getElementById('surveyDetailView').style.display='none';
+  loadSurveys();
+}
+
+async function tglSurvey(){
+  await fetch(`${API}/surveys/${currentId}/toggle`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:PW})});
+  loadDetail();
+}
+
+async function delResp(rid){
+  if(!confirm('¿Eliminar esta respuesta?'))return;
+  await fetch(`${API}/surveys/${currentId}/responses/${rid}?password=${PW}`,{method:'DELETE'});
+  loadDetail();
+}
+
+async function clearAll(){
+  if(!confirm('¿Borrar TODAS las respuestas? No se puede deshacer.'))return;
+  await fetch(`${API}/surveys/${currentId}/responses?password=${PW}`,{method:'DELETE'});
+  loadDetail();
+}
+
+function expCSV(){window.open(`${API}/surveys/${currentId}/export`,'_blank')}
+</script>
+</body>
+</html>

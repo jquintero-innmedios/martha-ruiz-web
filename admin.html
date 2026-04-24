@@ -3,243 +3,797 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Encuestas — Admin — Martha Ruiz Solera</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
+<title>Admin — Blog Martha Ruiz</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--rojo:#cc1e2b;--rojo-oscuro:#a01520;--naranja:#e8631a;--verde:#2eaa4a;--blanco:#fff;--gris:#f4f4f4;--gris-t:#555;--negro:#111;--grad:linear-gradient(90deg,#cc1e2b 0%,#e8631a 28%,#f5c518 52%,#2eaa4a 74%,#1a5fb4 100%)}
-body{font-family:'DM Sans',sans-serif;background:var(--gris);color:var(--negro);min-height:100vh}
-.rainbow-bar{height:5px;background:var(--grad);width:100%;position:fixed;top:0;z-index:100}
-.header{background:var(--blanco);border-bottom:1px solid #e8e8e8;padding:20px 32px;position:sticky;top:5px;z-index:50;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.header-title{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;text-transform:uppercase;color:var(--negro);letter-spacing:.02em}
-.header-title span{color:var(--rojo)}
-.container{max-width:960px;margin:0 auto;padding:24px 20px}
-.login{max-width:380px;margin:80px auto;background:var(--blanco);border:1px solid #e8e8e8;padding:40px 32px;text-align:center}
-.login-title{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;text-transform:uppercase;margin-bottom:8px}
-.login-sub{font-size:14px;color:var(--gris-t);margin-bottom:24px}
-.inp{width:100%;padding:12px 14px;border:2px solid #e8e8e8;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--negro);background:var(--blanco);outline:none;transition:border-color .2s}
-.inp:focus{border-color:var(--rojo)}
-.inp::placeholder{color:#aaa}
-.slist{display:grid;gap:12px;margin-top:20px}
-.sitem{background:var(--blanco);border:1px solid #e8e8e8;padding:20px 24px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px}
-.sitem:hover{border-color:var(--rojo);box-shadow:0 4px 20px rgba(0,0,0,.06)}
-.sitem-title{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase}
-.sitem-meta{font-size:12px;color:var(--gris-t);margin-top:2px}
-.sitem-badge{padding:4px 12px;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-.sitem-badge.open{background:rgba(46,170,74,.1);color:var(--verde)}
-.sitem-badge.closed{background:rgba(204,30,43,.1);color:var(--rojo)}
-.btn{padding:12px 24px;border:none;font-family:'Barlow Condensed',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.btn-red{background:var(--rojo);color:#fff;box-shadow:0 4px 16px rgba(204,30,43,.25)}
-.btn-red:hover{background:var(--rojo-oscuro)}
-.btn-outline{background:transparent;color:var(--rojo);border:2px solid var(--rojo)}
-.btn-outline:hover{background:var(--rojo);color:#fff}
-.btn-ghost{background:transparent;color:var(--negro);border:2px solid #e8e8e8}
-.btn-ghost:hover{border-color:var(--negro)}
-.btn-danger{background:transparent;color:#999;border:2px solid #ddd}
-.btn-danger:hover{border-color:var(--rojo);color:var(--rojo)}
-.btn-sm{padding:8px 16px;font-size:.78rem}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
-.st{background:var(--blanco);border:1px solid #e8e8e8;padding:20px;text-align:center}
-.st-v{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--rojo)}
-.st-l{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-t);margin-top:4px}
-.rsec{background:var(--blanco);border:1px solid #e8e8e8;padding:20px 24px;margin-bottom:16px}
-.rsec-t{font-family:'Barlow Condensed',sans-serif;font-size:.92rem;font-weight:800;text-transform:uppercase;color:var(--negro);margin-bottom:16px;letter-spacing:.04em}
-.ri{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #e8e8e8}
-.ri:last-child{border-bottom:none}
-.ri-l{font-size:14px;color:var(--gris-t);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ri-bc{flex:1.5;height:6px;background:#e8e8e8;margin:0 12px;overflow:hidden}
-.ri-b{height:100%;background:var(--rojo);transition:width .4s}
-.ri-c{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--rojo);min-width:28px;text-align:right}
-.rcard{background:var(--blanco);border:1px solid #e8e8e8;padding:14px 20px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;transition:all .2s}
-.rcard:hover{border-color:var(--naranja)}
-.rcard-info{flex:1}
-.rcard-time{font-size:11px;color:#aaa;letter-spacing:.04em}
-.rcard-body{font-size:13px;color:var(--negro);line-height:1.5;margin-top:3px}
-.rcard-body strong{color:var(--rojo)}
-.rcard-del{background:none;border:none;color:#ccc;cursor:pointer;font-size:16px;padding:4px 8px;transition:color .2s}
-.rcard-del:hover{color:var(--rojo)}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;justify-content:center;align-items:center}
-.modal-bg.active{display:flex}
-.modal{background:var(--blanco);max-width:480px;width:90%;padding:32px;border:1px solid #e8e8e8}
-.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;text-transform:uppercase;margin-bottom:20px;letter-spacing:.02em}
-.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--rojo);font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;text-decoration:none;margin-bottom:20px;font-size:.9rem}
-.back-link:hover{text-decoration:underline}
-.link-copy{display:flex;gap:8px;align-items:center;margin-top:8px}
-.link-copy .inp{flex:1;font-size:13px;background:var(--gris)}
-.copy-btn{padding:10px 16px;background:var(--negro);color:#fff;border:none;font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap}
-.copy-btn:hover{opacity:.8}
-.empty{text-align:center;padding:40px 20px;color:var(--gris-t)}
-.empty-icon{font-size:48px;margin-bottom:12px;opacity:.4}
-@media(max-width:600px){.header{padding:16px}.container{padding:16px}.sitem{grid-template-columns:1fr;gap:8px}.stats{grid-template-columns:1fr 1fr}}
+ :root{
+ --rojo:#cc1e2b;--rojo-oscuro:#a01520;--blanco:#fff;--gris-claro:#f4f4f4;
+ --gris-texto:#555;--negro:#111;
+ --grad:linear-gradient(90deg,#cc1e2b 0%,#e8631a 28%,#f5c518 52%,#2eaa4a 74%,#1a5fb4 100%);
+ }
+ *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+ body{font-family:'DM Sans',sans-serif;background:#f0f2f5;color:var(--negro);min-height:100vh}
+ .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--negro);position:relative;overflow:hidden}
+ .login-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(204,30,43,.2) 0%,transparent 70%)}
+ .login-box{background:#fff;padding:3rem;width:100%;max-width:420px;position:relative;z-index:1}
+ .login-rainbow{height:4px;background:var(--grad);margin-bottom:2rem}
+ .login-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;text-transform:uppercase;color:var(--negro);margin-bottom:.3rem}
+ .login-logo span{color:var(--rojo)}
+ .login-sub{font-size:.85rem;color:var(--gris-texto);margin-bottom:2rem}
+ .login-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+ .login-group label{font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--negro)}
+ .login-group input{padding:.9rem 1rem;border:2px solid transparent;background:var(--gris-claro);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s}
+ .login-group input:focus{border-color:var(--rojo)}
+ .login-btn{width:100%;padding:1rem;background:var(--rojo);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .25s;margin-top:.5rem}
+ .login-btn:hover{background:var(--rojo-oscuro)}
+ .login-error{background:#fee;border:1px solid var(--rojo);color:var(--rojo);padding:.7rem 1rem;font-size:.83rem;margin-bottom:1rem;display:none}
+ .admin-wrap{display:none;min-height:100vh}
+ .admin-sidebar{width:260px;background:var(--negro);position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;z-index:50}
+ .admin-sidebar-logo{padding:1.5rem 1.5rem 1rem;border-bottom:1px solid rgba(255,255,255,.08)}
+ .admin-logo-txt{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;text-transform:uppercase;color:#fff}
+ .admin-logo-txt span{color:var(--rojo)}
+ .admin-logo-sub{font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.2rem}
+ .admin-rainbow{height:3px;background:var(--grad)}
+ .admin-nav{padding:1rem 0;flex:1}
+ .admin-nav-item{display:flex;align-items:center;gap:.8rem;padding:.8rem 1.5rem;font-size:.85rem;font-weight:600;color:rgba(255,255,255,.55);cursor:pointer;transition:all .2s;border-left:3px solid transparent}
+ .admin-nav-item:hover,.admin-nav-item.active{color:#fff;background:rgba(255,255,255,.05);border-color:var(--rojo)}
+ .admin-nav-item .nav-ico{font-size:1.1rem;width:20px;text-align:center}
+ .admin-footer{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.08)}
+ .admin-logout{width:100%;padding:.7rem;background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.15);font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+ .admin-logout:hover{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+ .admin-main{margin-left:260px;padding:2rem;min-height:100vh}
+ .admin-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #e0e0e0}
+ .admin-page-title{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;text-transform:uppercase;color:var(--negro)}
+ .admin-btn{padding:.7rem 1.5rem;font-size:.82rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+ .admin-btn-red{background:var(--rojo);color:#fff}
+ .admin-btn-red:hover{background:var(--rojo-oscuro)}
+ .admin-btn-gray{background:var(--gris-claro);color:var(--negro)}
+ .admin-btn-gray:hover{background:#e0e0e0}
+ .admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+ .stat-card{background:#fff;padding:1.5rem;border-top:3px solid var(--rojo)}
+ .stat-card:nth-child(2){border-color:#e8631a}
+ .stat-card:nth-child(3){border-color:#2eaa4a}
+ .stat-card:nth-child(4){border-color:#1a5fb4}
+ .stat-n{font-family:'Barlow Condensed',sans-serif;font-size:2.5rem;font-weight:900;line-height:1;color:var(--negro)}
+ .stat-l{font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--gris-texto);margin-top:.3rem}
+ .tabla-wrap{background:#fff;overflow:hidden}
+ .tabla-head{display:grid;grid-template-columns:1fr 160px 140px 100px 120px;padding:1rem 1.5rem;background:var(--gris-claro);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-texto);gap:1rem}
+ .tabla-row{display:grid;grid-template-columns:1fr 160px 140px 100px 120px;padding:1.2rem 1.5rem;border-bottom:1px solid var(--gris-claro);align-items:center;gap:1rem;transition:background .2s}
+ .tabla-row:hover{background:#fafafa}
+ .tabla-titulo{font-weight:600;font-size:.9rem;color:var(--negro);line-height:1.3}
+ .tabla-cat{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;padding:.25rem .6rem;width:fit-content}
+ .tabla-fecha{font-size:.82rem;color:var(--gris-texto)}
+ .tabla-estado{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .6rem}
+ .estado-pub{background:#e8f5e9;color:#2e7d32}
+ .estado-bor{background:#fff3e0;color:#e65100}
+ .tabla-acciones{display:flex;gap:.5rem}
+ .tbl-btn{padding:.4rem .8rem;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border:none;cursor:pointer;transition:all .2s}
+ .tbl-edit{background:var(--gris-claro);color:var(--negro)}
+ .tbl-edit:hover{background:#e0e0e0}
+ .tbl-del{background:#fee;color:var(--rojo)}
+ .tbl-del:hover{background:var(--rojo);color:#fff}
+ .form-panel{background:#fff;padding:2rem;display:none}
+ .form-panel.visible{display:block}
+ .form-title{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:800;text-transform:uppercase;color:var(--negro);margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:2px solid var(--rojo)}
+ .form-rainbow{height:3px;background:var(--grad);margin-bottom:1.5rem}
+ .f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+ .f-g{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+ .f-g label{font-size:.73rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--negro)}
+ .f-g input,.f-g select,.f-g textarea{padding:.85rem 1rem;border:2px solid transparent;background:var(--gris-claro);font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--negro);outline:none;transition:border-color .2s;-webkit-appearance:none}
+ .f-g input:focus,.f-g select:focus,.f-g textarea:focus{border-color:var(--rojo)}
+ .f-g textarea{resize:vertical;min-height:300px;font-size:.9rem;line-height:1.6}
+ .editor-hint{font-size:.75rem;color:var(--gris-texto);margin-top:.3rem;line-height:1.4}
+ .form-actions{display:flex;gap:1rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--gris-claro)}
+ .toast{position:fixed;bottom:2rem;right:2rem;background:var(--negro);color:#fff;padding:1rem 1.5rem;font-size:.85rem;font-weight:600;z-index:1000;transform:translateY(100px);opacity:0;transition:all .3s;max-width:300px}
+ .toast.show{transform:translateY(0);opacity:1}
+ .toast.success{border-left:4px solid #2eaa4a}
+ .toast.error{border-left:4px solid var(--rojo)}
+ .tabla-empty{text-align:center;padding:4rem;color:var(--gris-texto)}
+ .tabla-empty-icon{font-size:3rem;margin-bottom:1rem}
+ .loading-tabla{text-align:center;padding:3rem;color:var(--gris-texto)}
+ .spinner{width:30px;height:30px;border:3px solid var(--gris-claro);border-top-color:var(--rojo);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 1rem}
+ @keyframes spin{to{transform:rotate(360deg)}}
+ .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center}
+ .modal-overlay.show{display:flex}
+ .modal-box{background:#fff;padding:2rem;max-width:400px;width:90%}
+ .modal-title{font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:800;text-transform:uppercase;margin-bottom:.8rem}
+ .modal-text{font-size:.88rem;color:var(--gris-texto);margin-bottom:1.5rem;line-height:1.5}
+ .modal-actions{display:flex;gap:.8rem}
+ @media(max-width:768px){
+ .admin-sidebar{transform:translateX(-100%)}
+ .admin-main{margin-left:0}
+ .admin-stats{grid-template-columns:1fr 1fr}
+ .tabla-head,.tabla-row{grid-template-columns:1fr auto}
+ .tabla-head>*:not(:first-child):not(:last-child){display:none}
+ .tabla-row>*:not(:first-child):not(:last-child){display:none}
+ }
 </style>
 </head>
 <body>
-
-<div class="rainbow-bar"></div>
-
-<div id="loginScreen" style="display:flex;min-height:100vh;align-items:center;justify-content:center;padding:20px">
-  <div class="login">
-    <div style="font-size:48px;margin-bottom:16px">📊</div>
-    <div class="login-title">Panel de Encuestas</div>
-    <div class="login-sub">Martha Ruiz Solera</div>
-    <input type="password" id="pwInput" class="inp" placeholder="Código de administrador" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="btn btn-red" style="width:100%;margin-top:12px" onclick="doLogin()">Ingresar</button>
-    <div id="loginErr" style="color:var(--rojo);font-size:13px;margin-top:12px;display:none">Código incorrecto</div>
-  </div>
+<div class="login-wrap" id="loginWrap">
+ <div class="login-box">
+ <div class="login-rainbow"></div>
+ <div class="login-logo">Martha <span>Admin</span></div>
+ <div class="login-sub">Panel de administración del blog · Acceso restringido</div>
+ <div class="login-error" id="loginError">Contraseña incorrecta. Intenta de nuevo.</div>
+ <form onsubmit="login(event)">
+ <div class="login-group">
+ <label>Usuario</label>
+ <input type="text" id="loginUser" placeholder="admin" autocomplete="username">
+ </div>
+ <div class="login-group">
+ <label>Contraseña</label>
+ <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+ </div>
+ <button class="login-btn" type="submit">Ingresar →</button>
+ </form>
+ </div>
 </div>
-
-<div id="dashboard" style="display:none">
-  <div class="header">
-    <div class="header-title">Encuestas <span>Admin</span></div>
-    <div style="display:flex;gap:8px">
-      <button class="btn btn-outline btn-sm" onclick="showCreate()">+ Nueva encuesta</button>
-      <button class="btn btn-ghost btn-sm" onclick="doLogout()">Salir</button>
-    </div>
-  </div>
-  <div class="container">
-    <div id="surveyListView"><div id="surveyList" class="slist"></div></div>
-    <div id="surveyDetailView" style="display:none">
-      <a class="back-link" onclick="showList()">← Volver a encuestas</a>
-      <div id="detailHeader" style="margin-bottom:20px"></div>
-      <div id="detailStats" class="stats"></div>
-      <div id="detailActions" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap"></div>
-      <div id="detailMun" class="rsec"></div>
-      <div id="detailCom" class="rsec"></div>
-      <div id="detailResp" class="rsec"></div>
-    </div>
-  </div>
+<div class="admin-wrap" id="adminWrap">
+ <aside class="admin-sidebar">
+ <div>
+ <div class="admin-sidebar-logo">
+ <div class="admin-logo-txt">Martha <span>Admin</span></div>
+ <div class="admin-logo-sub">Panel de Contenidos · Representante Córdoba</div>
+ </div>
+ <div class="admin-rainbow"></div>
+ <nav class="admin-nav">
+ <div style="font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.8rem 1.5rem .3rem">Blog</div>
+ <div class="admin-nav-item active" onclick="mostrarSeccion('articulos',this)">
+ <span class="nav-ico">📝</span> Artículos
+ </div>
+ <div class="admin-nav-item" onclick="mostrarSeccion('nuevo',this)">
+ <span class="nav-ico">✍️</span> Nuevo Artículo
+ </div>
+ <div class="admin-nav-item" onclick="window.open('blog.html','_blank')">
+ <span class="nav-ico">👁️</span> Ver Blog
+ </div>
+ <div style="font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.8rem 1.5rem .3rem;margin-top:.5rem">Sala de Prensa</div>
+ <div class="admin-nav-item" onclick="mostrarSeccion('boletines',this)">
+ <span class="nav-ico">📋</span> Boletines
+ </div>
+ <div class="admin-nav-item" onclick="mostrarSeccion('nuevoBoletin',this)">
+ <span class="nav-ico">➕</span> Nuevo Boletín
+ </div>
+ <div class="admin-nav-item" onclick="mostrarSeccion('medios',this)">
+ <span class="nav-ico">📰</span> En los Medios
+ </div>
+ <div class="admin-nav-item" onclick="mostrarSeccion('nuevoMedio',this)">
+ <span class="nav-ico">🔗</span> Agregar Medio
+ </div>
+ <div class="admin-nav-item" onclick="window.open('prensa.html','_blank')">
+ <span class="nav-ico">👁️</span> Ver Sala de Prensa
+ </div>
+ <div style="font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.8rem 1.5rem .3rem;margin-top:.5rem">General</div>
+ <div class="admin-nav-item" onclick="window.open('index.html','_blank')">
+ <span class="nav-ico">🏠</span> Ver Página Principal
+ </div>
+ </nav>
+ </div>
+ <div class="admin-footer">
+ <button class="admin-logout" onclick="logout()">Cerrar sesión</button>
+ </div>
+ </aside>
+ <main class="admin-main">
+ <div id="sec-articulos">
+ <div class="admin-topbar">
+ <div class="admin-page-title">Artículos</div>
+ <button class="admin-btn admin-btn-red" onclick="mostrarSeccion('nuevo', document.querySelector('.admin-nav-item:nth-child(2)'))">+ Nuevo Artículo</button>
+ </div>
+ <div class="admin-stats">
+ <div class="stat-card"><div class="stat-n" id="stat-total">0</div><div class="stat-l">Total artículos</div></div>
+ <div class="stat-card"><div class="stat-n" id="stat-pub">0</div><div class="stat-l">Publicados</div></div>
+ <div class="stat-card"><div class="stat-n" id="stat-bor">0</div><div class="stat-l">Borradores</div></div>
+ <div class="stat-card"><div class="stat-n" id="stat-cats">0</div><div class="stat-l">Categorías usadas</div></div>
+ </div>
+ <div class="tabla-wrap">
+ <div class="tabla-head">
+ <div>Título</div><div>Categoría</div><div>Fecha</div><div>Estado</div><div>Acciones</div>
+ </div>
+ <div id="tabla-body"><div class="loading-tabla"><div class="spinner"></div>Cargando...</div></div>
+ </div>
+ </div>
+ <div id="sec-nuevo" style="display:none">
+ <div class="admin-topbar">
+ <div class="admin-page-title" id="form-page-title">Nuevo Artículo</div>
+ <button class="admin-btn admin-btn-gray" onclick="mostrarSeccion('articulos', document.querySelector('.admin-nav-item'))">← Volver</button>
+ </div>
+ <div class="form-panel visible">
+ <div class="form-rainbow"></div>
+ <input type="hidden" id="edit-id">
+ <div class="f-row">
+ <div class="f-g" style="grid-column:1/-1">
+ <label>Título del artículo *</label>
+ <input type="text" id="f-titulo" placeholder="Escribe el título aquí...">
+ </div>
+ </div>
+ <div class="f-row">
+ <div class="f-g">
+ <label>Categoría *</label>
+ <select id="f-cat">
+ <option value="">Selecciona...</option>
+ <option>Columna Legislativa</option>
+ <option>Mujer & Política</option>
+ <option>Reflexión Personal</option>
+ <option>Salud</option>
+ <option>Familia</option>
+ <option>Córdoba</option>
+ </select>
+ </div>
+ <div class="f-g">
+ <label>Estado</label>
+ <select id="f-estado">
+ <option value="publicado">Publicado</option>
+ <option value="borrador">Borrador</option>
+ </select>
+ </div>
+ </div>
+ <div class="f-row">
+ <div class="f-g">
+ <label>Emoji representativo</label>
+ <input type="text" id="f-emoji" placeholder="🏛️" maxlength="4">
+ </div>
+ <div class="f-g">
+ <label>Tiempo de lectura (minutos)</label>
+ <input type="number" id="f-tiempo" placeholder="3" min="1" max="30">
+ </div>
+ </div>
+ <div class="f-g" style="grid-column:1/-1">
+ <label>Imagen del artículo</label>
+ <input type="file" id="f-imagen-file" accept="image/*" onchange="previsualizarImagen(this)">
+ <div id="f-imagen-preview" style="margin-top:.8rem;display:none">
+ <img id="preview-img" style="max-height:200px;max-width:100%;object-fit:cover;">
+ <p style="font-size:.75rem;color:var(--gris-texto);margin-top:.4rem">✅ Imagen seleccionada</p>
+ </div>
+ <input type="hidden" id="f-imagen-url">
+ </div>
+ <div class="f-g">
+ <label>Resumen / Introducción *</label>
+ <textarea id="f-resumen" style="min-height:100px" placeholder="Escribe un resumen corto del artículo (2-3 oraciones)..."></textarea>
+ </div>
+ <div class="f-g">
+ <label>Contenido completo *</label>
+ <textarea id="f-contenido" placeholder="Escribe el contenido completo del artículo aquí...&#10;&#10;Puedes usar HTML básico:&#10;&lt;p&gt;Párrafo&lt;/p&gt;&#10;&lt;h2&gt;Subtítulo&lt;/h2&gt;&#10;&lt;blockquote&gt;Cita destacada&lt;/blockquote&gt;&#10;&lt;strong&gt;Texto en negrita&lt;/strong&gt;"></textarea>
+ <div class="editor-hint">
+ 💡 Puedes usar HTML básico: &lt;p&gt; párrafos, &lt;h2&gt; subtítulos, &lt;blockquote&gt; citas, &lt;strong&gt; negritas, &lt;ul&gt;&lt;li&gt; listas
+ </div>
+ </div>
+ <div class="form-actions">
+ <button class="admin-btn admin-btn-red" onclick="guardarArticulo()">💾 Guardar Artículo</button>
+ <button class="admin-btn admin-btn-gray" onclick="limpiarForm()">🗑️ Limpiar</button>
+ </div>
+ </div>
+ </div>
+ <div id="sec-boletines" style="display:none">
+ <div class="admin-topbar">
+ <div class="admin-page-title">Boletines de Prensa</div>
+ <button class="admin-btn admin-btn-red" onclick="mostrarSeccion('nuevoBoletin', document.querySelector('.admin-nav-item:nth-child(8)'))">+ Nuevo Boletín</button>
+ </div>
+ <div class="tabla-wrap">
+ <div class="tabla-head" style="grid-template-columns:1fr 160px 120px">
+ <div>Título</div><div>Fecha</div><div>Acciones</div>
+ </div>
+ <div id="tabla-boletines"><div class="loading-tabla"><div class="spinner"></div>Cargando...</div></div>
+ </div>
+ </div>
+ <div id="sec-nuevoBoletin" style="display:none">
+ <div class="admin-topbar">
+ <div class="admin-page-title" id="form-boletin-title">Nuevo Boletín</div>
+ <button class="admin-btn admin-btn-gray" onclick="mostrarSeccion('boletines', document.querySelector('.admin-nav-item:nth-child(7)'))">← Volver</button>
+ </div>
+ <div class="form-panel visible">
+ <div class="form-rainbow"></div>
+ <input type="hidden" id="edit-boletin-id">
+ <div class="f-g">
+ <label>Título del boletín *</label>
+ <input type="text" id="b-titulo" placeholder="Título del boletín...">
+ </div>
+ <div class="f-g">
+ <label>Resumen *</label>
+ <textarea id="b-resumen" style="min-height:80px" placeholder="Resumen corto del boletín..."></textarea>
+ </div>
+ <div class="f-g">
+ <label>Contenido completo *</label>
+ <textarea id="b-contenido" placeholder="Contenido del boletín... Puedes usar HTML básico."></textarea>
+ </div>
+ <div class="f-g">
+ <label>Foto principal del boletín</label>
+ <input type="file" id="b-imagen-file" accept="image/*" onchange="previsualizarBoletin(this)">
+ <div id="b-imagen-preview" style="margin-top:.8rem;display:none">
+ <img id="b-preview-img" style="max-height:200px;max-width:100%;object-fit:cover;">
+ <p style="font-size:.75rem;color:var(--gris-texto);margin-top:.4rem">✅ Foto principal seleccionada</p>
+ </div>
+ <input type="hidden" id="b-imagen-url">
+ </div>
+ <div class="f-g">
+ <label>Galería de fotos adicionales (puedes seleccionar varias)</label>
+ <input type="file" id="b-galeria-files" accept="image/*" multiple onchange="previsualizarGaleria(this)">
+ <div id="b-galeria-preview" style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem"></div>
+ <input type="hidden" id="b-galeria-urls">
+ </div>
+ <div class="form-actions">
+ <button class="admin-btn admin-btn-red" onclick="guardarBoletin()">💾 Guardar Boletín</button>
+ <button class="admin-btn admin-btn-gray" onclick="limpiarBoletin()">🗑️ Limpiar</button>
+ </div>
+ </div>
+ </div>
+ <div id="sec-medios" style="display:none">
+ <div class="admin-topbar">
+ <div class="admin-page-title">En los Medios</div>
+ <button class="admin-btn admin-btn-red" onclick="mostrarSeccion('nuevoMedio', document.querySelector('.admin-nav-item:nth-child(11)'))">+ Agregar Medio</button>
+ </div>
+ <div class="tabla-wrap">
+ <div class="tabla-head" style="grid-template-columns:1fr 160px 160px 120px">
+ <div>Titular</div><div>Medio</div><div>Fecha</div><div>Acciones</div>
+ </div>
+ <div id="tabla-medios"><div class="loading-tabla"><div class="spinner"></div>Cargando...</div></div>
+ </div>
+ </div>
+ <div id="sec-nuevoMedio" style="display:none">
+ <div class="admin-topbar">
+ <div class="admin-page-title" id="form-medio-title">Agregar Medio</div>
+ <button class="admin-btn admin-btn-gray" onclick="mostrarSeccion('medios', document.querySelector('.admin-nav-item:nth-child(10)'))">← Volver</button>
+ </div>
+ <div class="form-panel visible">
+ <div class="form-rainbow"></div>
+ <input type="hidden" id="edit-medio-id">
+ <div class="f-row">
+ <div class="f-g">
+ <label>Nombre del medio *</label>
+ <input type="text" id="m-medio" placeholder="Ej: El Tiempo, RCN, Instagram @medio...">
+ </div>
+ <div class="f-g">
+ <label>Fecha de publicación *</label>
+ <input type="date" id="m-fecha">
+ </div>
+ </div>
+ <div class="f-g">
+ <label>Titular de la noticia *</label>
+ <input type="text" id="m-titular" placeholder="Titular exacto de la noticia...">
+ </div>
+ <div class="f-g">
+ <label>Link a la noticia *</label>
+ <input type="url" id="m-link" placeholder="https://... o https://instagram.com/p/...">
+ </div>
+ <div class="f-g">
+ <label>Imagen de la noticia (opcional) — sube screenshot si es de Instagram</label>
+ <input type="file" id="m-imagen-file" accept="image/*" onchange="previsualizarMedio(this)">
+ <div id="m-imagen-preview" style="margin-top:.8rem;display:none">
+ <img id="m-preview-img" style="max-height:150px;max-width:100%;object-fit:cover;">
+ <p style="font-size:.75rem;color:var(--gris-texto);margin-top:.4rem">✅ Imagen seleccionada</p>
+ </div>
+ <input type="hidden" id="m-imagen-url">
+ </div>
+ <div class="form-actions">
+ <button class="admin-btn admin-btn-red" onclick="guardarMedio()">💾 Guardar</button>
+ <button class="admin-btn admin-btn-gray" onclick="limpiarMedio()">🗑️ Limpiar</button>
+ </div>
+ </div>
+ </div>
+ </main>
 </div>
-
-<div id="createModal" class="modal-bg">
-  <div class="modal">
-    <div class="modal-title">Crear nueva encuesta</div>
-    <input id="newId" class="inp" placeholder="ID (ej: eventos-monteria, sin espacios)" style="margin-bottom:10px">
-    <input id="newTitle" class="inp" placeholder="Título (ej: Tu voz cuenta — Evento Montería)" style="margin-bottom:10px">
-    <input id="newSubtitle" class="inp" placeholder="Subtítulo (ej: Martha Ruiz Solera)" style="margin-bottom:10px">
-    <div style="font-size:12px;color:var(--gris-t);margin-bottom:16px;line-height:1.5">
-      Se crearán 5 preguntas estándar:<br>
-      Municipio · Temas de legislación · Proyecto prioritario · Comisión · Nombre
-    </div>
-    <div style="display:flex;gap:10px">
-      <button class="btn btn-ghost" style="flex:1" onclick="hideCreate()">Cancelar</button>
-      <button class="btn btn-red" style="flex:1" onclick="createSurvey()">Crear</button>
-    </div>
-  </div>
+<div class="modal-overlay" id="modalEliminar">
+ <div class="modal-box">
+ <div class="modal-title">¿Eliminar artículo?</div>
+ <p class="modal-text">Esta acción no se puede deshacer. El artículo se eliminará permanentemente.</p>
+ <div class="modal-actions">
+ <button class="admin-btn admin-btn-red" onclick="confirmarEliminar()">Sí, eliminar</button>
+ <button class="admin-btn admin-btn-gray" onclick="cerrarModal()">Cancelar</button>
+ </div>
+ </div>
 </div>
-
-<script>
-const API='https://nico.innmedios.com/api';
-const PW='martha2026';
-let currentId='';
-
-function doLogin(){
-  const pw=document.getElementById('pwInput').value;
-  if(pw===PW){document.getElementById('loginScreen').style.display='none';document.getElementById('dashboard').style.display='block';loadSurveys()}
-  else{document.getElementById('loginErr').style.display='block'}
+<div class="toast" id="toast"></div>
+<script type="module">
+ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+ import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+ const firebaseConfig = {
+ apiKey: "AIzaSyC-FZcABicW9VkgCcJtIlMaOX1KdDHWO-k",
+ authDomain: "martha-ruiz-blog.firebaseapp.com",
+ projectId: "martha-ruiz-blog",
+ storageBucket: "martha-ruiz-blog.firebasestorage.app",
+ messagingSenderId: "572271986147",
+ appId: "1:572271986147:web:e4e958abd9c8aefd678cd6"
+ };
+ const app = initializeApp(firebaseConfig);
+ const db = getFirestore(app);
+ const ADMIN_USER = "martha";
+ const ADMIN_PASS = "cordoba1234";
+ let articulos = [];
+ let idAEliminar = null;
+ const COLORES_CAT = {
+ 'Columna Legislativa':'#cc1e2b','Mujer & Política':'#e8631a',
+ 'Reflexión Personal':'#1a5fb4','Salud':'#2eaa4a','Familia':'#a01520','Córdoba':'#f5c518'
+ };
+ window.login = function(e) {
+ e.preventDefault();
+ const user = document.getElementById('loginUser').value;
+ const pass = document.getElementById('loginPass').value;
+ if (user === ADMIN_USER && pass === ADMIN_PASS) {
+ document.getElementById('loginWrap').style.display = 'none';
+ document.getElementById('adminWrap').style.display = 'flex';
+ cargarArticulos();
+ } else {
+ document.getElementById('loginError').style.display = 'block';
+ }
+ };
+ window.logout = function() {
+ document.getElementById('adminWrap').style.display = 'none';
+ document.getElementById('loginWrap').style.display = 'flex';
+ document.getElementById('loginPass').value = '';
+ };
+ window.mostrarSeccion = function(sec, btn) {
+ ['articulos','nuevo','boletines','nuevoBoletin','medios','nuevoMedio'].forEach(s => {
+ const el = document.getElementById('sec-'+s);
+ if(el) el.style.display = s === sec ? 'block' : 'none';
+ });
+ document.querySelectorAll('.admin-nav-item').forEach(b => b.classList.remove('active'));
+ if(btn) btn.classList.add('active');
+ if(sec === 'boletines') cargarBoletines();
+ if(sec === 'medios') cargarMedios();
+ if(sec === 'nuevo' && !document.getElementById('edit-id').value)
+ document.getElementById('form-page-title').textContent = 'Nuevo Artículo';
+ };
+ async function cargarArticulos() {
+ try {
+ const q = query(collection(db, "articulos"), orderBy("fecha", "desc"));
+ const snap = await getDocs(q);
+ articulos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+ renderTabla();
+ actualizarStats();
+ } catch(e) {
+ document.getElementById('tabla-body').innerHTML = '<div class="tabla-empty"><div class="tabla-empty-icon">⚠️</div><p>Error al cargar. Verifica la conexión.</p></div>';
+ }
+ }
+ function renderTabla() {
+ if (articulos.length === 0) {
+ document.getElementById('tabla-body').innerHTML = '<div class="tabla-empty"><div class="tabla-empty-icon">📝</div><p>No hay artículos aún. ¡Crea el primero!</p></div>';
+ return;
+ }
+ document.getElementById('tabla-body').innerHTML = articulos.map(a => {
+ const color = COLORES_CAT[a.categoria] || '#cc1e2b';
+ const fecha = a.fecha?.toDate ? a.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'short',day:'numeric'}) : '';
+ return `<div class="tabla-row">
+ <div class="tabla-titulo">${a.titulo}</div>
+ <div><span class="tabla-cat" style="background:${color}">${a.categoria}</span></div>
+ <div class="tabla-fecha">${fecha}</div>
+ <div><span class="tabla-estado ${a.estado === 'publicado' ? 'estado-pub' : 'estado-bor'}">${a.estado || 'publicado'}</span></div>
+ <div class="tabla-acciones">
+ <button class="tbl-btn tbl-edit" onclick="editarArticulo('${a.id}')">Editar</button>
+ <button class="tbl-btn tbl-del" onclick="pedirEliminar('${a.id}')">Eliminar</button>
+ </div>
+ </div>`;
+ }).join('');
+ }
+ function actualizarStats() {
+ const pub = articulos.filter(a => a.estado !== 'borrador').length;
+ const bor = articulos.filter(a => a.estado === 'borrador').length;
+ const cats = new Set(articulos.map(a => a.categoria)).size;
+ document.getElementById('stat-total').textContent = articulos.length;
+ document.getElementById('stat-pub').textContent = pub;
+ document.getElementById('stat-bor').textContent = bor;
+ document.getElementById('stat-cats').textContent = cats;
+ }
+window.previsualizarImagen = function(input) {
+ if(input.files && input.files[0]) {
+ const reader = new FileReader();
+ reader.onload = e => {
+ document.getElementById('preview-img').src = e.target.result;
+ document.getElementById('f-imagen-preview').style.display = 'block';
+ };
+ reader.readAsDataURL(input.files[0]);
+ }
+};
+async function subirImagenCloudinary() {
+ const file = document.getElementById('f-imagen-file').files[0];
+ const urlExistente = document.getElementById('f-imagen-url').value;
+ if(!file) return urlExistente || '';
+ const formData = new FormData();
+ formData.append('file', file);
+ formData.append('upload_preset', 'martha-blog');
+ const res = await fetch('https://api.cloudinary.com/v1_1/dav4yhq85/image/upload', {
+ method: 'POST', body: formData
+ });
+ const data = await res.json();
+ return data.secure_url || '';
 }
-function doLogout(){document.getElementById('dashboard').style.display='none';document.getElementById('loginScreen').style.display='flex';document.getElementById('pwInput').value=''}
-
-async function loadSurveys(){
-  const r=await fetch(`${API}/surveys`);
-  const d=await r.json();
-  const list=document.getElementById('surveyList');
-  if(!d.surveys.length){list.innerHTML='<div class="empty"><div class="empty-icon">📋</div>No hay encuestas. Crea la primera.</div>';return}
-  list.innerHTML=d.surveys.map(s=>`
-    <div class="sitem" onclick="showDetail('${s.id}')">
-      <div>
-        <div class="sitem-title">${s.title}</div>
-        <div class="sitem-meta">${s.responses} respuestas · ${new Date(s.created).toLocaleDateString('es-CO')}</div>
-      </div>
-      <span class="sitem-badge ${s.open?'open':'closed'}">${s.open?'Abierta':'Cerrada'}</span>
-    </div>
-  `).join('');
-}
-
-function showCreate(){document.getElementById('createModal').classList.add('active')}
-function hideCreate(){document.getElementById('createModal').classList.remove('active')}
-
-async function createSurvey(){
-  const id=document.getElementById('newId').value.trim().replace(/[^a-z0-9-]/gi,'-').toLowerCase();
-  const title=document.getElementById('newTitle').value.trim();
-  const subtitle=document.getElementById('newSubtitle').value.trim();
-  if(!id||!title){alert('ID y título son requeridos');return}
-  const r=await fetch(`${API}/surveys`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,title,subtitle,password:PW})});
-  if(!r.ok){const e=await r.json();alert(e.detail||'Error');return}
-  hideCreate();
-  document.getElementById('newId').value='';document.getElementById('newTitle').value='';document.getElementById('newSubtitle').value='';
-  loadSurveys();
-}
-
-async function showDetail(sid){
-  currentId=sid;
-  document.getElementById('surveyListView').style.display='none';
-  document.getElementById('surveyDetailView').style.display='block';
-  await loadDetail();
-}
-
-async function loadDetail(){
-  const r=await fetch(`${API}/surveys/${currentId}`);
-  const d=await r.json();
-  const s=d.survey;const resp=d.responses;
-
-  document.getElementById('detailHeader').innerHTML=`
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;text-transform:uppercase">${s.title}</div>
-    <div class="link-copy">
-      <input class="inp" value="https://martharuizsol.com/encuesta.html?id=${s.id}" readonly id="surveyLink">
-      <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('surveyLink').value);this.textContent='✓ Copiado'">Copiar link</button>
-    </div>
-  `;
-
-  document.getElementById('detailStats').innerHTML=`
-    <div class="st"><div class="st-v">${d.total}</div><div class="st-l">Respuestas</div></div>
-    <div class="st"><div class="st-v" style="font-size:18px;color:${d.open?'var(--verde)':'var(--rojo)'}">${d.open?'Abierta':'Cerrada'}</div><div class="st-l">Estado</div></div>
-  `;
-
-  document.getElementById('detailActions').innerHTML=`
-    <button class="btn ${d.open?'btn-red':'btn-outline'} btn-sm" onclick="tglSurvey()">${d.open?'Cerrar encuesta':'Abrir encuesta'}</button>
-    <button class="btn btn-outline btn-sm" onclick="expCSV()">📥 Exportar CSV</button>
-    <button class="btn btn-danger btn-sm" onclick="clearAll()">🗑️ Borrar todas</button>
-  `;
-
-  const mc={};resp.forEach(x=>{if(x.municipio)mc[x.municipio]=(mc[x.municipio]||0)+1});
-  const mx=Math.max(...Object.values(mc),1);
-  document.getElementById('detailMun').innerHTML=`<div class="rsec-t">📊 Municipios</div>`+Object.entries(mc).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="ri"><span class="ri-l">${n}</span><div class="ri-bc"><div class="ri-b" style="width:${c/mx*100}%"></div></div><span class="ri-c">${c}</span></div>`).join('');
-
-  const cc={};resp.forEach(x=>{if(x.comision)cc[x.comision]=(cc[x.comision]||0)+1});
-  const cx=Math.max(...Object.values(cc),1);
-  document.getElementById('detailCom').innerHTML=`<div class="rsec-t">🏛️ Comisiones</div>`+Object.entries(cc).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="ri"><span class="ri-l">${n}</span><div class="ri-bc"><div class="ri-b" style="width:${c/cx*100}%"></div></div><span class="ri-c">${c}</span></div>`).join('');
-
-  document.getElementById('detailResp').innerHTML=`<div class="rsec-t">💬 Respuestas (${resp.length})</div>`+(resp.length?resp.map(r=>`<div class="rcard"><div class="rcard-info"><div class="rcard-time">${new Date(r.timestamp).toLocaleString('es-CO',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</div><div class="rcard-body"><strong>${r.municipio||'—'}</strong> · ${r.comision||'—'}<br>${(r.temas||'—').substring(0,80)}${(r.temas||'').length>80?'...':''}</div></div><button class="rcard-del" onclick="delResp('${r.id}')" title="Eliminar">✕</button></div>`).join(''):'<div class="empty" style="padding:20px"><div class="empty-icon">📭</div>Aún no hay respuestas</div>');
-}
-
-function showList(){
-  document.getElementById('surveyListView').style.display='block';
-  document.getElementById('surveyDetailView').style.display='none';
-  loadSurveys();
-}
-
-async function tglSurvey(){
-  await fetch(`${API}/surveys/${currentId}/toggle`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:PW})});
-  loadDetail();
-}
-
-async function delResp(rid){
-  if(!confirm('¿Eliminar esta respuesta?'))return;
-  await fetch(`${API}/surveys/${currentId}/responses/${rid}?password=${PW}`,{method:'DELETE'});
-  loadDetail();
-}
-
-async function clearAll(){
-  if(!confirm('¿Borrar TODAS las respuestas? No se puede deshacer.'))return;
-  await fetch(`${API}/surveys/${currentId}/responses?password=${PW}`,{method:'DELETE'});
-  loadDetail();
-}
-
-function expCSV(){window.open(`${API}/surveys/${currentId}/export`,'_blank')}
-
-// Auto-refresh every 10 seconds when viewing detail
-setInterval(()=>{if(currentId&&document.getElementById('surveyDetailView').style.display!=='none')loadDetail()},10000);
+ window.guardarArticulo = async function() {
+ const titulo = document.getElementById('f-titulo').value.trim();
+ const cat = document.getElementById('f-cat').value;
+ const resumen = document.getElementById('f-resumen').value.trim();
+ const contenido = document.getElementById('f-contenido').value.trim();
+ const estado = document.getElementById('f-estado').value;
+ const emoji = document.getElementById('f-emoji').value.trim() || '✍️';
+ const tiempo = document.getElementById('f-tiempo').value || '3';
+ const editId = document.getElementById('edit-id').value;
+ if (!titulo || !cat || !resumen || !contenido) { toast('Completa todos los campos obligatorios (*)', 'error'); return; }
+ const imagenUrl = await subirImagenCloudinary();
+ const data = { titulo, categoria: cat, resumen, contenido, estado, emoji, tiempoLectura: tiempo, imagen: imagenUrl, fecha: Timestamp.now() };
+ try {
+ if (editId) { await updateDoc(doc(db, "articulos", editId), data); toast('✅ Artículo actualizado', 'success'); }
+ else { await addDoc(collection(db, "articulos"), data); toast('✅ Artículo publicado', 'success'); }
+ limpiarForm();
+ await cargarArticulos();
+ mostrarSeccion('articulos', document.querySelector('.admin-nav-item'));
+ } catch(e) { toast('❌ Error al guardar', 'error'); }
+ };
+ window.editarArticulo = function(id) {
+ const a = articulos.find(x => x.id === id);
+ if (!a) return;
+ document.getElementById('edit-id').value = id;
+ document.getElementById('f-titulo').value = a.titulo;
+ document.getElementById('f-cat').value = a.categoria;
+ document.getElementById('f-resumen').value = a.resumen;
+ document.getElementById('f-contenido').value = a.contenido;
+ document.getElementById('f-estado').value = a.estado || 'publicado';
+ document.getElementById('f-emoji').value = a.emoji || '✍️';
+ document.getElementById('f-tiempo').value = a.tiempoLectura || '3';
+ document.getElementById('form-page-title').textContent = 'Editar Artículo';
+ mostrarSeccion('nuevo', document.querySelectorAll('.admin-nav-item')[1]);
+ window.scrollTo({top:0,behavior:'smooth'});
+ };
+ window.pedirEliminar = function(id) {
+ idAEliminar = id;
+ document.getElementById('modalEliminar').classList.add('show');
+ };
+ window.cerrarModal = function() {
+ idAEliminar = null;
+ document.getElementById('modalEliminar').classList.remove('show');
+ };
+ window.confirmarEliminar = async function() {
+ if (!idAEliminar) return;
+ try {
+ await deleteDoc(doc(db, "articulos", idAEliminar));
+ toast('🗑️ Artículo eliminado', 'success');
+ cerrarModal();
+ await cargarArticulos();
+ } catch(e) { toast('❌ Error al eliminar', 'error'); }
+ };
+ window.limpiarForm = function() {
+ document.getElementById('edit-id').value = '';
+ document.getElementById('f-titulo').value = '';
+ document.getElementById('f-cat').value = '';
+ document.getElementById('f-resumen').value = '';
+ document.getElementById('f-contenido').value = '';
+ document.getElementById('f-estado').value = 'publicado';
+ document.getElementById('f-emoji').value = '';
+ document.getElementById('f-tiempo').value = '';
+ document.getElementById('f-imagen-file').value = '';
+ document.getElementById('f-imagen-url').value = '';
+ document.getElementById('f-imagen-preview').style.display = 'none';
+ document.getElementById('form-page-title').textContent = 'Nuevo Artículo';
+ };
+ async function cargarBoletines() {
+ try {
+ const q = query(collection(db,"boletines"), orderBy("fecha","desc"));
+ const snap = await getDocs(q);
+ const boletines = snap.docs.map(d=>({id:d.id,...d.data()}));
+ if(boletines.length===0){
+ document.getElementById('tabla-boletines').innerHTML='<div class="tabla-empty"><div class="tabla-empty-icon">📋</div><p>No hay boletines aún.</p></div>';
+ return;
+ }
+ document.getElementById('tabla-boletines').innerHTML = boletines.map(b=>{
+ const fecha = b.fecha?.toDate ? b.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'short',day:'numeric'}) : '';
+ return `<div class="tabla-row" style="grid-template-columns:1fr 160px 120px">
+ <div class="tabla-titulo">${b.titulo}</div>
+ <div class="tabla-fecha">${fecha}</div>
+ <div class="tabla-acciones">
+ <button class="tbl-btn tbl-edit" onclick="editarBoletin('${b.id}')">Editar</button>
+ <button class="tbl-btn tbl-del" onclick="eliminarBoletin('${b.id}')">Eliminar</button>
+ </div>
+ </div>`;
+ }).join('');
+ } catch(e) { console.error(e); }
+ }
+ window.previsualizarBoletin = function(input) {
+ if(input.files && input.files[0]) {
+ const reader = new FileReader();
+ reader.onload = e => {
+ document.getElementById('b-preview-img').src = e.target.result;
+ document.getElementById('b-imagen-preview').style.display = 'block';
+ };
+ reader.readAsDataURL(input.files[0]);
+ }
+ };
+ window.previsualizarGaleria = function(input) {
+ const preview = document.getElementById('b-galeria-preview');
+ preview.innerHTML = '';
+ Array.from(input.files).forEach(file => {
+ const reader = new FileReader();
+ reader.onload = e => {
+ const img = document.createElement('img');
+ img.src = e.target.result;
+ img.style = 'width:100px;height:70px;object-fit:cover;';
+ preview.appendChild(img);
+ };
+ reader.readAsDataURL(file);
+ });
+ };
+ async function subirImagenBoletin() {
+ const file = document.getElementById('b-imagen-file').files[0];
+ const urlExistente = document.getElementById('b-imagen-url').value;
+ if(!file) return urlExistente || '';
+ const formData = new FormData();
+ formData.append('file', file);
+ formData.append('upload_preset', 'martha-blog');
+ const res = await fetch('https://api.cloudinary.com/v1_1/dav4yhq85/image/upload', {method:'POST',body:formData});
+ const data = await res.json();
+ return data.secure_url || '';
+ }
+ async function subirGaleriaBoletin() {
+ const files = document.getElementById('b-galeria-files').files;
+ const urlsExistentes = document.getElementById('b-galeria-urls').value;
+ if(!files || files.length === 0) return urlsExistentes ? JSON.parse(urlsExistentes) : [];
+ const urls = [];
+ for(const file of Array.from(files)) {
+ const formData = new FormData();
+ formData.append('file', file);
+ formData.append('upload_preset', 'martha-blog');
+ const res = await fetch('https://api.cloudinary.com/v1_1/dav4yhq85/image/upload', {method:'POST',body:formData});
+ const data = await res.json();
+ if(data.secure_url) urls.push(data.secure_url);
+ }
+ return urls;
+ }
+ window.guardarBoletin = async function() {
+ const titulo = document.getElementById('b-titulo').value.trim();
+ const resumen = document.getElementById('b-resumen').value.trim();
+ const contenido = document.getElementById('b-contenido').value.trim();
+ const editId = document.getElementById('edit-boletin-id').value;
+ if(!titulo||!resumen||!contenido){toast('Completa todos los campos obligatorios','error');return;}
+ toast('⏳ Subiendo imágenes...','success');
+ const imagen = await subirImagenBoletin();
+ const galeria = await subirGaleriaBoletin();
+ const data = {titulo,resumen,contenido,imagen,galeria,fecha:Timestamp.now()};
+ try {
+ if(editId){ await updateDoc(doc(db,"boletines",editId),data); toast('✅ Boletín actualizado','success'); }
+ else { await addDoc(collection(db,"boletines"),data); toast('✅ Boletín publicado','success'); }
+ limpiarBoletin();
+ cargarBoletines();
+ mostrarSeccion('boletines', document.querySelectorAll('.admin-nav-item')[6]);
+ } catch(e){ toast('❌ Error al guardar','error'); }
+ };
+ window.editarBoletin = function(id) {
+ const cargar = async () => {
+ const snap = await getDocs(query(collection(db,"boletines"),orderBy("fecha","desc")));
+ const b = snap.docs.map(d=>({id:d.id,...d.data()})).find(x=>x.id===id);
+ if(!b) return;
+ document.getElementById('edit-boletin-id').value = id;
+ document.getElementById('b-titulo').value = b.titulo;
+ document.getElementById('b-resumen').value = b.resumen;
+ document.getElementById('b-contenido').value = b.contenido;
+ document.getElementById('b-imagen-url').value = b.imagen||'';
+ if(b.imagen){
+ document.getElementById('b-preview-img').src = b.imagen;
+ document.getElementById('b-imagen-preview').style.display = 'block';
+ }
+ if(b.galeria && b.galeria.length > 0){
+ document.getElementById('b-galeria-urls').value = JSON.stringify(b.galeria);
+ const preview = document.getElementById('b-galeria-preview');
+ preview.innerHTML = b.galeria.map(url=>`<img src="${url}" style="width:100px;height:70px;object-fit:cover;">`).join('');
+ }
+ document.getElementById('form-boletin-title').textContent = 'Editar Boletín';
+ mostrarSeccion('nuevoBoletin', document.querySelectorAll('.admin-nav-item')[7]);
+ };
+ cargar();
+ };
+ window.eliminarBoletin = async function(id) {
+ if(!confirm('¿Eliminar este boletín?')) return;
+ await deleteDoc(doc(db,"boletines",id));
+ toast('🗑️ Boletín eliminado','success');
+ cargarBoletines();
+ };
+ window.limpiarBoletin = function() {
+ document.getElementById('edit-boletin-id').value='';
+ document.getElementById('b-titulo').value='';
+ document.getElementById('b-resumen').value='';
+ document.getElementById('b-contenido').value='';
+ document.getElementById('b-imagen-file').value='';
+ document.getElementById('b-imagen-url').value='';
+ document.getElementById('b-imagen-preview').style.display='none';
+ document.getElementById('b-galeria-files').value='';
+ document.getElementById('b-galeria-urls').value='';
+ document.getElementById('b-galeria-preview').innerHTML='';
+ document.getElementById('form-boletin-title').textContent='Nuevo Boletín';
+ };
+ async function cargarMedios() {
+ try {
+ const q = query(collection(db,"medios"), orderBy("fecha","desc"));
+ const snap = await getDocs(q);
+ const medios = snap.docs.map(d=>({id:d.id,...d.data()}));
+ if(medios.length===0){
+ document.getElementById('tabla-medios').innerHTML='<div class="tabla-empty"><div class="tabla-empty-icon">📰</div><p>No hay noticias de medios aún.</p></div>';
+ return;
+ }
+ document.getElementById('tabla-medios').innerHTML = medios.map(m=>{
+ const fecha = m.fecha?.toDate ? m.fecha.toDate().toLocaleDateString('es-CO',{year:'numeric',month:'short',day:'numeric'}) : m.fecha||'';
+ return `<div class="tabla-row" style="grid-template-columns:1fr 160px 160px 120px">
+ <div class="tabla-titulo">${m.titular}</div>
+ <div class="tabla-fecha">${m.medio}</div>
+ <div class="tabla-fecha">${fecha}</div>
+ <div class="tabla-acciones">
+ <button class="tbl-btn tbl-edit" onclick="editarMedio('${m.id}')">Editar</button>
+ <button class="tbl-btn tbl-del" onclick="eliminarMedio('${m.id}')">Eliminar</button>
+ </div>
+ </div>`;
+ }).join('');
+ } catch(e){ console.error(e); }
+ }
+ window.previsualizarMedio = function(input) {
+ if(input.files && input.files[0]) {
+ const reader = new FileReader();
+ reader.onload = e => {
+ document.getElementById('m-preview-img').src = e.target.result;
+ document.getElementById('m-imagen-preview').style.display = 'block';
+ };
+ reader.readAsDataURL(input.files[0]);
+ }
+ };
+ async function subirImagenMedio() {
+ const file = document.getElementById('m-imagen-file').files[0];
+ const urlExistente = document.getElementById('m-imagen-url').value;
+ if(!file) return urlExistente || '';
+ const formData = new FormData();
+ formData.append('file', file);
+ formData.append('upload_preset', 'martha-blog');
+ const res = await fetch('https://api.cloudinary.com/v1_1/dav4yhq85/image/upload', {method:'POST',body:formData});
+ const data = await res.json();
+ return data.secure_url || '';
+ }
+ window.guardarMedio = async function() {
+ const medio = document.getElementById('m-medio').value.trim();
+ const titular = document.getElementById('m-titular').value.trim();
+ const link = document.getElementById('m-link').value.trim();
+ const fechaVal = document.getElementById('m-fecha').value;
+ const editId = document.getElementById('edit-medio-id').value;
+ if(!medio||!titular||!link){toast('Completa todos los campos obligatorios','error');return;}
+ toast('⏳ Subiendo imagen...','success');
+ const imagen = await subirImagenMedio();
+ const data = {medio,titular,link,imagen,fecha:fechaVal ? Timestamp.fromDate(new Date(fechaVal)) : Timestamp.now()};
+ try {
+ if(editId){ await updateDoc(doc(db,"medios",editId),data); toast('✅ Medio actualizado','success'); }
+ else { await addDoc(collection(db,"medios"),data); toast('✅ Medio agregado','success'); }
+ limpiarMedio();
+ cargarMedios();
+ mostrarSeccion('medios', document.querySelectorAll('.admin-nav-item')[9]);
+ } catch(e){ toast('❌ Error al guardar','error'); }
+ };
+ window.editarMedio = function(id) {
+ const cargar = async () => {
+ const snap = await getDocs(query(collection(db,"medios"),orderBy("fecha","desc")));
+ const m = snap.docs.map(d=>({id:d.id,...d.data()})).find(x=>x.id===id);
+ if(!m) return;
+ document.getElementById('edit-medio-id').value = id;
+ document.getElementById('m-medio').value = m.medio;
+ document.getElementById('m-titular').value = m.titular;
+ document.getElementById('m-link').value = m.link;
+ document.getElementById('form-medio-title').textContent = 'Editar Medio';
+ mostrarSeccion('nuevoMedio', document.querySelectorAll('.admin-nav-item')[10]);
+ };
+ cargar();
+ };
+ window.eliminarMedio = async function(id) {
+ if(!confirm('¿Eliminar esta noticia?')) return;
+ await deleteDoc(doc(db,"medios",id));
+ toast('🗑️ Noticia eliminada','success');
+ cargarMedios();
+ };
+ window.limpiarMedio = function() {
+ document.getElementById('edit-medio-id').value='';
+ document.getElementById('m-medio').value='';
+ document.getElementById('m-titular').value='';
+ document.getElementById('m-link').value='';
+ document.getElementById('m-fecha').value='';
+ document.getElementById('m-imagen-file').value='';
+ document.getElementById('m-imagen-url').value='';
+ document.getElementById('m-imagen-preview').style.display='none';
+ document.getElementById('form-medio-title').textContent='Agregar Medio';
+ };
+ function toast(msg, tipo) {
+ const t = document.getElementById('toast');
+ t.textContent = msg;
+ t.className = `toast ${tipo} show`;
+ setTimeout(() => t.classList.remove('show'), 3500);
+ }
 </script>
 </body>
 </html>
