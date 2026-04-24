@@ -3,166 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Encuestas — Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
+<title>Encuestas — Admin — Martha Ruiz Solera</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--rojo:#cc1e2b;--rojo-oscuro:#a01520;--naranja:#e8631a;--verde:#2eaa4a;--blanco:#fff;--gris:#f4f4f4;--gris-t:#555;--negro:#111;--grad:linear-gradient(90deg,#cc1e2b 0%,#e8631a 28%,#f5c518 52%,#2eaa4a 74%,#1a5fb4 100%)}
+:root{--rojo:#cc1e2b;--rojo-oscuro:#a01520;--naranja:#e8631a;--verde:#2eaa4a;--azul:#1a5fb4;--blanco:#fff;--gris:#f4f4f4;--gris-t:#555;--negro:#111;--grad:linear-gradient(90deg,#cc1e2b 0%,#e8631a 28%,#f5c518 52%,#2eaa4a 74%,#1a5fb4 100%)}
 body{font-family:'DM Sans',sans-serif;background:var(--gris);color:var(--negro);min-height:100vh}
-
 .rainbow-bar{height:5px;background:var(--grad);width:100%;position:fixed;top:0;z-index:100}
 
-.header{background:var(--blanco);border-bottom:1px solid #e8e8e8;padding:20px 32px;position:sticky;top:5px;z-index:50;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.header-title{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;text-transform:uppercase;color:var(--negro);letter-spacing:.02em}
-.header-title span{color:var(--rojo)}
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--negro);position:relative;overflow:hidden}
+.login-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(204,30,43,.2) 0%,transparent 70%)}
+.login-box{background:#fff;padding:3rem;width:100%;max-width:420px;position:relative;z-index:1}
+.login-rainbow{height:4px;background:var(--grad);margin-bottom:2rem}
+.login-logo{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;text-transform:uppercase;color:var(--negro);margin-bottom:.3rem}
+.login-logo span{color:var(--rojo)}
+.login-sub{font-size:.85rem;color:var(--gris-t);margin-bottom:2rem}
+.login-group{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+.login-group label{font-size:.75rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--negro)}
+.login-group input{padding:.9rem 1rem;border:2px solid transparent;background:var(--gris);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s}
+.login-group input:focus{border-color:var(--rojo)}
+.login-btn{width:100%;padding:1rem;background:var(--rojo);color:#fff;border:none;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .25s;margin-top:.5rem}
+.login-btn:hover{background:var(--rojo-oscuro)}
+.login-error{background:#fee;border:1px solid var(--rojo);color:var(--rojo);padding:.7rem 1rem;font-size:.83rem;margin-bottom:1rem;display:none}
 
-.container{max-width:960px;margin:0 auto;padding:24px 20px}
+/* LAYOUT */
+.app{display:none}
+.sidebar{width:260px;background:var(--negro);position:fixed;top:5px;left:0;bottom:0;display:flex;flex-direction:column;z-index:50}
+.sidebar-logo{padding:1.5rem 1.5rem 1rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar-logo-txt{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;text-transform:uppercase;color:#fff}
+.sidebar-logo-txt span{color:var(--rojo)}
+.sidebar-logo-sub{font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.2rem}
+.sidebar-rainbow{height:3px;background:var(--grad)}
+.sidebar-nav{padding:1rem 0;flex:1;overflow-y:auto}
+.nav-item{display:flex;align-items:center;gap:.8rem;padding:.8rem 1.5rem;font-size:.85rem;font-weight:600;color:rgba(255,255,255,.55);cursor:pointer;transition:all .2s;border-left:3px solid transparent}
+.nav-item:hover,.nav-item.active{color:#fff;background:rgba(255,255,255,.05);border-color:var(--rojo)}
+.nav-ico{font-size:1.1rem;width:20px;text-align:center}
+.nav-section{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.8rem 1.5rem .3rem}
+.sidebar-footer{padding:1rem 1.5rem;border-top:1px solid rgba(255,255,255,.08)}
+.sidebar-logout{width:100%;padding:.7rem;background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.15);font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.sidebar-logout:hover{background:var(--rojo);color:#fff;border-color:var(--rojo)}
 
-/* Login */
-.login{max-width:380px;margin:80px auto;background:var(--blanco);border:1px solid #e8e8e8;padding:40px 32px;text-align:center}
-.login-title{font-family:'Barlow Condensed',sans-serif;font-size:1.6rem;font-weight:900;text-transform:uppercase;margin-bottom:8px}
-.login-sub{font-size:14px;color:var(--gris-t);margin-bottom:24px}
-.login .inp{width:100%;margin-bottom:16px}
+.main{margin-left:260px;padding:2rem;min-height:100vh;padding-top:calc(2rem + 5px)}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid #e0e0e0;flex-wrap:wrap;gap:12px}
+.page-title{font-family:'Barlow Condensed',sans-serif;font-size:1.8rem;font-weight:900;text-transform:uppercase}
+.page-title span{color:var(--rojo)}
 
-/* Survey list */
-.slist{display:grid;gap:12px;margin-top:20px}
-.sitem{background:var(--blanco);border:1px solid #e8e8e8;padding:20px 24px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px}
-.sitem:hover{border-color:var(--rojo);box-shadow:0 4px 20px rgba(0,0,0,.06)}
-.sitem-title{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase}
-.sitem-meta{font-size:12px;color:var(--gris-t);margin-top:2px}
-.sitem-badge{padding:4px 12px;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:0}
-.sitem-badge.open{background:rgba(46,170,74,.1);color:var(--verde)}
-.sitem-badge.closed{background:rgba(204,30,43,.1);color:var(--rojo)}
-
-/* Buttons */
-.btn{padding:12px 24px;border:none;font-family:'Barlow Condensed',sans-serif;font-size:.88rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;border-radius:0}
+/* BUTTONS */
+.btn{padding:10px 20px;border:none;font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
 .btn-red{background:var(--rojo);color:#fff;box-shadow:0 4px 16px rgba(204,30,43,.25)}
 .btn-red:hover{background:var(--rojo-oscuro)}
 .btn-outline{background:transparent;color:var(--rojo);border:2px solid var(--rojo)}
 .btn-outline:hover{background:var(--rojo);color:#fff}
-.btn-ghost{background:transparent;color:var(--negro);border:2px solid #e8e8e8}
-.btn-ghost:hover{border-color:var(--negro)}
+.btn-dark{background:var(--negro);color:#fff}
+.btn-dark:hover{opacity:.85}
+.btn-gray{background:var(--gris);color:var(--negro);border:2px solid #e0e0e0}
+.btn-gray:hover{border-color:var(--negro)}
 .btn-danger{background:transparent;color:#999;border:2px solid #ddd}
-.btn-danger:hover{border-color:var(--rojo);color:var(--rojo)}
-.btn-sm{padding:8px 16px;font-size:.78rem}
-.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-danger:hover{border-color:var(--rojo);color:var(--rojo);background:rgba(204,30,43,.05)}
+.btn-sm{padding:7px 14px;font-size:.76rem}
 
-/* Stats */
+/* SURVEY LIST */
+.slist{display:grid;gap:12px;margin-top:20px}
+.sitem{background:var(--blanco);border:1px solid #e8e8e8;padding:20px 24px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px}
+.sitem:hover{border-color:var(--rojo);box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.sitem-title{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase}
+.sitem-meta{font-size:12px;color:var(--gris-t);margin-top:2px}
+.badge{padding:4px 12px;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.badge-open{background:rgba(46,170,74,.1);color:var(--verde)}
+.badge-closed{background:rgba(204,30,43,.1);color:var(--rojo)}
+
+/* STATS */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
-.st{background:var(--blanco);border:1px solid #e8e8e8;padding:20px;text-align:center}
-.st-v{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--rojo)}
-.st-l{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-t);margin-top:4px}
+.stat-card{background:var(--blanco);border:1px solid #e8e8e8;padding:20px;text-align:center;border-top:3px solid var(--rojo)}
+.stat-card:nth-child(2){border-top-color:var(--naranja)}
+.stat-card:nth-child(3){border-top-color:var(--verde)}
+.stat-n{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--negro)}
+.stat-l{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-t);margin-top:4px}
 
-/* Sections */
-.rsec{background:var(--blanco);border:1px solid #e8e8e8;padding:20px 24px;margin-bottom:16px}
-.rsec-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.rsec-t{font-family:'Barlow Condensed',sans-serif;font-size:.92rem;font-weight:800;text-transform:uppercase;color:var(--negro);letter-spacing:.04em}
-.ri{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #e8e8e8}
-.ri:last-child{border-bottom:none}
-.ri-l{font-size:14px;color:var(--gris-t);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ri-bc{flex:1.5;height:6px;background:#e8e8e8;margin:0 12px;overflow:hidden;border-radius:3px}
-.ri-b{height:100%;background:var(--rojo);border-radius:3px;transition:width .4s}
-.ri-c{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--rojo);min-width:28px;text-align:right}
+/* CHARTS */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+@media(max-width:768px){.chart-grid{grid-template-columns:1fr}}
+.chart-box{background:var(--blanco);border:1px solid #e8e8e8;padding:20px 24px}
+.chart-title{font-family:'Barlow Condensed',sans-serif;font-size:.92rem;font-weight:800;text-transform:uppercase;color:var(--negro);margin-bottom:16px;letter-spacing:.04em}
+.bar-row{margin-bottom:10px}
+.bar-label{font-size:13px;color:var(--gris-t);margin-bottom:3px;display:flex;justify-content:space-between}
+.bar-label span:last-child{font-family:'Barlow Condensed',sans-serif;font-weight:800;color:var(--rojo)}
+.bar-track{height:24px;background:#e8e8e8;overflow:hidden;position:relative}
+.bar-fill{height:100%;transition:width .6s ease;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:700;color:#fff;min-width:0}
 
-/* Response cards */
-.rcard{background:var(--blanco);border:1px solid #e8e8e8;padding:14px 20px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;transition:all .2s}
-.rcard:hover{border-color:var(--naranja)}
-.rcard-info{flex:1}
-.rcard-time{font-size:11px;color:#aaa;letter-spacing:.04em}
-.rcard-body{font-size:13px;color:var(--negro);line-height:1.5;margin-top:3px}
-.rcard-body strong{color:var(--rojo)}
-.rcard-del{background:none;border:none;color:#ccc;cursor:pointer;font-size:16px;padding:4px 8px;transition:color .2s}
-.rcard-del:hover{color:var(--rojo)}
+.bar-fill.c1{background:var(--rojo)}.bar-fill.c2{background:var(--naranja)}.bar-fill.c3{background:#f5c518;color:var(--negro)}.bar-fill.c4{background:var(--verde)}.bar-fill.c5{background:var(--azul)}.bar-fill.c6{background:#8b5cf6}.bar-fill.c7{background:#64748b}
 
-/* Create form */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;justify-content:center;align-items:center}
-.modal-bg.active{display:flex}
-.modal{background:var(--blanco);max-width:480px;width:90%;padding:32px;border:1px solid #e8e8e8}
-.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;text-transform:uppercase;margin-bottom:20px;letter-spacing:.02em}
+/* RESPONSE CARDS */
+.resp-section{background:var(--blanco);border:1px solid #e8e8e8;padding:20px 24px;margin-bottom:16px}
+.resp-section-title{font-family:'Barlow Condensed',sans-serif;font-size:.92rem;font-weight:800;text-transform:uppercase;color:var(--negro);margin-bottom:16px;letter-spacing:.04em;display:flex;justify-content:space-between;align-items:center}
+.resp-card{background:var(--blanco);border:1px solid #e8e8e8;padding:14px 20px;margin-bottom:8px;transition:all .2s;position:relative}
+.resp-card:hover{border-color:var(--naranja)}
+.resp-time{font-size:11px;color:#aaa;letter-spacing:.04em}
+.resp-name{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;text-transform:uppercase;color:var(--negro);margin-top:2px}
+.resp-body{font-size:13px;color:var(--gris-t);line-height:1.5;margin-top:4px}
+.resp-body strong{color:var(--rojo)}
+.resp-del{position:absolute;top:10px;right:10px;background:none;border:none;color:#ccc;cursor:pointer;font-size:16px;padding:4px 8px;transition:color .2s}
+.resp-del:hover{color:var(--rojo)}
+.resp-empty{text-align:center;padding:30px;color:var(--gris-t);font-size:14px}
 
-.inp{width:100%;padding:12px 14px;border:2px solid #e8e8e8;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--negro);background:var(--blanco);outline:none;transition:border-color .2s}
-.inp:focus{border-color:var(--rojo)}
-.inp::placeholder{color:#aaa}
-
+/* BACK LINK */
 .back-link{display:inline-flex;align-items:center;gap:6px;color:var(--rojo);font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;text-decoration:none;margin-bottom:20px;font-size:.9rem}
 .back-link:hover{text-decoration:underline}
 
+/* CREATE MODAL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;justify-content:center;align-items:center}
+.modal-bg.active{display:flex}
+.modal{background:var(--blanco);max-width:480px;width:90%;padding:32px;border:1px solid #e8e8e8}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;text-transform:uppercase;margin-bottom:20px;letter-spacing:.02em}
+.inp{width:100%;padding:12px 14px;border:2px solid #e8e8e8;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--negro);background:var(--blanco);outline:none;transition:border-color .2s;margin-bottom:10px}
+.inp:focus{border-color:var(--rojo)}
+.inp::placeholder{color:#aaa}
+
+/* LINK COPY */
 .link-copy{display:flex;gap:8px;align-items:center;margin-top:8px}
-.link-copy .inp{flex:1;font-size:13px;background:var(--gris)}
+.link-copy .inp{flex:1;font-size:13px;background:var(--gris);margin-bottom:0}
 .copy-btn{padding:10px 16px;background:var(--negro);color:#fff;border:none;font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap}
 .copy-btn:hover{opacity:.8}
 
-.empty{text-align:center;padding:40px 20px;color:var(--gris-t)}
-.empty-icon{font-size:48px;margin-bottom:12px;opacity:.4}
+/* QUESTION DETAIL */
+.q-detail{background:var(--blanco);border:1px solid #e8e8e8;padding:16px 20px;margin-bottom:12px}
+.q-label{font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--rojo);margin-bottom:4px}
+.q-text{font-size:.92rem;color:var(--negro);margin-bottom:8px}
+.q-answers{font-size:12px;color:var(--gris-t)}
 
-@media(max-width:600px){
-  .header{padding:16px}
-  .container{padding:16px}
-  .sitem{grid-template-columns:1fr;gap:8px}
-  .stats{grid-template-columns:1fr 1fr}
-}
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.main{margin-left:0}.stats{grid-template-columns:1fr 1fr}.chart-grid{grid-template-columns:1fr}.sitem{grid-template-columns:1fr;gap:8px}}
 </style>
 </head>
 <body>
 
 <div class="rainbow-bar"></div>
 
-<!-- LOGIN -->
-<div id="loginScreen" style="display:flex;min-height:100vh;align-items:center;justify-content:center;padding:20px">
-  <div class="login">
-    <div style="font-size:48px;margin-bottom:16px">📊</div>
-    <div class="login-title">Panel de Encuestas</div>
-    <div class="login-sub">Ingresa el código de administrador</div>
-    <input type="password" id="pwInput" class="inp" placeholder="Código de administrador" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="btn btn-red" style="width:100%" onclick="doLogin()">Ingresar</button>
-    <div id="loginErr" style="color:var(--rojo);font-size:13px;margin-top:12px;display:none">Código incorrecto</div>
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-rainbow"></div>
+    <div class="login-logo">Encuestas <span>Admin</span></div>
+    <div class="login-sub">Panel de administración de encuestas · Martha Ruiz Solera</div>
+    <div class="login-error" id="loginError">Código incorrecto</div>
+    <form onsubmit="doLogin(event)">
+      <div class="login-group">
+        <label>Código de administrador</label>
+        <input type="password" id="pwInput" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="login-btn" type="submit">Ingresar →</button>
+    </form>
   </div>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dashboard" style="display:none">
-  <div class="header">
-    <div class="header-title">Encuestas <span>Admin</span></div>
-    <div style="display:flex;gap:8px">
-      <button class="btn btn-outline btn-sm" onclick="showCreate()">+ Nueva encuesta</button>
-      <button class="btn btn-ghost btn-sm" onclick="doLogout()">Salir</button>
+<div class="app" id="app">
+  <aside class="sidebar">
+    <div>
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-txt">Encuestas <span>Admin</span></div>
+        <div class="sidebar-logo-sub">Martha Ruiz Solera</div>
+      </div>
+      <div class="sidebar-rainbow"></div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">Encuestas</div>
+        <div class="nav-item active" id="navList" onclick="showList()">
+          <span class="nav-ico">📋</span> Todas las encuestas
+        </div>
+        <div class="nav-item" onclick="showCreate()">
+          <span class="nav-ico">➕</span> Nueva encuesta
+        </div>
+        <div class="nav-section">Enlaces</div>
+        <div class="nav-item" onclick="window.open('encuesta.html','_blank')">
+          <span class="nav-ico">👁️</span> Ver encuesta
+        </div>
+        <div class="nav-item" onclick="window.open('admin.html','_blank')">
+          <span class="nav-ico">📝</span> Blog Admin
+        </div>
+      </nav>
     </div>
-  </div>
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" onclick="doLogout()">Cerrar sesión</button>
+    </div>
+  </aside>
 
-  <div class="container">
-    <!-- Survey list -->
-    <div id="surveyListView">
+  <main class="main" id="mainContent">
+    <!-- LIST VIEW -->
+    <div id="listView">
+      <div class="topbar">
+        <div class="page-title">Encuestas</div>
+      </div>
       <div id="surveyList" class="slist"></div>
     </div>
 
-    <!-- Survey detail -->
-    <div id="surveyDetailView" style="display:none">
+    <!-- DETAIL VIEW -->
+    <div id="detailView" style="display:none">
       <a class="back-link" onclick="showList()">← Volver a encuestas</a>
 
       <div id="detailHeader" style="margin-bottom:20px"></div>
       <div id="detailStats" class="stats"></div>
-      <div id="detailActions" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap"></div>
+      <div id="detailActions" style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap"></div>
 
-      <div id="detailMun" class="rsec"></div>
-      <div id="detailCom" class="rsec"></div>
-      <div id="detailResp" class="rsec"></div>
+      <div id="detailQuestions" style="margin-bottom:24px"></div>
+      <div id="detailCharts" class="chart-grid"></div>
+      <div id="detailResponses" class="resp-section"></div>
     </div>
-  </div>
+  </main>
 </div>
 
 <!-- CREATE MODAL -->
 <div id="createModal" class="modal-bg">
   <div class="modal">
     <div class="modal-title">Crear nueva encuesta</div>
-    <input id="newId" class="inp" placeholder="ID (ej: eventos-monteria, sin espacios)" style="margin-bottom:10px">
-    <input id="newTitle" class="inp" placeholder="Título (ej: Tu voz cuenta — Evento Montería)" style="margin-bottom:10px">
-    <input id="newSubtitle" class="inp" placeholder="Subtítulo (ej: Martha Ruiz Solera)" style="margin-bottom:10px">
+    <input id="newId" class="inp" placeholder="ID (ej: eventos-monteria, sin espacios)">
+    <input id="newTitle" class="inp" placeholder="Título (ej: Tu voz cuenta — Evento Montería)">
+    <input id="newSubtitle" class="inp" placeholder="Subtítulo (ej: Martha Ruiz Solera)">
     <div style="font-size:12px;color:var(--gris-t);margin-bottom:16px;line-height:1.5">
       Se crearán 5 preguntas estándar:<br>
-      Municipio · Temas de legislación · Proyecto prioritario · Comisión · Nombre
+      Municipio · Temas de legislación · Proyecto prioritario · Comisión · Nombre (opcional)
     </div>
     <div style="display:flex;gap:10px">
-      <button class="btn btn-ghost" style="flex:1" onclick="hideCreate()">Cancelar</button>
+      <button class="btn btn-gray" style="flex:1" onclick="hideCreate()">Cancelar</button>
       <button class="btn btn-red" style="flex:1" onclick="createSurvey()">Crear</button>
     </div>
   </div>
@@ -171,27 +230,29 @@ body{font-family:'DM Sans',sans-serif;background:var(--gris);color:var(--negro);
 <script>
 const API='https://nico.innmedios.com/api';
 const PW='martha2026';
-let loggedIn=false,currentId='';
+let currentId='';
 
-function doLogin(){
+function doLogin(e){
+  e.preventDefault();
   const pw=document.getElementById('pwInput').value;
-  if(pw===PW){loggedIn=true;document.getElementById('loginScreen').style.display='none';document.getElementById('dashboard').style.display='block';loadSurveys()}
-  else{document.getElementById('loginErr').style.display='block'}
+  if(pw===PW){document.getElementById('loginWrap').style.display='none';document.getElementById('app').style.display='block';loadSurveys()}
+  else{document.getElementById('loginError').style.display='block'}
 }
-function doLogout(){loggedIn=false;document.getElementById('dashboard').style.display='none';document.getElementById('loginScreen').style.display='flex';document.getElementById('pwInput').value=''}
+function doLogout(){document.getElementById('app').style.display='none';document.getElementById('loginWrap').style.display='flex';document.getElementById('pwInput').value=''}
 
 async function loadSurveys(){
   const r=await fetch(`${API}/surveys`);
   const d=await r.json();
   const list=document.getElementById('surveyList');
-  if(!d.surveys.length){list.innerHTML='<div class="empty"><div class="empty-icon">📋</div>No hay encuestas aún. Crea la primera.</div>';return}
+  if(!d.surveys.length){list.innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--gris-t)"><div style="font-size:48px;margin-bottom:12px">📋</div>No hay encuestas. Crea la primera.</div>';return}
   list.innerHTML=d.surveys.map(s=>`
     <div class="sitem" onclick="showDetail('${s.id}')">
       <div>
         <div class="sitem-title">${s.title}</div>
-        <div class="sitem-meta">${s.responses} respuestas · Creada ${new Date(s.created).toLocaleDateString('es-CO')}</div>
+        <div class="sitem-meta">${s.responses} respuestas · ${new Date(s.created).toLocaleDateString('es-CO')}</div>
       </div>
-      <span class="sitem-badge ${s.open?'open':'closed'}">${s.open?'Abierta':'Cerrada'}</span>
+      <span class="badge ${s.open?'badge-open':'badge-closed'}">${s.open?'Abierta':'Cerrada'}</span>
+      <span style="font-size:20px;color:var(--gris-t)">→</span>
     </div>
   `).join('');
 }
@@ -206,37 +267,36 @@ async function createSurvey(){
   if(!id||!title){alert('ID y título son requeridos');return}
   const r=await fetch(`${API}/surveys`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,title,subtitle,password:PW})});
   if(!r.ok){const e=await r.json();alert(e.detail||'Error');return}
-  hideCreate();
-  document.getElementById('newId').value='';document.getElementById('newTitle').value='';document.getElementById('newSubtitle').value='';
+  hideCreate();document.getElementById('newId').value='';document.getElementById('newTitle').value='';document.getElementById('newSubtitle').value='';
   loadSurveys();
 }
 
 async function showDetail(sid){
   currentId=sid;
-  document.getElementById('surveyListView').style.display='none';
-  document.getElementById('surveyDetailView').style.display='block';
+  document.getElementById('listView').style.display='none';
+  document.getElementById('detailView').style.display='block';
   await loadDetail();
 }
 
 async function loadDetail(){
   const r=await fetch(`${API}/surveys/${currentId}`);
   const d=await r.json();
-  const s=d.survey;
-  const resp=d.responses;
+  const s=d.survey;const resp=d.responses;const qs=s.questions||[];
 
   // Header
   document.getElementById('detailHeader').innerHTML=`
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.5rem;font-weight:900;text-transform:uppercase">${s.title}</div>
     <div class="link-copy">
-      <input class="inp" value="https://martharuizsol.com/encuesta.html?id=${s.id}" readonly id="surveyLink">
-      <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('surveyLink').value);this.textContent='✓ Copiado'">Copiar link</button>
+      <input class="inp" value="https://martharuizsol.com/encuesta.html?id=${s.id}" readonly id="surveyLink" style="margin:0">
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('surveyLink').value);this.textContent='✓'">Copiar</button>
     </div>
   `;
 
   // Stats
   document.getElementById('detailStats').innerHTML=`
-    <div class="st"><div class="st-v">${d.total}</div><div class="st-l">Respuestas</div></div>
-    <div class="st"><div class="st-v" style="font-size:18px;color:${d.open?'var(--verde)':'var(--rojo)'}">${d.open?'Abierta':'Cerrada'}</div><div class="st-l">Estado</div></div>
+    <div class="stat-card"><div class="stat-n">${d.total}</div><div class="stat-l">Respuestas</div></div>
+    <div class="stat-card"><div class="stat-n" style="font-size:18px;color:${d.open?'var(--verde)':'var(--rojo)'}">${d.open?'Abierta':'Cerrada'}</div><div class="stat-l">Estado</div></div>
+    <div class="stat-card"><div class="stat-n">${qs.length}</div><div class="stat-l">Preguntas</div></div>
   `;
 
   // Actions
@@ -246,23 +306,53 @@ async function loadDetail(){
     <button class="btn btn-danger btn-sm" onclick="clearAll()">🗑️ Borrar todas</button>
   `;
 
-  // Municipios
-  const mc={};resp.forEach(x=>{if(x.municipio)mc[x.municipio]=(mc[x.municipio]||0)+1});
-  const mx=Math.max(...Object.values(mc),1);
-  document.getElementById('detailMun').innerHTML=`<div class="rsec-t">📊 Municipios</div>`+Object.entries(mc).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="ri"><span class="ri-l">${n}</span><div class="ri-bc"><div class="ri-b" style="width:${c/mx*100}%"></div></div><span class="ri-c">${c}</span></div>`).join('');
+  // Questions detail
+  const qHTML=qs.map((q,i)=>{
+    const total=resp.filter(r=>r[q.id]&&r[q.id].trim()).length;
+    let ans='';
+    if(q.type==='select'||q.type==='options'){
+      const counts={};
+      resp.forEach(r=>{const v=r[q.id];if(v)counts[v]=(counts[v]||0)+1});
+      ans=Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${k}: ${v}`).join(' · ');
+    }else{
+      ans=`${total} respuestas`;
+    }
+    return `<div class="q-detail"><div class="q-label">Pregunta ${i+1} · ${q.type==='select'||q.type==='options'?'Selección':'Texto'}${q.required?'':' · Opcional'}</div><div class="q-text">${q.label}</div>${ans?`<div class="q-answers">${ans}</div>`:''}</div>`;
+  }).join('');
+  document.getElementById('detailQuestions').innerHTML=qHTML;
 
-  // Comisiones
-  const cc={};resp.forEach(x=>{if(x.comision)cc[x.comision]=(cc[x.comision]||0)+1});
+  // Charts
+  const colors=['c1','c2','c3','c4','c5','c6','c7'];
+  let chartsHTML='';
+
+  // Municipio chart
+  const mc={};resp.forEach(r=>{if(r.municipio)mc[r.municipio]=(mc[r.municipio]||0)+1});
+  const mx=Math.max(...Object.values(mc),1);
+  chartsHTML+=`<div class="chart-box"><div class="chart-title">📍 Municipios</div>${Object.entries(mc).sort((a,b)=>b[1]-a[1]).map(([n,c],i)=>`<div class="bar-row"><div class="bar-label"><span>${n}</span><span>${c}</span></div><div class="bar-track"><div class="bar-fill ${colors[i%7]}" style="width:${c/mx*100}%"></div></div></div>`).join('')}</div>`;
+
+  // Comisión chart
+  const cc={};resp.forEach(r=>{if(r.comision)cc[r.comision]=(cc[r.comision]||0)+1});
   const cx=Math.max(...Object.values(cc),1);
-  document.getElementById('detailCom').innerHTML=`<div class="rsec-t">🏛️ Comisiones</div>`+Object.entries(cc).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="ri"><span class="ri-l">${n}</span><div class="ri-bc"><div class="ri-b" style="width:${c/cx*100}%"></div></div><span class="ri-c">${c}</span></div>`).join('');
+  chartsHTML+=`<div class="chart-box"><div class="chart-title">🏛️ Comisiones</div>${Object.entries(cc).sort((a,b)=>b[1]-a[1]).map(([n,c],i)=>`<div class="bar-row"><div class="bar-label"><span>${n.replace('Comisión ','').split(' — ')[1]||n.replace('Comisión ','')}</span><span>${c}</span></div><div class="bar-track"><div class="bar-fill ${colors[i%7]}" style="width:${c/cx*100}%"></div></div></div>`).join('')}</div>`;
+
+  document.getElementById('detailCharts').innerHTML=chartsHTML;
 
   // Responses
-  document.getElementById('detailResp').innerHTML=`<div class="rsec-t">💬 Respuestas (${resp.length})</div>`+(resp.length?resp.map(r=>`<div class="rcard"><div class="rcard-info"><div class="rcard-time">${new Date(r.timestamp).toLocaleString('es-CO',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</div><div class="rcard-body"><strong>${r.municipio||'—'}</strong> · ${r.comision||'—'}<br>${(r.temas||'—').substring(0,80)}${(r.temas||'').length>80?'...':''}</div></div><button class="rcard-del" onclick="delResp('${r.id}')" title="Eliminar">✕</button></div>`).join(''):'<div class="empty" style="padding:20px"><div class="empty-icon">📭</div>Aún no hay respuestas</div>');
+  const respHTML=resp.length?resp.map(r=>`
+    <div class="resp-card">
+      <button class="resp-del" onclick="delResp('${r.id}')" title="Eliminar respuesta">✕</button>
+      <div class="resp-time">${new Date(r.timestamp).toLocaleString('es-CO',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}</div>
+      <div class="resp-name">${r.nombre||'Anónimo'} · ${r.municipio||'—'}</div>
+      <div class="resp-body"><strong>Comisión:</strong> ${r.comision||'—'}<br><strong>Temas:</strong> ${r.temas||'—'}<br><strong>Proyecto:</strong> ${r.proyecto||'—'}</div>
+    </div>
+  `).join(''):'<div class="resp-empty">📭 Aún no hay respuestas</div>';
+
+  document.getElementById('detailResponses').innerHTML=`<div class="resp-section-title">💬 Todas las respuestas (${resp.length})</div>${respHTML}`;
 }
 
 function showList(){
-  document.getElementById('surveyListView').style.display='block';
-  document.getElementById('surveyDetailView').style.display='none';
+  document.getElementById('listView').style.display='block';
+  document.getElementById('detailView').style.display='none';
   loadSurveys();
 }
 
@@ -284,6 +374,9 @@ async function clearAll(){
 }
 
 function expCSV(){window.open(`${API}/surveys/${currentId}/export`,'_blank')}
+
+// Auto-refresh
+setInterval(()=>{if(currentId&&document.getElementById('detailView').style.display!=='none')loadDetail()},15000);
 </script>
 </body>
 </html>
