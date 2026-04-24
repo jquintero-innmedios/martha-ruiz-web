@@ -172,56 +172,12 @@ select.inp:focus{border-color:var(--rojo);background:#fff}
     <div class="ok-title">¡Gracias por tu voz!</div>
     <div class="ok-text">Tu respuesta fue registrada.</div>
   </div>
+  
+  <div style="text-align:center;margin-top:32px;padding:16px;border-top:1px solid #e8e8e8">
+    <a href="https://nico.innmedios.com/encuesta/admin" style="font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--rojo);text-decoration:none;padding:10px 24px;border:2px solid var(--rojo);transition:all .2s">📊 Panel de administración</a>
+  </div>
+
   <div id="errMsg" class="err" style="text-align:center;margin-top:16px;font-size:14px"></div>
-</div>
-
-<!-- ADMIN PANEL -->
-<div id="adm" class="admin" style="display:none">
-  <div class="admin-hd">
-    <div class="admin-t" id="admTitle">📊 Encuestas</div>
-    <div class="admin-acts">
-      <button class="abtn-outline" onclick="showCreate()">+ Nueva encuesta</button>
-    </div>
-  </div>
-
-  <!-- Create form -->
-  <div id="createForm" class="create-form">
-    <div class="create-title">Crear nueva encuesta</div>
-    <input id="newId" class="inp" placeholder="ID (ej: eventos-monteria, sin espacios)" style="margin-bottom:8px">
-    <input id="newTitle" class="inp" placeholder="Título de la encuesta" style="margin-bottom:8px">
-    <input id="newSubtitle" class="inp" placeholder="Subtítulo (ej: Martha Ruiz Solera)" style="margin-bottom:16px">
-    <div style="font-size:13px;color:var(--gris-t);margin-bottom:8px">Preguntas (se crearán las 5 preguntas estándar: municipio, temas, proyecto, comisión, nombre)</div>
-    <div class="btns">
-      <button class="btn btn-ghost" onclick="hideCreate()">Cancelar</button>
-      <button class="btn btn-red" onclick="createSurvey()">Crear</button>
-    </div>
-  </div>
-
-  <!-- Survey list -->
-  <div id="surveyList" class="slist"></div>
-
-  <!-- Single survey detail (hidden by default) -->
-  <div id="surveyDetail" style="display:none">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;cursor:pointer" onclick="showList()">
-      <span style="color:var(--rojo);font-size:20px">←</span>
-      <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.04em">Volver a encuestas</span>
-    </div>
-
-    <div class="stats">
-      <div class="st"><div id="dTotal" class="st-v">0</div><div class="st-l">Respuestas</div></div>
-      <div class="st"><div id="dStatus" class="st-v" style="font-size:16px">—</div><div class="st-l">Estado</div></div>
-    </div>
-
-    <div class="admin-acts" style="margin-bottom:20px">
-      <button id="dTglBtn" class="abtn abtn-closed" onclick="tglSurvey()">Cerrar encuesta</button>
-      <button class="abtn-outline" onclick="expCSV()">📥 Exportar CSV</button>
-      <button class="abtn-danger" onclick="clearAll()">🗑️ Borrar todas</button>
-    </div>
-
-    <div class="rsec"><div class="rsec-t">📊 Municipios</div><div id="dMun"></div></div>
-    <div class="rsec"><div class="rsec-t">🏛️ Comisiones</div><div id="dCom"></div></div>
-    <div class="rsec"><div class="rsec-t">💬 Respuestas</div><div id="dResp"></div></div>
-  </div>
 </div>
 
 <script>
@@ -369,123 +325,17 @@ async function submit(){
 }
 
 // ADMIN
-function showAdm(){
-  const c=prompt('Código de administrador:');
-  if(c!==PW)return;
-  document.getElementById('surveyEl').style.display='none';
-  document.getElementById('closedState').style.display='none';
-  document.getElementById('loadingState').style.display='none';
-  document.getElementById('adm').style.display='block';
-  loadSurveys();
-}
 
-async function loadSurveys(){
-  const r=await fetch(`${API}/surveys`);
-  const d=await r.json();
-  const list=document.getElementById('surveyList');
-  list.innerHTML='';
-  d.surveys.forEach(s=>{
-    const item=document.createElement('div');
-    item.className='sitem';
-    item.onclick=()=>showDetail(s.id);
-    item.innerHTML=`<div><div class="sitem-title">${s.title}</div><div class="sitem-meta">${s.responses} respuestas · ${new Date(s.created).toLocaleDateString('es-CO')}</div></div><div class="sitem-badge ${s.open?'open':'closed'}">${s.open?'Abierta':'Cerrada'}</div>`;
-    list.appendChild(item);
-  });
-}
 
-function showCreate(){
-  document.getElementById('createForm').classList.add('active');
-  document.getElementById('surveyDetail').style.display='none';
-  document.getElementById('surveyList').style.display='none';
-}
 
-function hideCreate(){
-  document.getElementById('createForm').classList.remove('active');
-  document.getElementById('surveyList').style.display='grid';
-}
 
-async function createSurvey(){
-  const id=document.getElementById('newId').value.trim().replace(/\s+/g,'-').toLowerCase();
-  const title=document.getElementById('newTitle').value.trim();
-  const subtitle=document.getElementById('newSubtitle').value.trim();
-  if(!id||!title){alert('ID y título son requeridos');return}
-
-  const questions=[
-    {"id":"municipio","type":"select","label":"¿De qué municipio eres?","required":true,"options":["Montería","Cereté","Lorica","Sahagún","San Pelayo","Ciénaga de Oro","Planeta Rica","Tierralta","Valdivia","San Antero","San Carlos","Ayapel","Montelíbano","Puerto Libertador","La Apartada","Buenavista","Canalete","Chimá","Momil","Moñitos","Pueblo Nuevo","Purísima","San Bernardo del Viento","San José de Uré","San Andrés de Sotavento","Tuchín","Villa Nueva","Otro"]},
-    {"id":"temas","type":"textarea","label":"¿Sobre qué temas te gustaría que legisláramos?","required":true,"placeholder":"Ej: educación rural, salud, empleo, seguridad..."},
-    {"id":"proyecto","type":"textarea","label":"¿Cuál debe ser el proyecto prioritario para tu municipio?","required":true,"placeholder":"Describe el proyecto o necesidad más urgente..."},
-    {"id":"comision","type":"options","label":"¿Desde qué comisión quieres que mi voz te represente?","required":true,"options":["Comisión Primera — Constitucional y Reglamento","Comisión Segunda — Relaciones Internacionales","Comisión Tercera — Hacienda y Crédito Público","Comisión Cuarta — Presupuesto","Comisión Quinta — Reglamentación","Comisión Sexta — Transporte y Comunicaciones","Comisión Séptima — Constitucional Permanente"]},
-    {"id":"nombre","type":"text","label":"Tu nombre","required":false,"placeholder":"Si quieres, escribe tu nombre..."}
-  ];
-
-  const r=await fetch(`${API}/surveys`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,title,subtitle,questions,password:PW})});
-  if(!r.ok){const e=await r.json();alert(e.detail||'Error');return}
-  hideCreate();
-  loadSurveys();
-  document.getElementById('newId').value='';
-  document.getElementById('newTitle').value='';
-  document.getElementById('newSubtitle').value='';
-  alert(`Encuesta creada: ${window.location.origin}/encuesta/${id}`);
-}
 
 let currentDetail='';
-async function showDetail(sid){
-  currentDetail=sid;
-  document.getElementById('surveyList').style.display='none';
-  document.getElementById('createForm').classList.remove('active');
-  document.getElementById('surveyDetail').style.display='block';
-  await loadDetail();
-}
 
-async function loadDetail(){
-  const r=await fetch(`${API}/surveys/${currentDetail}`);
-  const d=await r.json();
-  document.getElementById('admTitle').textContent='📊 '+d.survey.title;
-  document.getElementById('dTotal').textContent=d.total;
-  document.getElementById('dStatus').textContent=d.open?'Abierta':'Cerrada';
-  document.getElementById('dStatus').style.color=d.open?'var(--verde)':'var(--rojo)';
-  const btn=document.getElementById('dTglBtn');
-  btn.textContent=d.open?'Cerrar encuesta':'Abrir encuesta';
-  btn.className=d.open?'abtn abtn-open':'abtn abtn-closed';
 
-  const resp=d.responses;
-  // Municipios
-  const mc={};resp.forEach(x=>{if(x.municipio)mc[x.municipio]=(mc[x.municipio]||0)+1});
-  const mx=Math.max(...Object.values(mc),1);
-  document.getElementById('dMun').innerHTML=Object.entries(mc).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="ri"><span class="ri-l">${n}</span><div class="ri-bc"><div class="ri-b" style="width:${c/mx*100}%"></div></div><span class="ri-c">${c}</span></div>`).join('')||'<div style="color:#aaa;font-size:14px">Sin respuestas aún</div>';
 
-  // Comisiones
-  const cc={};resp.forEach(x=>{if(x.comision)cc[x.comision]=(cc[x.comision]||0)+1});
-  const cx=Math.max(...Object.values(cc),1);
-  document.getElementById('dCom').innerHTML=Object.entries(cc).sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="ri"><span class="ri-l">${n}</span><div class="ri-bc"><div class="ri-b" style="width:${c/cx*100}%"></div></div><span class="ri-c">${c}</span></div>`).join('')||'<div style="color:#aaa;font-size:14px">Sin respuestas aún</div>';
 
-  // All responses
-  document.getElementById('dResp').innerHTML=resp.length?resp.map(r=>`<div class="rcard"><div class="rcard-info"><div class="rcard-time">${new Date(r.timestamp).toLocaleString('es-CO',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})}</div><div class="rcard-body"><strong>${r.municipio||'—'}</strong> · ${r.comision||'—'}<br>${r.temas||'—'}</div></div><button class="rcard-del" onclick="delResp('${r.id}')" title="Eliminar">✕</button></div>`).join(''):'<div style="color:#aaa;font-size:14px">Sin respuestas aún</div>';
-}
 
-function showList(){
-  document.getElementById('surveyDetail').style.display='none';
-  document.getElementById('surveyList').style.display='grid';
-  document.getElementById('admTitle').textContent='📊 Encuestas';
-  loadSurveys();
-}
-
-async function tglSurvey(){
-  await fetch(`${API}/surveys/${currentDetail}/toggle`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:PW})});
-  loadDetail();
-}
-
-async function delResp(rid){
-  if(!confirm('¿Eliminar esta respuesta?'))return;
-  await fetch(`${API}/surveys/${currentDetail}/responses/${rid}?password=${PW}`,{method:'DELETE'});
-  loadDetail();
-}
-
-async function clearAll(){
-  if(!confirm('¿Borrar TODAS las respuestas? No se puede deshacer.'))return;
-  await fetch(`${API}/surveys/${currentDetail}/responses?password=${PW}`,{method:'DELETE'});
-  loadDetail();
-}
 
 function expCSV(){window.open(`${API}/surveys/${currentDetail}/export`,'_blank')}
 
